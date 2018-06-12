@@ -128,11 +128,17 @@ ggplot(teeth_tall,aes( x = age_days_cut, fill = measurement)) +
 
 
 # combine left and right
+teeth_tall$side  <- str_sub(teeth_tall$tooth, start = 1, end = 1)
+teeth_tall$tooth <- str_sub(teeth_tall$tooth, start = 2, end = 10)
 
 
-
-
-
+ggplot(teeth_tall,aes( x = age_days_cut, fill = measurement)) + 
+  geom_bar(position = "fill", width = 0.95)+
+  scale_fill_brewer(palette = "Dark2")+
+  facet_wrap(~tooth, ncol = 1)+
+  scale_x_continuous(expand = c(0.01,0.01))+
+  scale_y_continuous(expand = c(0.01,0.01))+
+  themeo
 
 
 
