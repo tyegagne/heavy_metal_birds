@@ -58,7 +58,7 @@ joined_metal <- joined_metal %>% group_by(spp,metal,year) %>%
 joined_metal$metal <- as.factor(joined_metal$metal)
 
 # extreme value species
-joined_metal <- filter(joined_metal, !spp %in% c("BUPE", "SOTE","RFBO","BFAL") )
+#joined_metal <- filter(joined_metal, !spp %in% c("BUPE", "SOTE","RFBO","BFAL") )
 joined_metal <- filter(joined_metal, !metal %in% c("As",'Hg') )
 
 # metals by species facetted 
@@ -116,7 +116,7 @@ joined_metal %>%
   ggplot(aes(year,ip.value,color = metal))+
   geom_point()+
   scale_color_brewer(palette = "Dark2")+
-  facet_wrap(~spp)
+  facet_wrap(~spp, scales = "free_y")
 
 joined_metal %>% 
   group_by(spp,metal) %>% 
@@ -143,7 +143,7 @@ joined_metal %>%
   ggplot(aes(year,interp_levels,color = metal))+
   geom_point()+
   scale_color_brewer(palette = "Dark2")+
-  facet_wrap(~spp)+
+  facet_wrap(~spp, scales = "free_y")+
   themeo
 
 joined_metal$metal <- as.factor(joined_metal$metal)
@@ -218,7 +218,7 @@ ggplot(all_df,aes(x = year, y = modeled, color = metal))+
 trophic_p <- read.csv('tp_through_time.csv')
 str(trophic_p)
 
-# plot it quick to look at it
+# plot it quick to look at it 
 ggplot(trophic_p,aes(x = year, y = tp_med, color = spp))+
   geom_line()+
   themeo
@@ -230,3 +230,18 @@ ggplot(trophic_p,aes(x = year, y = tp_med, color = spp))+
 
 # merge this in with the metals data
 # I want NAs for all years that don't have metal readings, to then interpolate.
+# trophic species levels 
+# equate levels
+# which in this case means building a dataframe with TPs labeled with factors from the heavy metals
+
+
+levels(trophic_p$spp)
+levels(joined_metal$spp)
+
+# post index.lock
+
+
+
+
+
+

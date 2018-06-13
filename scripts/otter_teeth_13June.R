@@ -3,7 +3,7 @@ library(lubridate)
 library(ggplot2)
 
 ##############################
-###    T's ggPlot theme    ###
+###    T's ggPlot theme    ### 
 ##############################
 themeo <-theme_classic()+
   theme(strip.background = element_blank(),
