@@ -238,10 +238,45 @@ ggplot(trophic_p,aes(x = year, y = tp_med, color = spp))+
 levels(trophic_p$spp)
 levels(joined_metal$spp)
 
-# post index.lock
+# dragging through this.
+
+# BRBO == BRBO
+# BRNO == BRNO
+# BUPE == BUPE
+# LAAL == LAAL
+# SOTE == SOTE
+# WHTE == WHTE
+# WTSH == WTSH
+# WTTR == WTTR
+
+# BFAL == LAAL in the TrophicTP
+# RFBO == BRBO in the TrophicTP
+
+str(trophic_p)
+
+BFAL <- filter(trophic_p, spp == "LAAL") %>% mutate(spp = "BFAL")
+RFBO <- filter(trophic_p, spp == "BRBO") %>% mutate(spp = "RFBO")
+
+trophic_p <- rbind(trophic_p, BFAL, RFBO)
+trophic_p <- filter(trophic_p, !spp == "TP")
+
+levels(trophic_p$spp)
+
+joined_all <- left_join(joined_metal, trophic_p, by = c("year","spp")) %>%  select(-X)
+
+ggplot(data = joined_all, aes(x = year, y = interp_levels))+
+  geom_line(aes(color = metal)) + 
+  facet_wrap(~spp, scales = "free_y")+
+  geom_line(aes(y = tp_med^5), color = "black") +
+  themeo
 
 
 
+
+ggplot(data = joined_all)+
+  geom_line(aes(x = year, y = tp_med )) + 
+  facet_wrap(~spp)+
+  themeo
 
 
 
