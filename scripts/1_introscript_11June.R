@@ -59,21 +59,25 @@ joined_metal$metal <- as.factor(joined_metal$metal)
 
 # extreme value species
 #joined_metal <- filter(joined_metal, !spp %in% c("BUPE", "SOTE","RFBO","BFAL") )
-joined_metal <- filter(joined_metal, !metal %in% c("As",'Hg') )
+#joined_metal <- filter(joined_metal, !metal %in% c("As",'Hg') )
+joined_metal <- filter(joined_metal, metal %in% c("As",'Hg') )
+
 
 # metals by species facetted 
 ggplot(joined_metal,aes(x = year, y = (interp_levels), color = spp, group = spp))+
   geom_point(size = .2)+
   geom_line(size = .2)+
   facet_wrap(~metal, scales = "free_y")+
-  scale_color_brewer(palette = "Dark2")+
+  #scale_color_brewer(palette = "Dark2")+
   themeo
 
 # species by metal facetted
 ggplot(joined_metal,aes(x = year, y = (interp_levels), color = metal, group = metal))+
   geom_point(size = .2)+
   geom_line(size = .2)+
-  facet_wrap(~spp)+
+  facet_wrap(~spp, scales = "free_y")+
+  scale_x_continuous(limits = c(1980,2017))+
+  scale_y_continuous(limits = c(0,32))+
   scale_color_brewer(palette = "Dark2")+
   themeo
 
