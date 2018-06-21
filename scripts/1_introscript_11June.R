@@ -32,11 +32,11 @@ metals <- cbind(unique_id, metals)             # add that to the dataframe
 str(metals) # check the structure
 
 # reshape the dataframe so every row is the contamination level for a single metal for a single specimen
-metals_values_gathered <- select(metals, unique_id, spp, year, Mn, Fe, Cu, Zn, As, Mo, Cd, Hg, Pb) %>% 
+metals_values_gathered <- dplyr::select(metals, unique_id, spp, year, Mn, Fe, Cu, Zn, As, Mo, Cd, Hg, Pb) %>% 
   gather(key = metal, value = measurement, Mn, Fe, Cu, Zn, As, Mo, Cd, Hg, Pb) 
 
 # reshape the dataframe so every row is the min detection level for a single metal for a single specimen
-metals_limits_gathered <- select(metals, unique_id, spp, year, Mn_rl, Fe_rl, Cu_rl, Zn_rl, As_rl, Mo_rl, Cd_rl, Hg_rl, Pb_rl) %>% 
+metals_limits_gathered <- dplyr::select(metals, unique_id, spp, year, Mn_rl, Fe_rl, Cu_rl, Zn_rl, As_rl, Mo_rl, Cd_rl, Hg_rl, Pb_rl) %>% 
   gather(key = metal_limit, value = reference_limit, Mn_rl, Fe_rl, Cu_rl, Zn_rl, As_rl, Mo_rl, Cd_rl, Hg_rl, Pb_rl)
 
 # join those dataframes 
@@ -59,8 +59,8 @@ joined_metal$metal <- as.factor(joined_metal$metal)
 
 # extreme value species
 #joined_metal <- filter(joined_metal, !spp %in% c("BUPE", "SOTE","RFBO","BFAL") )
-#joined_metal <- filter(joined_metal, !metal %in% c("As",'Hg') )
-joined_metal <- filter(joined_metal, metal %in% c("As",'Hg') )
+joined_metal <- filter(joined_metal, !metal %in% c("As",'Hg') )
+#joined_metal <- filter(joined_metal, metal %in% c("As",'Hg') )
 
 
 # metals by species facetted 
@@ -76,8 +76,8 @@ ggplot(joined_metal,aes(x = year, y = (interp_levels), color = metal, group = me
   geom_point(size = .2)+
   geom_line(size = .2)+
   facet_wrap(~spp, scales = "free_y")+
-  scale_x_continuous(limits = c(1980,2017))+
-  scale_y_continuous(limits = c(0,32))+
+  #scale_x_continuous(limits = c(1980,2017))+
+  #scale_y_continuous(limits = c(0,32))+
   scale_color_brewer(palette = "Dark2")+
   themeo
 
@@ -120,7 +120,8 @@ joined_metal %>%
   ggplot(aes(year,ip.value,color = metal))+
   geom_point()+
   scale_color_brewer(palette = "Dark2")+
-  facet_wrap(~spp, scales = "free_y")
+  facet_wrap(~spp, scales = "free_y")+
+  themeo
 
 joined_metal %>% 
   group_by(spp,metal) %>% 
@@ -258,29 +259,37 @@ levels(joined_metal$spp)
 
 str(trophic_p)
 
+
 BFAL <- filter(trophic_p, spp == "LAAL") %>% mutate(spp = "BFAL")
 RFBO <- filter(trophic_p, spp == "BRBO") %>% mutate(spp = "RFBO")
 
 trophic_p <- rbind(trophic_p, BFAL, RFBO)
 trophic_p <- filter(trophic_p, !spp == "TP")
+trophic_p$spp <- droplevels(trophic_p$spp)
 
 levels(trophic_p$spp)
+levels(joined_metal$spp)
 
 joined_all <- left_join(joined_metal, trophic_p, by = c("year","spp")) %>%  select(-X)
 
-ggplot(data = joined_all, aes(x = year, y = interp_levels))+
-  geom_line(aes(color = metal)) + 
-  facet_wrap(~spp, scales = "free_y")+
-  geom_line(aes(y = tp_med^5), color = "black") +
+str(joined_all)
+
+joined_all_t <- joined_all %>% 
+  mutate(interp_levels = scale(interp_levels),tp_med = scale(tp_med)) 
+
+a <- ggplot(data = joined_all_t, aes(x = year, y = interp_levels))+
+  geom_line(aes(color = metal), show.legend = F) + 
+  facet_wrap(~spp, scales = "free_y", ncol = 1)+
+  geom_ribbon(aes(ymax = tp_med/5, ymin = -Inf), alpha = .5, color = "black") +
+  scale_x_continuous(expand = c(0,0))+
   themeo
 
-
-
-
-ggplot(data = joined_all)+
-  geom_line(aes(x = year, y = tp_med )) + 
-  facet_wrap(~spp)+
+b<- ggplot(data = joined_all_t, aes(x = year, y = interp_levels + tp_med))+
+  geom_line(aes(color = metal), show.legend = F) + 
+  facet_wrap(~spp, scales = "free_y", ncol = 1)+
+  scale_x_continuous(expand = c(0,0))+
+  #geom_line(aes(y = tp_med), color = "black") +
   themeo
-
+grid.arrange(a,b, ncol = 2)
 
 
