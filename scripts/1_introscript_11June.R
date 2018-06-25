@@ -19,7 +19,7 @@ themeo <-theme_classic()+
         strip.text=element_text(hjust=0) )
 
 # set working directory and read in csv
-setwd('/Users/tgagne/Dropbox (MBA)/Seabird TL Project/data') # running from Tylers computer
+setwd('/Users/tgagne/heavy_metal_birds/data') # running from Tylers computer
 #setwd('C:/Users/omax0085/Dropbox/Seabird TL Project/data') # running from Lizzies computer
 getwd()
 
@@ -222,6 +222,8 @@ ggplot(all_df,aes(x = year, y = modeled, color = metal))+
 # bring in the trophic position estimates from Gagne et al. 2018
 trophic_p <- read.csv('tp_through_time.csv')
 str(trophic_p)
+
+trophic_p[,3:6] <- round(trophic_p[,3:6], digits = 2)
 
 # plot it quick to look at it 
 ggplot(trophic_p,aes(x = year, y = tp_med, color = spp))+
