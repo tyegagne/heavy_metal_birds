@@ -2,6 +2,19 @@ library(ggplot2)
 library(gtools)
 library(minpack.lm) 
 
+##############################
+###  Popular ggPlot theme  ###
+##############################
+themeo <-theme_classic()+
+  theme(strip.background = element_blank(),
+        axis.line = element_blank(),
+        axis.text.x = element_text(margin = margin( 0.2, unit = "cm")),
+        axis.text.y = element_text(margin = margin(c(1, 0.2), unit = "cm")),
+        axis.ticks.length=unit(-0.1, "cm"),
+        panel.border = element_rect(colour = "black", fill=NA, size=.5),
+        legend.title=element_blank(),
+        strip.text=element_text(hjust=0) )
+
 setwd('/Users/tgagne/heavy_metal_birds/data') # running from Tylers computer
 TTC <- read.csv('SuedelTTC.csv')
 
@@ -12,15 +25,12 @@ ggplot(TTC,aes(x = TL, y = ttc))+
   facet_wrap(~metal, scales = "free_y")
 
 metals <- levels(TTC$metal)
-
 metals <- metals[c(1,2,4,5,6,7)]
-metals
+# <- "Copper"
 
 par(mfrow = c(6,3))
 
-par(mfrow = c(6,7),
-    oma = c(5,4,0,0) + 0.3,
-    mar = c(0,0,1,1) + 1.2)
+#par(mfrow = c(6,3), oma = c(5,4,0,0) + 0.3, mar = c(0,0,1,1) + 1.2)
 
 lookup_table <- NULL
 
@@ -31,8 +41,8 @@ TTC_sub <- subset(TTC, metal == metals[i])
 starters <- coef(lm(logit(ttc/100) ~ TL, data = TTC_sub))
 TTC_form <- ttc~phi1/(1+exp(-(phi2+phi3*TL)))
 start <- list(phi1=30,
-           phi2=starters[1] ,
-           phi3=starters[2])
+           phi2=starters[1] + .001 ,
+           phi3=starters[2] + .001)
 
 fitTypical <- nlsLM(TTC_form, data=TTC_sub, start=start, trace = T)
 
@@ -74,14 +84,26 @@ b <- ggplot(lookup_table, aes(TL, ttc*10))+
 
 gridExtra::grid.arrange(a,b, ncol = 2)
 
+levels(lookup_table$metal)
 
 
+levels(joined_all_t$metal)
+
+# in order to join the TTC lookup table with the metals levels table we need matching 
+# metal factor levels 
+# and Trophic positions as factors?
+
+# First change, metal factors in the lookup table to appropriate levels in the metals levels
 
 
+# > levels(joined_all_t$metal)
+# [1] "As" "Cd" "Cu" "Fe" "Hg" "Mn" "Mo" "Pb" "Zn"
 
+# > levels(lookup_table$metal)
+# [1] "Arsenic"    "Cadmium"    "Lead"       "Mercury"    "Molybdenum" "Zinc"   
 
-
-
+# Whats missing in the lookup table: Copper (can be fixed quick), Iron, Mn, 
+# Cadmium appears to fit almost the exact same model as Copper, Copper will be Cadmium
 
 
 

@@ -292,6 +292,8 @@ b<- ggplot(data = joined_all_t, aes(x = year, y = interp_levels + tp_med))+
   scale_x_continuous(expand = c(0,0))+
   #geom_line(aes(y = tp_med), color = "black") +
   themeo
-grid.arrange(a,b, ncol = 2)
+
+gridExtra::grid.arrange(a,b, ncol = 2)
+
 
 
