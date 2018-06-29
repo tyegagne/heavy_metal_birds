@@ -272,12 +272,11 @@ trophic_p$spp <- droplevels(trophic_p$spp)
 levels(trophic_p$spp)
 levels(joined_metal$spp)
 
-joined_all <- left_join(joined_metal, trophic_p, by = c("year","spp")) %>%  select(-X)
+joined_all_t <- left_join(joined_metal, trophic_p, by = c("year","spp")) %>%  select(-X)
 
 str(joined_all)
 
-joined_all_t <- joined_all %>% 
-  mutate(interp_levels = scale(interp_levels),tp_med = scale(tp_med)) 
+#joined_all_t <- joined_all %>% mutate(interp_levels = scale(interp_levels),tp_med = scale(tp_med)) 
 
 a <- ggplot(data = joined_all_t, aes(x = year, y = interp_levels))+
   geom_line(aes(color = metal), show.legend = F) + 

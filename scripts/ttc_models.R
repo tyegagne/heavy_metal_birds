@@ -67,11 +67,21 @@ plot(x = newdata$TL, y = newdata$ttc*10, type = 'l', main = "TTC * 10 ppm")
 
 }
 
+str(lookup_table)
+
+# Copper is cadmium, and Iron and Mg will self represent as Zinc
+Cu <- subset(lookup_table, metal == "Cadmium"); Cu$metal <- "Copper" %>% as.factor(); str(Cu)
+Mn <- subset(lookup_table, metal == "Zinc"); Mn$metal <- "Manganese" %>% as.factor(); str(Mn)
+Fe <- subset(lookup_table, metal == "Zinc"); Fe$metal <- "Iron" %>% as.factor(); str(Fe)
+
+lookup_table <- rbind(lookup_table,Cu,Mn,Fe)
+
 
 str(lookup_table)
 
 a <- ggplot(lookup_table, aes(TL, ttc))+
   geom_line()+
+  geom_point(data = TTC,aes(x = TL, y = ttc), size = 1)+
   geom_hline(yintercept = 1, lty = "dashed")+
   facet_wrap(~metal, scales = "free_y", ncol = 1 )+
   themeo
@@ -85,9 +95,7 @@ b <- ggplot(lookup_table, aes(TL, ttc*10))+
 gridExtra::grid.arrange(a,b, ncol = 2)
 
 levels(lookup_table$metal)
-
-
-levels(joined_all_t$metal)
+levels(joined_all$metal)
 
 # in order to join the TTC lookup table with the metals levels table we need matching 
 # metal factor levels 
@@ -107,8 +115,48 @@ levels(joined_all_t$metal)
 
 
 
+str(joined_all)
+levels(joined_all$metal) # What want to change
+levels(lookup_table$metal) # what we want to change it to
+
+joined_all <- joined_all %>% ungroup() %>% 
+  mutate( metal = fct_recode(metal, 
+    Arsenic = "As",
+    Cadmium   = "Cd",
+    Lead       = "Pb",
+    Mercury    = "Hg",
+    Molybdenum = "Mo",
+    Zinc       = "Zn",
+    Copper    = "Cu",
+   Manganese  = "Mn",
+   Iron      = "Fe"
+))
+
+str(lookup_table)
+lookup_table <- lookup_table %>% mutate(tp_med = TL) %>% select(-TL)
+
+joined_all <- left_join(joined_all,lookup_table, by = c("metal","tp_med"))
+corrected <- joined_all %>% mutate(corrected_metal_level = interp_levels * ttc)
 
 
+ggplot(corrected )+
+  geom_point(aes(x = year, y = (corrected_metal_level), color = spp))+
+  #geom_line(aes(x = year, y = interp_levels, color = spp))+
+  facet_wrap(~metal, scales = "free_y")+
+  scale_y_continuous(limits = c(0,1))
+  
+  
+ggplot(corrected )+
+  geom_point(aes(x = year, y = (corrected_metal_level), color = metal))+
+  #geom_line(aes(x = year, y = interp_levels, color = spp))+
+  facet_wrap(~spp, scales = "free_y")
+  
+  
+  
+  
+  
+  
+  
 
 
 
