@@ -113,7 +113,7 @@ levels(joined_all$metal)
 # Whats missing in the lookup table: Copper (can be fixed quick), Iron, Mn, 
 # Cadmium appears to fit almost the exact same model as Copper, Copper will be Cadmium
 
-
+joined_all <- joined_all_t
 
 str(joined_all)
 levels(joined_all$metal) # What want to change
@@ -152,12 +152,19 @@ ggplot(corrected )+
   facet_wrap(~spp, scales = "free_y")
   
   
+  ggplot(corrected,aes(x = year, y = corrected_metal_level, group = spp) )+
+           geom_line()+
+           facet_wrap(~metal, scales = "free_y", ncol = 1)
   
   
   
+# To Do: 
+# z -score filter/adjustment
+# running post- 1980
+# ppm global generation
+# metal ensembles
+# shade TP in TTC figures
   
-  
-
 
 
 

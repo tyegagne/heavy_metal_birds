@@ -43,7 +43,7 @@ metals_limits_gathered <- dplyr::select(metals, unique_id, spp, year, Mn_rl, Fe_
 joined_metal <- cbind(metals_values_gathered,ref_limit = metals_limits_gathered$reference_limit)
 
 # create new column - if measurement level is NA then use min detection
-joined_metal$interp_levels <- if_else(is.na(joined_metal$measurement),joined_metal$ref_limit,joined_metal$measurement)
+joined_metal$interp_levels <- if_else(is.na(joined_metal$measurement),joined_metal$ref_limit/2,joined_metal$measurement) # using half of ref limit per Gains reccomendation
 
 #clean up
 rm(metals_limits_gathered,metals_values_gathered,metals,unique_id)
@@ -80,6 +80,16 @@ ggplot(joined_metal,aes(x = year, y = (interp_levels), color = metal, group = me
   #scale_y_continuous(limits = c(0,32))+
   scale_color_brewer(palette = "Dark2")+
   themeo
+
+ggplot(joined_metal,aes(x = year, y = (interp_levels), color = metal, group = metal))+
+  geom_point(size = 1)+
+  geom_line(size = 1)+
+  facet_grid(metal~spp, scales = "free_y")+
+  #scale_x_continuous(limits = c(1980,2017))+
+  #scale_y_continuous(limits = c(0,32))+
+  scale_color_brewer(palette = "Dark2")+
+  themeo
+
 
 # interpolating values between years
 # build dummy data.frame
