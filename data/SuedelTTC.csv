@@ -1,0 +1,76 @@
+spp,comm_name,metal,TL,TL_sd,ttc,reference
+Hexanchus griseus,Bluntnose sixgill shark ,Arsenic,4.5,0.2,20.9,Suedel et al 1994
+Sebastes entomelas,widow rockfish,Arsenic,3.7,0.3,0.3,LeBlanc and Jackson 1973
+Hexanchus griseus,Bluntnose sixgill shark ,Arsenic,4.5,0.2,10,LeBlanc and Jackson 1973
+Patella vulgata,limpet,Arsenic,1,NA,0.2,Klump and Peterson 1979
+Carcinus maenas,green crab,Arsenic,2,NA,2.3,Klump and Peterson 1979
+Acanthephyra eximia,shrimp,Arsenic,2,NA,0.7,Leatherland et al 1973
+Diaphus dumerili,headlightfish,Arsenic,3,NA,0.1,Leatherland et al 1973
+Hexagrammos sp.,greenling,Arsenic,2,NA,0.3,LeBlanc and Jackson 1973
+Hydrolagus colliei,spotted ratfish,Arsenic,3.7,0.54,15.2,LeBlanc and Jackson 1973
+Moina macrocopa,zooplankton,Arsenic,1,NA,0.1,Maeda et al 1990
+Carassius auratus,goldfish,Arsenic,2,0,0.2,Maeda et al 1990
+Artemia sp.,Brine shrimp,Arsenic,1,NA,0.2,Lindsay and Sanders 1990
+Palaemonetes pugio,grass shrimp,Arsenic,2,NA,0.4,Lindsay and Sanders 1990
+Carpiodes cyprinus,quilback,Cadmium,2.6,0.27,0.04,Mathis and Cummings 1973
+Micropterus dolomieu,smallmouth bass,Cadmium,3.6,0.2,0.8,Mathis and Cummings 1973
+Patella vulgata,limpet,Cadmium,1,NA,24.6,Klump and Peterson 1979
+Helotes sexlineatus,Eastern striped grunter,Cadmium,2,0,0.4,Ward et al 1986
+Platichthyes flesus,flounder,Cadmium,3.3,0.2,0.1,Hardisty et al 1974
+Etheostoma flabellare,fantail darter,Cadmium,3.2,0.39,0.1,Enk and Mathis 1977
+Micropterus dolomieu,smallmouth bass,Cadmium,3.6,0.2,0.9,Enk and Mathis 1977
+NA,omnivorous fish,Cadmium,3,NA,1.1,Ward et al 1986
+Carcinus maenas,littoral crab,Cadmium,2,NA,0.01,Klump and Peterson 1979
+Acanthephyra eximia,shrimp,Cadmium,2,NA,2.4,Leatherland et al 1973
+Diaphus dumerili,headlightfish,Cadmium,3,0,0.1,Leatherland et al 1973
+Littorina littoralis,periwinkle,Cadmium,1,NA,4.5,Bryan and Langston 1992
+Littorina littoralis,periwinkle,Cadmium,1,NA,4.7,Bryan and Langston 1992
+Littorina littoralis,periwinkle,Cadmium,1,NA,5.8,Bryan and Langston 1992
+Nucella lapillus,Dogwinkle,Cadmium,2,NA,9.4,Bryan and Langston 1992
+Nucella lapillus,Dogwinkle,Cadmium,2,NA,4.9,Bryan and Langston 1992
+Nucella lapillus,Dogwinkle,Cadmium,2,NA,4.1,Bryan and Langston 1992
+Carpiodes cyprinus,quilback,Copper,2.6,0.27,0.02,Mathis and Cummings 1973
+Micropterus dolomieu,smallmouth bass,Copper,3.6,0.2,0.7,Mathis and Cummings 1973
+Carcinus maenas,green crab,Copper,2,NA,14.9,Klump and Peterson 1979
+Patella vulgata,limpet,Copper,1,NA,0.6,Klump and Peterson 1979
+Pleuronectes platessa,Plaice,Copper,3.2,0.5,0.5,Saward et al 1975
+Etheostoma flabellare,fantail darter,Lead,3.2,0.39,0.3,Enk and Mathis 1977
+Micropterus dolomieu,smallmouth bass,Lead,3.6,0.2,0.9,Enk and Mathis 1977
+Carpiodes cyprinus,quilback,Lead,2.6,0.27,0.1,Mathis and Cummings 1973
+Micropterus dolomieu,smallmouth bass,Lead,3.6,0.2,0.9,Mathis and Cummings 1973
+NA,omnivorous fish,Lead,3,NA,2.6,Ward et al 1986
+Helotes sexlineatus,Eastern striped grunter,Lead,2,0,0.4,Ward et al 1986
+Platichthyes flesus,flounder,Lead,3.3,0.2,0.7,Hardisty et al 1974
+Haliotis sp.,abalone,Lead,1,NA,0.5,Stewart and Schultz-Baldes 1976
+Haliotis sp.,abalone,Lead,1,NA,0.4,Stewart and Schultz-Baldes 1976
+Esox lucius,Northern pike,Mercury,4.1,0.4,2.9,Wren and MacCrimmon 1986
+Esox lucius,Northern pike,Mercury,4.1,0.4,2.4,Wren and MacCrimmon 1986
+Argyropleecus affinis,Hatchetfish,Mercury,3.1,0.19,1.5,Williams and Weiss 1973
+Euthynnus pelamis,skipjack tuna,Mercury,4.4,0.5,2.8,Williams and Weiss 1973
+Bathylogus pacificus,slender smelt,Mercury,3.3,0.42,6.8,Williams and Weiss 1973
+Cyclothone braueri,lightfish,Mercury,3.1,0.18,0.2,Williams and Weiss 1973
+NA,zooplankton,Mercury,1,NA,0.3,Knauer and Martin 1972
+Engraulis mordax,Northern anchovy,Mercury,3.1,0.28,0.3,Knauer and Martin 1972
+Zoarces viviparus,eelpout,Mercury,3.5,0.49,1,Kiorboe et al 1983
+Acanthephyra eximia,shrimp,Mercury,2,NA,1.7,Leatherland et al 1973
+Diaphus dumerili,headlightfish,Mercury,3,0,0.4,Leatherland et al 1973
+Carpiodes cyprinus,quilback,Zinc,2.6,0.27,0.06,Mathis and Cummings 1973
+Micropterus dolomieu,smallmouth bass,Zinc,3.6,0.2,1,Mathis and Cummings 1973
+Gobiesox rhessodon,California clingfish,Zinc,3.2,0.45,0.1,Ward et al 1986
+Helotes sexlineatus,Eastern striped grunter,Zinc,2,0,0.4,Ward et al 1986
+Carcinus maenas,green crab,Zinc,2,NA,1.2,Klump and Peterson 1979
+Patella vulgata,limpet,Zinc,1,NA,0.6,Klump and Peterson 1979
+Platichthyes flesus,flounder,Zinc,3.3,0.2,1.4,Hardisty et al 1974
+Acanthephyra eximia,shrimp,Zinc,2,NA,0.7,Leatherland et al 1973
+Diaphus dumerili,headlightfish,Zinc,3,0,0.6,Leatherland et al 1973
+Littorina obtusata,snail,Zinc,1,NA,0.02,Young 1975
+NA,postlarval fish,Zinc,2,NA,0.68,Baptist and Lewis 1969
+Fundulus heteroclitus,mummichog,Zinc,3.6,0.48,0.11,Baptist and Lewis 1969
+Nucella lapillus,dogwhelk,Zinc,3,NA,0.57,Young 1975
+Balanus balanoides,northern rock barnacle,Zinc,2,NA,0.26,Young 1975
+Artemia sp.,Brine shrimp,Zinc,1,NA,0.85,Willis and Sunda 1984
+Leiostomas xanthurus,spot croaker,Zinc,3.2,0.1,0.17,Willis and Sunda 1984
+Procambarus clarki,crayfish,Molybdenum,2,NA,0.4,Saiki et al 1993
+Gambusia affinis,mosquitofish,Molybdenum,3.1,0.2,1.2,Saiki et al 1993
+Micropterus dolomieu,smallmouth bass,Molybdenum,3.6,0.2,1.2,Wren et al 1983
+Salvelinus namaycush,lake trout,Molybdenum,4.3,0.5,0.7,Wren et al 1983
