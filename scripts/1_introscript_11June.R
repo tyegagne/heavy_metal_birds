@@ -59,8 +59,20 @@ joined_metal$metal <- as.factor(joined_metal$metal)
 
 # extreme value species
 #joined_metal <- filter(joined_metal, !spp %in% c("BUPE", "SOTE","RFBO","BFAL") )
-joined_metal <- filter(joined_metal, !metal %in% c("As",'Hg') )
-#joined_metal <- filter(joined_metal, metal %in% c("As",'Hg') )
+#joined_metal <- filter(joined_metal, !metal %in% c("As",'Hg') )
+
+# filter Hg and As newer than 1980
+joined_metal <- filter(joined_metal, !(metal %in% c("As",'Hg') & year < 1980) )
+
+# quantile cutoff
+# Cutoff based on observations of grouped metals. Univariate outliers by metal level
+# consider upper quantile in response to inflatted positive values?
+library(DescTools)
+joined_metal <- 
+  
+  joined_metal %>% 
+  group_by(metal) %>% 
+  mutate(interp_levels = Winsorize(interp_levels,probs = c(0,0.95)))
 
 
 # metals by species facetted 
