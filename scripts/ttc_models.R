@@ -50,12 +50,12 @@ newdata <- data.frame(TL = seq(0,5, by = .01),ttc = predict(fitTypical, newdata 
 
 lookup_table <- rbind(lookup_table,newdata)
 
-plot(ttc ~ TL, data = TTC_sub, main = metals[i], xlim = c(0,5))
-lines(ttc ~ TL, data = newdata)
+#plot(ttc ~ TL, data = TTC_sub, main = metals[i], xlim = c(0,5))
+#lines(ttc ~ TL, data = newdata)
 #abline(h = 1, lty = 'dashed')
 
-plot(ttc ~ TL, data = newdata, type = 'l', main = paste(metals[i], 'TTC by TL'), ylab = "TTC")
-abline(h = 1, lty = 'dashed')
+#plot(ttc ~ TL, data = newdata, type = 'l', main = paste(metals[i], 'TTC by TL'), ylab = "TTC")
+#abline(h = 1, lty = 'dashed')
 
 #plot(x = newdata$TL, y = newdata$ttc/10, type = 'l', main = "TTC / 10 ppm")
 #plot(x = newdata$TL, y = 10/newdata$ttc, type = 'l', main = "10 ppm / TTC")
@@ -63,7 +63,8 @@ abline(h = 1, lty = 'dashed')
 #plot(x = newdata$TL, y = 10/(newdata$TL*newdata$ttc), type = 'l', main = "10 ppm / TL * TTC")
 #plot(x = newdata$TL, y = log(10^(newdata$TL*newdata$ttc)), type = 'l', main = "log( 10 ppm ^ TL*TTC )")
 #plot(x = newdata$TL, y = (newdata$ttc*newdata$TL)*10, type = 'l', main = "TTC * TL * 10 ppm")
-plot(x = newdata$TL, y = newdata$ttc*10, type = 'l', main = "TTC * 10 ppm")
+
+##plot(x = newdata$TL, y = newdata$ttc*10, type = 'l', main = "TTC * 10 ppm")
 
 }
 
@@ -94,8 +95,8 @@ b <- ggplot(lookup_table, aes(TL, ttc*10))+
 
 gridExtra::grid.arrange(a,b, ncol = 2)
 
-levels(lookup_table$metal)
-levels(joined_all$metal)
+
+
 
 # in order to join the TTC lookup table with the metals levels table we need matching 
 # metal factor levels 
@@ -115,6 +116,13 @@ levels(joined_all$metal)
 
 joined_all <- joined_all_t
 
+# paper figure
+b + 
+  annotate("rect",xmin = min(joined_all$tp_med, na.rm = T), xmax = max(joined_all$tp_med, na.rm = T), ymin = -Inf, ymax = Inf, alpha = .5)+
+  facet_wrap(~metal, scales = "free_y", ncol = 2)+
+  labs(title = "Trophic transfer of an environment level of 10 ppm", y = "parts per million", x = "trophic position")
+
+
 str(joined_all)
 levels(joined_all$metal) # What want to change
 levels(lookup_table$metal) # what we want to change it to
@@ -128,22 +136,32 @@ joined_all <- joined_all %>% ungroup() %>%
     Molybdenum = "Mo",
     Zinc       = "Zn",
     Copper    = "Cu",
-   Manganese  = "Mn",
-   Iron      = "Fe"
+    Manganese  = "Mn",
+    Iron      = "Fe"
 ))
 
 str(lookup_table)
 lookup_table <- lookup_table %>% mutate(tp_med = TL) %>% select(-TL)
+
+levels(joined_all$metal) # What want 
+levels(lookup_table$metal)
+
+joined_all$metal   <- as.character(joined_all$metal) %>% as.factor()
+lookup_table$metal <- as.character(lookup_table$metal) %>% as.factor()
+
+joined_all$tp_med   <- as.character(joined_all$tp_med) %>% as.factor()
+lookup_table$tp_med   <- as.character(lookup_table$tp_med) %>% as.factor()
+
+
 
 joined_all <- left_join(joined_all,lookup_table, by = c("metal","tp_med"))
 corrected <- joined_all %>% mutate(corrected_metal_level = interp_levels * ttc)
 
 
 ggplot(corrected )+
-  geom_point(aes(x = year, y = (corrected_metal_level), color = spp))+
+  geom_line(aes(x = year, y = (corrected_metal_level), color = spp))+
   #geom_line(aes(x = year, y = interp_levels, color = spp))+
-  facet_wrap(~metal, scales = "free_y")+
-  scale_y_continuous(limits = c(0,1))
+  facet_wrap(~metal, scales = "free_y")
   
   
 ggplot(corrected )+
@@ -156,7 +174,12 @@ ggplot(corrected )+
            geom_line()+
            facet_wrap(~metal, scales = "free_y", ncol = 1)
   
-  
+  many <- ggplot(corrected,aes(x = year, y = corrected_metal_level, group = spp) )+
+    geom_point(size = .4)+
+    facet_grid(metal~spp, scales = "free_y")+
+    scale_y_continuous(expand = c(0.25,0))+
+    themeo
+  many
   
 # To Do: 
 # z -score filter/adjustment
@@ -165,6 +188,27 @@ ggplot(corrected )+
 # metal ensembles
 # shade TP in TTC figures
   
+  # by metal summaries
+  ensemble <- corrected %>% group_by(metal,year) %>% 
+    
+    mutate(metal_ensemble = mean(corrected_metal_level)) %>% 
+    
+    ggplot(aes(x = year, y = metal_ensemble, color = metal, group = metal))+
+    geom_point(size = .5, color = "grey")+
+
+    #geom_smooth()+
+    facet_wrap(~metal, scales = "free_y", ncol = 1)+
+    scale_x_continuous(expand = c(0,0))+
+    #scale_y_continuous(limits = c(0,32))+
+    themeo
+  
+  ensemble
+  
+# matrix of all observations with ensembles
+matrixo <-   matrix(nrow = 5, ncol = 5)
+matrixo[,1:4] <- 1
+matrixo[,5] <- 2
 
 
-
+gridExtra::grid.arrange(many, ensemble, layout_matrix = matrixo)
+  

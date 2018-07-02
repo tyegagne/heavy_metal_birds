@@ -57,9 +57,8 @@ joined_metal <- joined_metal %>% group_by(spp,metal,year) %>%
 #metal to factor
 joined_metal$metal <- as.factor(joined_metal$metal)
 
-# extreme value species
-#joined_metal <- filter(joined_metal, !spp %in% c("BUPE", "SOTE","RFBO","BFAL") )
-#joined_metal <- filter(joined_metal, !metal %in% c("As",'Hg') )
+# single/~2-3 year observations in recent 
+joined_metal <- filter(joined_metal, !spp %in% c("RFBO","BFAL") )
 
 # filter Hg and As newer than 1980
 joined_metal <- filter(joined_metal, !(metal %in% c("As",'Hg') & year < 1980) )
@@ -72,7 +71,7 @@ joined_metal <-
   
   joined_metal %>% 
   group_by(metal) %>% 
-  mutate(interp_levels = Winsorize(interp_levels,probs = c(0,0.95)))
+  mutate(interp_levels = Winsorize(interp_levels,probs = c(0,0.90)))
 
 
 # metals by species facetted 
@@ -90,7 +89,6 @@ ggplot(joined_metal,aes(x = year, y = (interp_levels), color = metal, group = me
   facet_wrap(~spp, scales = "free_y")+
   #scale_x_continuous(limits = c(1980,2017))+
   #scale_y_continuous(limits = c(0,32))+
-  scale_color_brewer(palette = "Dark2")+
   themeo
 
 ggplot(joined_metal,aes(x = year, y = (interp_levels), color = metal, group = metal))+
@@ -99,7 +97,22 @@ ggplot(joined_metal,aes(x = year, y = (interp_levels), color = metal, group = me
   facet_grid(metal~spp, scales = "free_y")+
   #scale_x_continuous(limits = c(1980,2017))+
   #scale_y_continuous(limits = c(0,32))+
+  themeo
+
+
+# by metal summaries
+joined_metal %>% group_by(metal,year) %>% 
+  
+  mutate(metal_ensemble = mean(interp_levels)) %>% 
+  
+  ggplot(aes(x = year, y = metal_ensemble, color = metal, group = metal))+
+  geom_point(size = .5, color = "grey")+
+  geom_line(size = .5, color = "grey")+
+  geom_smooth()+
+  facet_wrap(~metal, scales = "free_y", ncol = 1)+
   scale_color_brewer(palette = "Dark2")+
+  scale_x_continuous(expand = c(0,0))+
+  #scale_y_continuous(limits = c(0,32))+
   themeo
 
 
@@ -132,16 +145,21 @@ joined_metal <- sc
 rm(sc,yearvec,met,rep,dummy_df,m,s)
 
 # linear interpolation of NAs
-joined_metal <- joined_metal %>% 
+joined_metal <- 
+  joined_metal %>% 
   group_by(spp,metal) %>% 
-  mutate(ip.value = na.approx(interp_levels, rule = 2)) #linear interpolation
+  mutate(ip.value = na.approx(interp_levels, rule = 2)) 
+ # mutate(time = seq(1,n())) %>%
+ # mutate(ip.value = approx(time,interp_levels,time)$y) %>% 
+ # select(-time)
+
+#linear interpolation
   #mutate(ip.value = na.approx(interp_levels, rule = 2)) %>% 
   #mutate(ip.value = na.approx(interp_levels, rule = 2)) %>% 
 
 joined_metal %>% 
   ggplot(aes(year,ip.value,color = metal))+
   geom_point()+
-  scale_color_brewer(palette = "Dark2")+
   facet_wrap(~spp, scales = "free_y")+
   themeo
 
@@ -152,8 +170,8 @@ joined_metal %>%
   select(-time) %>% 
   ggplot(aes(year,ip.value,color = metal))+
   geom_point()+
-  scale_color_brewer(palette = "Dark2")+
-  facet_wrap(~spp)
+  facet_wrap(~spp)+
+  themeo
 
 
 # attempt to bootstrap estimates
@@ -169,7 +187,6 @@ joined_metal <- data.frame(year = joined_metal$year,
 joined_metal %>% 
   ggplot(aes(year,interp_levels,color = metal))+
   geom_point()+
-  scale_color_brewer(palette = "Dark2")+
   facet_wrap(~spp, scales = "free_y")+
   themeo
 
@@ -190,7 +207,7 @@ for( i in 1:length(sppx)) {
     # select a single metal
     one_spp_one_metal <- filter(one_spp, metal == metals[x])
     
-    for( b in 1:10){ 
+    for( b in 1:1){ 
       modeled <- NULL
       # randomly sample ~80% observations
       one_spp_one_metal_samp <- sample_frac(one_spp_one_metal, size = .2)
@@ -294,9 +311,12 @@ trophic_p$spp <- droplevels(trophic_p$spp)
 levels(trophic_p$spp)
 levels(joined_metal$spp)
 
+trophic_p$spp    <- as.character(trophic_p$spp) %>% as.factor()
+joined_metal$spp <- as.character(joined_metal$spp) %>% as.factor()
+
+# attempt to resolve NAs appearing in merge?
 joined_all_t <- left_join(joined_metal, trophic_p, by = c("year","spp")) %>%  select(-X)
 
-str(joined_all)
 
 #joined_all_t <- joined_all %>% mutate(interp_levels = scale(interp_levels),tp_med = scale(tp_med)) 
 
