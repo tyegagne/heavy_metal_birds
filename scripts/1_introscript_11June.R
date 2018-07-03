@@ -23,8 +23,7 @@ setwd('/Users/tgagne/heavy_metal_birds/data') # running from Tylers computer
 #setwd('C:/Users/omax0085/Dropbox/Seabird TL Project/data') # running from Lizzies computer
 getwd()
 
-# tyler dataframe manipulation
- # you may have to install this
+# dataframe manipulation
 metals <- read.csv('heavy_metal_June6.csv' , header = T,na.strings = "--" )
 unique_id <- paste0("B",seq(1,dim(metals)[1])) # create a unique ID for each specimen
 metals <- cbind(unique_id, metals)             # add that to the dataframe
@@ -68,7 +67,6 @@ joined_metal <- filter(joined_metal, !(metal %in% c("As",'Hg') & year < 1980) )
 # consider upper quantile in response to inflatted positive values?
 library(DescTools)
 joined_metal <- 
-  
   joined_metal %>% 
   group_by(metal) %>% 
   mutate(interp_levels = Winsorize(interp_levels,probs = c(0,0.90)))
@@ -79,7 +77,6 @@ ggplot(joined_metal,aes(x = year, y = (interp_levels), color = spp, group = spp)
   geom_point(size = .2)+
   geom_line(size = .2)+
   facet_wrap(~metal, scales = "free_y")+
-  #scale_color_brewer(palette = "Dark2")+
   themeo
 
 # species by metal facetted
@@ -110,7 +107,6 @@ joined_metal %>% group_by(metal,year) %>%
   geom_line(size = .5, color = "grey")+
   geom_smooth()+
   facet_wrap(~metal, scales = "free_y", ncol = 1)+
-  scale_color_brewer(palette = "Dark2")+
   scale_x_continuous(expand = c(0,0))+
   #scale_y_continuous(limits = c(0,32))+
   themeo
@@ -148,10 +144,10 @@ rm(sc,yearvec,met,rep,dummy_df,m,s)
 joined_metal <- 
   joined_metal %>% 
   group_by(spp,metal) %>% 
-  mutate(ip.value = na.approx(interp_levels, rule = 2)) 
- # mutate(time = seq(1,n())) %>%
- # mutate(ip.value = approx(time,interp_levels,time)$y) %>% 
- # select(-time)
+ # mutate(ip.value = na.approx(interp_levels, rule = 2)) 
+  mutate(time = seq(1,n())) %>%
+  mutate(ip.value = approx(time,interp_levels,time)$y) %>% 
+  select(-time)
 
 #linear interpolation
   #mutate(ip.value = na.approx(interp_levels, rule = 2)) %>% 
@@ -212,7 +208,7 @@ for( i in 1:length(sppx)) {
       # randomly sample ~80% observations
       one_spp_one_metal_samp <- sample_frac(one_spp_one_metal, size = .2)
       # fit a model to the sample
-      smooth_mod <- loess(interp_levels ~ year, data = one_spp_one_metal_samp, span = .5)
+      smooth_mod <- loess(interp_levels ~ year, data = one_spp_one_metal_samp, span = 1)
       # predict across whole year range
       modeled <- predict(object = smooth_mod, newdata =  year)
       replic <- data.frame(year,modeled,b, spp = sppx[i], metal = metals[x])
