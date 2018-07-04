@@ -75,10 +75,11 @@ joined_metal <-
 metal_by_spp <- ggplot(joined_metal,aes(x = year, y = (interp_levels), color = spp, group = spp))+
   geom_point(size = .2)+
   geom_line(size = .2)+
+  scale_color_manual(values = colorRampPalette(rev(brewer.pal(8, "Paired")))(9))+
   themeo
 
-metal_by_spp + facet_wrap(~metal, scales = "free_y")
-metal_by_spp + facet_grid(metal~spp, scales = "free_y")
+metal_by_spp + facet_wrap(~metal, scales = "free_y", ncol = 1)
+metal_by_spp + facet_grid(metal~spp, scales = "free_y"); rm(metal_by_spp)
 
 # grouped by metal ensemble 
 joined_metal %>% group_by(metal,year) %>% 
@@ -115,8 +116,7 @@ sc$interp_levels.x <- NULL
 joined_metal <- sc
 
 # cleanup
-rm(sc,yearvec,met,rep,dummy_df,m,s)
-
+rm(sc,yearvec,met,rep,dummy_df,m,s, metals, spp)
 
 # linear interpolation of NAs
 joined_metal <- 
@@ -130,9 +130,9 @@ joined_metal <-
 joined_metal %>% 
   ggplot(aes(year,ip.value,color = metal))+
   geom_point()+
+  scale_color_manual(values = colorRampPalette(rev(brewer.pal(8, "Paired")))(9))+
   facet_wrap(~spp, scales = "free_y")+
   themeo
-
 
 # bring in the trophic position estimates from Gagne et al. 2018
 trophic_p <- read.csv('tp_through_time.csv')
@@ -165,9 +165,7 @@ tp_plot + facet_wrap(~spp)
 # RFBO == BRBO in the TrophicTP
 
 # Correction with ensemble TP decline instead of by species tp trajectory
-tp_null <- NULL
-spp <- levels(trophic_p$spp)
-ensem_tp <- subset(trophic_p, spp == "TP")
+tp_null <- NULL; spp <- levels(trophic_p$spp); ensem_tp <- subset(trophic_p, spp == "TP")
 
 for(s in 1:length(spp)){
   tp_duh <-  data.frame(X = "x", spp = spp[s], year = seq(1891,2015,by = 1), tp_med = ensem_tp$tp_med, tp_upper = ensem_tp$tp_upper, tp_lower = ensem_tp$tp_lower)
@@ -193,7 +191,6 @@ joined_metal$spp <- as.character(joined_metal$spp) %>% as.factor()
 
 # attempt to resolve NAs appearing in merge?
 joined_all_t <- left_join(joined_metal, trophic_p, by = c("year","spp")) %>%  select(-X)
-
 
 # Handling Trophic Transfer Coefficients
 TTC <- read.csv('SuedelTTC.csv')
@@ -304,8 +301,8 @@ levels(joined_all$metal) # What want
 levels(lookup_table$metal)
 
 joined_all <- left_join(joined_all,lookup_table, by = c("metal","tp_med"))
-corrected <- joined_all %>% mutate(corrected_metal_level = interp_levels * ttc)
-
+#corrected <- joined_all %>% mutate(corrected_metal_level = interp_levels * ttc)  # think the bug is that interp levels should be ref as ip.value?
+corrected <- joined_all %>% mutate(corrected_metal_level = ip.value * ttc)
 
 ggplot(corrected )+
   geom_line(aes(x = year, y = (corrected_metal_level), color = spp))+
@@ -321,12 +318,22 @@ ggplot(corrected,aes(x = year, y = corrected_metal_level, group = spp) )+
   geom_line()+
   facet_wrap(~metal, scales = "free_y", ncol = 1)
 
-many <- ggplot(corrected,aes(x = year, y = corrected_metal_level, group = spp, color = metal) )+
+many <- ggplot(corrected,aes(x = year, y = corrected_metal_level, group = spp) )+
  # geom_line(size = .4)+
   geom_line(size = .5)+
   facet_grid(metal~spp, scales = "free_y")+
   #scale_color_manual(values = colorRampPalette(rev(brewer.pal(8, "Paired")))(9))+
   scale_y_continuous(expand = c(0.25,0))+
+  themeo
+many
+
+many <- ggplot(corrected,aes(x = year, y = corrected_metal_level, group = spp) )+
+  # geom_line(size = .4)+
+  geom_line(size = .5)+
+  facet_wrap(~metal, scales = "free_y", ncol = 1)+
+  #scale_color_manual(values = colorRampPalette(rev(brewer.pal(8, "Paired")))(9))+
+  scale_y_continuous(expand = c(0.25,0))+
+  scale_x_continuous(expand = c(0,0))+
   themeo
 many
 
@@ -359,6 +366,7 @@ matrixo[,5] <- 2
 
 
 gridExtra::grid.arrange(many, ensemble, layout_matrix = matrixo)
+gridExtra::grid.arrange(many, ensemble, ncol = 2)
 
 
 
