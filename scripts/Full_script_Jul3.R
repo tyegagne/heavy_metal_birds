@@ -71,7 +71,7 @@ joined_metal <-
   group_by(metal) %>% 
   mutate(interp_levels = Winsorize(interp_levels,probs = c(0,0.90)))
 
-# metals by species facetted 
+# plots of metals by species facetted 
 metal_by_spp <- ggplot(joined_metal,aes(x = year, y = (interp_levels), color = spp, group = spp))+
   geom_point(size = .2)+
   geom_line(size = .2)+
@@ -81,7 +81,7 @@ metal_by_spp <- ggplot(joined_metal,aes(x = year, y = (interp_levels), color = s
 metal_by_spp + facet_wrap(~metal, scales = "free_y", ncol = 1)
 metal_by_spp + facet_grid(metal~spp, scales = "free_y"); rm(metal_by_spp)
 
-# grouped by metal ensemble 
+# grouped by raw metal ensemble mean plot
 joined_metal %>% group_by(metal,year) %>% 
   mutate(metal_ensemble = mean(interp_levels)) %>% 
   ggplot(aes(x = year, y = metal_ensemble, color = metal, group = metal))+
@@ -122,11 +122,14 @@ rm(sc,yearvec,met,rep,dummy_df,m,s, metals, spp)
 joined_metal <- 
   joined_metal %>% 
   group_by(spp,metal) %>% 
+  # this when uncommented extends extrapolation to min max years
+  # the other interpolation line has to be hashed out
   # mutate(ip.value = na.approx(interp_levels, rule = 2)) 
   mutate(time = seq(1,n())) %>%
   mutate(ip.value = approx(time,interp_levels,time)$y) %>% 
   select(-time)
 
+# this plot checks the interpolation between years
 joined_metal %>% 
   ggplot(aes(year,ip.value,color = metal))+
   geom_point()+
@@ -144,6 +147,7 @@ tp_plot <- ggplot(trophic_p,aes(x = year, y = tp_med, color = spp))+
   geom_line()+
   themeo
 
+# facet it by species, 'TP' is the ensemble of all of these spp
 tp_plot + facet_wrap(~spp)
 
 # merge this in with the metals data
@@ -165,34 +169,40 @@ tp_plot + facet_wrap(~spp)
 # RFBO == BRBO in the TrophicTP
 
 # Correction with ensemble TP decline instead of by species tp trajectory
+# If you run the next 10 lines it will move forward with locating correction TTC values based 
+# on ensemble of TP rather than species specific TPs. 
+# Skip these 10 lines if you prefer to run corrections with spp specific trophic positions rather than ensemble.
 tp_null <- NULL; spp <- levels(trophic_p$spp); ensem_tp <- subset(trophic_p, spp == "TP")
-
 for(s in 1:length(spp)){
-  tp_duh <-  data.frame(X = "x", spp = spp[s], year = seq(1891,2015,by = 1), tp_med = ensem_tp$tp_med, tp_upper = ensem_tp$tp_upper, tp_lower = ensem_tp$tp_lower)
+  tp_duh <-  data.frame(X = "x", spp = spp[s], 
+                        year = seq(1891,2015,by = 1), 
+                        tp_med = ensem_tp$tp_med, 
+                        tp_upper = ensem_tp$tp_upper,
+                        tp_lower = ensem_tp$tp_lower)
   tp_null <- rbind(tp_null,tp_duh)}
-
 trophic_p <- tp_null
 
 # attempting correction with ensemble TP decline. 
 BFAL <- filter(trophic_p, spp == "LAAL") %>% mutate(spp = "BFAL")
 RFBO <- filter(trophic_p, spp == "BRBO") %>% mutate(spp = "RFBO")
-
 trophic_p <- rbind(trophic_p, BFAL, RFBO)
 trophic_p <- filter(trophic_p, !spp == "TP")
 trophic_p$spp <- droplevels(trophic_p$spp)
 
-levels(trophic_p$spp)
+levels(trophic_p$spp)    
 levels(joined_metal$spp)
 
 trophic_p$spp    <- as.character(trophic_p$spp) %>% as.factor()
 joined_metal$spp <- as.character(joined_metal$spp) %>% as.factor()
 
-
-
-# attempt to resolve NAs appearing in merge?
+# join metal readings with trophic position of bird at particular year
 joined_all_t <- left_join(joined_metal, trophic_p, by = c("year","spp")) %>%  select(-X)
 
-# Handling Trophic Transfer Coefficients
+
+
+### ### ### ### ### ### ### ### ### #
+### Trophic Transfer Coefficients ###
+### ### ### ### ### ### ### ### ### #
 TTC <- read.csv('SuedelTTC.csv')
 
 str(TTC)
@@ -208,20 +218,31 @@ lookup_table <- NULL
 
 for(i in 1:length(metals)){
   
+  # subset a single metal from the TTC table
   TTC_sub <- subset(TTC, metal == metals[i])
+  
+  # find starting values of the logistic equation that will fit the TTC x TL data
   starters <- coef(lm(logit(ttc/100) ~ TL, data = TTC_sub))
+  
+  # define the logistic equation to be fit
   TTC_form <- ttc~phi1/(1+exp(-(phi2+phi3*TL)))
+  
+  # list of starting values
   start <- list(phi1=30,
                 phi2=starters[1] + .001 ,
                 phi3=starters[2] + .001)
   
+  # non linear least squares fit
   fitTypical <- nlsLM(TTC_form, data=TTC_sub, start=start, trace = T)
   
+  # dataframe of predictions of TTC accross range of TP i.e. 0 - 5
   newdata <- data.frame(TL = seq(0,5, by = .01),ttc = predict(fitTypical, newdata = data.frame(TL = seq(0,5, by = .01))), metal = metals[i])
   
+  # build dataframe of all metal's TTCs
   lookup_table <- rbind(lookup_table,newdata)
 }
 
+# does it look like it should?
 str(lookup_table)
 
 # Copper is cadmium, and Iron and Mg will self represent as Zinc
@@ -238,14 +259,13 @@ a <- ggplot(lookup_table, aes(TL, ttc))+
   facet_wrap(~metal, scales = "free_y", ncol = 1 )+
   themeo
 
-b <- ggplot(lookup_table, aes(TL, ttc*10))+
+b <- ggplot(lookup_table, aes(TL, ttc*10))+ # correction shows what 10ppm at base would look like at various TPs
   geom_line()+
   geom_hline(yintercept = 10, lty = "dashed")+
   facet_wrap(~metal, scales = "free_y", ncol = 1)+
   themeo
 
 gridExtra::grid.arrange(a,b, ncol = 2)
-
 
 # in order to join the TTC lookup table with the metals levels table we need matching 
 # metal factor levels 
@@ -267,9 +287,16 @@ joined_all <- joined_all_t
 
 # paper figure
 b + 
-  annotate("rect",xmin = min(joined_all$tp_med, na.rm = T), xmax = max(joined_all$tp_med, na.rm = T), ymin = -Inf, ymax = Inf, alpha = .5)+
+  annotate("rect",
+           xmin = min(joined_all$tp_med, na.rm = T), 
+           xmax = max(joined_all$tp_med, na.rm = T), 
+           ymin = -Inf, 
+           ymax = Inf, 
+           alpha = .5)+
   facet_wrap(~metal, scales = "free_y", ncol = 2)+
-  labs(title = "Trophic transfer of an environment level of 10 ppm", y = "parts per million", x = "trophic position")
+  labs(title = "Trophic transfer of an environment level of 10 ppm", 
+       y = "parts per million", 
+       x = "trophic position")
 
 
 levels(joined_all$metal) # What want to change
@@ -302,7 +329,7 @@ levels(lookup_table$metal)
 
 joined_all <- left_join(joined_all,lookup_table, by = c("metal","tp_med"))
 #corrected <- joined_all %>% mutate(corrected_metal_level = interp_levels * ttc)  # think the bug is that interp levels should be ref as ip.value?
-corrected <- joined_all %>% mutate(corrected_metal_level = ip.value * ttc)
+corrected <- joined_all %>% mutate(corrected_metal_level = ip.value / ttc) # TTC suggest that you divide by in order to represent the environmental availability given what you know it is at a particular TP
 
 ggplot(corrected )+
   geom_line(aes(x = year, y = (corrected_metal_level), color = spp))+
@@ -368,14 +395,25 @@ matrixo[,5] <- 2
 gridExtra::grid.arrange(many, ensemble, layout_matrix = matrixo)
 gridExtra::grid.arrange(many, ensemble, ncol = 2)
 
+# SCRATCH
+
+# Metals vs. TP through time
+
+str(corrected)
 
 
 
 
+corrected %>% 
+  ggplot(aes(x = as.numeric(tp_med), y = ip.value))+
+  geom_path()+
+  facet_grid(metal~spp, scales = "free_y")
 
 
-
-
+corrected %>% 
+  ggplot(aes(x = as.numeric(tp_med), y = corrected_metal_level))+
+  geom_path()+
+  facet_grid(metal~spp, scales = "free_y")
 
 
 
