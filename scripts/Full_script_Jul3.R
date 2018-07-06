@@ -168,6 +168,9 @@ tp_plot + facet_wrap(~spp)
 # BFAL == LAAL in the TrophicTP
 # RFBO == BRBO in the TrophicTP
 
+
+###
+####
 # Correction with ensemble TP decline instead of by species tp trajectory
 # If you run the next 10 lines it will move forward with locating correction TTC values based 
 # on ensemble of TP rather than species specific TPs. 
@@ -181,6 +184,9 @@ for(s in 1:length(spp)){
                         tp_lower = ensem_tp$tp_lower)
   tp_null <- rbind(tp_null,tp_duh)}
 trophic_p <- tp_null
+###
+####
+
 
 # attempting correction with ensemble TP decline. 
 BFAL <- filter(trophic_p, spp == "LAAL") %>% mutate(spp = "BFAL")
@@ -209,7 +215,10 @@ str(TTC)
 
 ggplot(TTC,aes(x = TL, y = ttc))+
   geom_point()+
-  facet_wrap(~metal, scales = "free_y")
+  geom_hline(yintercept = 1, lty = "dashed")+
+  facet_wrap(~metal, scales = "free_y")+
+  scale_x_continuous(limits = c(0,5))+
+  themeo
 
 
 metals <- levels(TTC$metal)
@@ -225,11 +234,15 @@ for(i in 1:length(metals)){
   starters <- coef(lm(logit(ttc/100) ~ TL, data = TTC_sub))
   
   # define the logistic equation to be fit
-  TTC_form <- ttc~phi1/(1+exp(-(phi2+phi3*TL)))
+  #TTC_form <- ttc~phi1/(1+exp(-(phi2+phi3*TL)))
+  
+  # alternative functions
+  TTC_form <- ttc~2/(1+exp(-(phi3*TL)))
   
   # list of starting values
-  start <- list(phi1=30,
-                phi2=starters[1] + .001 ,
+  start <- list(#phi1=30,
+                #phi2 = 1,
+                #phi2=starters[1] + .001 ,
                 phi3=starters[2] + .001)
   
   # non linear least squares fit
@@ -282,7 +295,6 @@ gridExtra::grid.arrange(a,b, ncol = 2)
 
 # Whats missing in the lookup table: Copper (can be fixed quick), Iron, Mn, 
 # Cadmium appears to fit almost the exact same model as Copper, Copper will be Cadmium
-
 joined_all <- joined_all_t
 
 # paper figure
@@ -390,7 +402,6 @@ ensemble
 matrixo <-   matrix(nrow = 5, ncol = 5)
 matrixo[,1:4] <- 1
 matrixo[,5] <- 2
-
 
 gridExtra::grid.arrange(many, ensemble, layout_matrix = matrixo)
 gridExtra::grid.arrange(many, ensemble, ncol = 2)
