@@ -1,32 +1,16 @@
 
 library(dplyr)
 
-
 x=runif(50)
-
 y=exp(2*x)+rnorm(50)
-
-ans=penspl(5,x,y,10,3,2.5)
-
-plot(x,y)
-
-lines(ans$xpl,ans$cpl)
-
-lines(ans$xpl,ans$ucpl,col=2)
-
-
 x <- c(0, 3.2, 3.6, 2.6, 3.6, 3.0, 2.0, 3.3, 1.0, 1.0)
 y <- c(1, 0.3, 0.9, 0.1, 0.9, 2.6, 0.4, 0.7, 0.5, 0.4)
 df <- data.frame(x = x,y = y)
-
 plot(df$x,df$y)
 abline(h = 1, lty = "dashed")
-
 weights <- c(100, 1, 1, 1, 1, 1, 1, 1, 1, 1)
-
 spline_mod <- smooth.spline(x = df$x, y = df$y,w = weights, df = 5)
 prediction <- predict(object = spline_mod, x = seq(0,5,length.out = 100))
-
 lines(prediction$x,prediction$y)
 
 
@@ -35,7 +19,6 @@ lines(prediction$x,prediction$y)
 TTC <- read.csv('SuedelTTC.csv')
 
 str(TTC)
-
 
 metals <- levels(TTC$metal)
 #metals <- metals[c(1,2,4,5,6,7)]
@@ -66,25 +49,14 @@ for(i in 1:length(metals)){
   # dataframe of predictions of TTC accross range of TP i.e. 0 - 5
   newdata <- data.frame(TL = seq(0,5, by = .01),ttc = prediction$y, metal = metals[i])
   
-  #newdata$ttc <- if( newdata$ttc < 0 ){ newdata$ttc <- .01 } else{ newdata$ttc }
-  
-  
-  
   lines(newdata$TL,newdata$ttc)
-  
- # newdata$ttc <- 
   
   # build dataframe of all metal's TTCs
   lookup_table <- rbind(lookup_table,newdata)
   
 }
 
-str(lookup_table)
-
-
-
-# Copper is cadmium, and Iron and Mg will self represent as Zinc
-#Cu <- subset(lookup_table, metal == "Cadmium"); Cu$metal <- "Copper" %>% as.factor(); str(Cu)
+# Iron and Mg will self represent as Zinc
 Mn <- subset(lookup_table, metal == "Zinc"); Mn$metal <- "Manganese" %>% as.factor(); str(Mn)
 Fe <- subset(lookup_table, metal == "Zinc"); Fe$metal <- "Iron" %>% as.factor(); str(Fe)
 
@@ -122,18 +94,29 @@ b +
 
 
 # dummy data attempt to correct concentration data in to trophic transfer coefficient data
-par(mfrow = c(3,2))
+par(mfrow = c(4,2))
 
+n = 15
 # generate a plot dummy concentration data
+x_base=runif(n , min = 0, max = 5)
+
+ya = exp(1.5*x_base)+rnorm(n , sd = 200)+real_intercept # exponential increasing
+yb = -exp(1.2*x_base)+rnorm(n , sd = 100)+real_intercept # exponential degreasing
+yc = (5*x_base)+rnorm(n , sd = 20)+real_intercept # linear increasing 
+yd = rnorm(n , sd = 20) + real_intercept
+
+equations <- cbind(ya,yb,yc,yd) %>%  as.data.frame()
+
+for(e in 1:length(equations)){
+  
 
 # this is the real intercept i.e. "environmental level"
 real_intercept <- 500
 
-x=runif(50, min = 0, max = 5)
-y=exp(1.5*x)+rnorm(50, sd = 200)+real_intercept
-#y=(-5*x)+rnorm(50, sd = 20)+200
-df <- data.frame(x,y)
-plot(df)
+y_base = equations[e] %>% as.vector() 
+
+df <- data.frame(x_base,y_base)
+plot(df, xlab = "trophic position", ylab = "concentration (ppm)",pch = 20)
 
 # fit 3 degree spline to raw concentration data
 spline_mod <- smooth.spline(df$x, df$y, df = 3)
@@ -163,12 +146,12 @@ est_prediction <- predict(object = est_mod, x = seq(0,5,by = 0.01)) %>% as.data.
 real_mod <- smooth.spline(x, y2, df = 3)
 real_prediction <- predict(object = real_mod, x = seq(0,5,by = 0.01)) %>% as.data.frame()
 
-plot(x, y, pch = 7)
-points(x, y2, col = "red", pch = 7)
+plot(x, y, pch = 20, ylab = "transfer coefficient", xlab = "trophic position")
+points(x, y2, col = "green4", pch = 20)
 lines(est_prediction)
-lines(real_prediction, col = "red")
+lines(real_prediction, col = "green4")
 
-
+}
 
 
 
