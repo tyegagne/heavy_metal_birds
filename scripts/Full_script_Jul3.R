@@ -234,15 +234,12 @@ for(i in 1:length(metals)){
   starters <- coef(lm(logit(ttc/100) ~ TL, data = TTC_sub))
   
   # define the logistic equation to be fit
-  #TTC_form <- ttc~phi1/(1+exp(-(phi2+phi3*TL)))
-  
-  # alternative functions
-  TTC_form <- ttc~2/(1+exp(-(phi3*TL)))
+  TTC_form <- ttc~phi1/(1+exp(-(phi2+phi3*TL)))
   
   # list of starting values
-  start <- list(#phi1=30,
+  start <- list(phi1=30,
                 #phi2 = 1,
-                #phi2=starters[1] + .001 ,
+                phi2=starters[1] + .001 ,
                 phi3=starters[2] + .001)
   
   # non linear least squares fit
