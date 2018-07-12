@@ -1,0 +1,502 @@
+Common name,Latin name,published TL,Sealife TL,reference,ecosystem,Metal,concentration,sd
+clam,Mactra veneriformis,2,-,Cui,wetland,Arsenic,4.52,-
+clam,Mactra veneriformis,2,-,Cui,wetland,Cadmium,0.45,-
+clam,Mactra veneriformis,2,-,Cui,wetland,Copper,4,-
+clam,Mactra veneriformis,2,-,Cui,wetland,Mercury,-,-
+clam,Mactra veneriformis,2,-,Cui,wetland,Lead,0.14,-
+clam,Mactra veneriformis,2,-,Cui,wetland,Manganese,22.68,-
+clam,Mactra veneriformis,2,-,Cui,wetland,Molybdenum,-,-
+clam,Mactra veneriformis,2,-,Cui,wetland,Zinc,70.92,-
+crab,Helice tridens,2.11,-,Cui,wetland,Arsenic,4.32,-
+crab,Helice tridens,2.11,-,Cui,wetland,Cadmium,0.44,-
+crab,Helice tridens,2.11,-,Cui,wetland,Copper,112.86,-
+crab,Helice tridens,2.11,-,Cui,wetland,Mercury,0.12,-
+crab,Helice tridens,2.11,-,Cui,wetland,Lead,0.8,-
+crab,Helice tridens,2.11,-,Cui,wetland,Manganese,170.2,-
+crab,Helice tridens,2.11,-,Cui,wetland,Molybdenum,-,-
+crab,Helice tridens,2.11,-,Cui,wetland,Zinc,63.45,-
+chinese shrimp,Fenneropenaeus chinensis,2.08,-,Cui,wetland,Arsenic,7.5,0.39
+chinese shrimp,Fenneropenaeus chinensis,2.08,-,Cui,wetland,Cadmium,-,-
+chinese shrimp,Fenneropenaeus chinensis,2.08,-,Cui,wetland,Copper,80.59,23.44
+chinese shrimp,Fenneropenaeus chinensis,2.08,-,Cui,wetland,Mercury,0.1,0.02
+chinese shrimp,Fenneropenaeus chinensis,2.08,-,Cui,wetland,Lead,0.39,0.12
+chinese shrimp,Fenneropenaeus chinensis,2.08,-,Cui,wetland,Manganese,2.77,0.26
+chinese shrimp,Fenneropenaeus chinensis,2.08,-,Cui,wetland,Molybdenum,-,-
+chinese shrimp,Fenneropenaeus chinensis,2.08,-,Cui,wetland,Zinc,58,17.83
+chinese mitten crab,Eriocheir sinensis,1.88,-,Cui,wetland,Arsenic,4.77,0.27
+chinese mitten crab,Eriocheir sinensis,1.88,-,Cui,wetland,Cadmium,0.29,0.02
+chinese mitten crab,Eriocheir sinensis,1.88,-,Cui,wetland,Copper,76.88,21.07
+chinese mitten crab,Eriocheir sinensis,1.88,-,Cui,wetland,Manganese,82.51,17.62
+chinese mitten crab,Eriocheir sinensis,1.88,-,Cui,wetland,Lead,-,-
+chinese mitten crab,Eriocheir sinensis,1.88,-,Cui,wetland,Zinc,92.79,19.37
+chinese mitten crab,Eriocheir sinensis,1.88,-,Cui,wetland,Mercury,0.21,0.01
+chinese mitten crab,Eriocheir sinensis,1.88,-,Cui,wetland,Molybdenum,-,-
+silver carp,Hypophthalmichthys molitrix,2.29,2,Cui,wetland,Arsenic,0.97,0.32
+silver carp,Hypophthalmichthys molitrix,2.29,2,Cui,wetland,Cadmium,-,-
+silver carp,Hypophthalmichthys molitrix,2.29,2,Cui,wetland,Copper,3.72,1.09
+silver carp,Hypophthalmichthys molitrix,2.29,2,Cui,wetland,Manganese,2.58,0.81
+silver carp,Hypophthalmichthys molitrix,2.29,2,Cui,wetland,Lead,-,-
+silver carp,Hypophthalmichthys molitrix,2.29,2,Cui,wetland,Zinc,21.6,4.95
+silver carp,Hypophthalmichthys molitrix,2.29,2,Cui,wetland,Mercury,0.1,1.22
+Common carp,Cyprinus carpio,2.65,3.1,Cui,wetland,Arsenic,0.23,0.02
+Common carp,Cyprinus carpio,2.65,3.1,Cui,wetland,Cadmium,-,-
+Common carp,Cyprinus carpio,2.65,3.1,Cui,wetland,Copper,4.39,2.23
+Common carp,Cyprinus carpio,2.65,3.1,Cui,wetland,Manganese,2.68,0.47
+Common carp,Cyprinus carpio,2.65,3.1,Cui,wetland,Lead,0.91,0.04
+Common carp,Cyprinus carpio,2.65,3.1,Cui,wetland,Zinc,61.41,16.03
+Common carp,Cyprinus carpio,2.65,3.1,Cui,wetland,Mercury,0.46,0.25
+Weever,Lateolabrax japonicus ,2.74,3.5,Cui,wetland,Arsenic,2.75,0.32
+Weever,Lateolabrax japonicus ,2.74,3.5,Cui,wetland,Cadmium,-,-
+Weever,Lateolabrax japonicus ,2.74,3.5,Cui,wetland,Copper,2.32,1.2
+Weever,Lateolabrax japonicus ,2.74,3.5,Cui,wetland,Manganese,2.41,1.07
+Weever,Lateolabrax japonicus ,2.74,3.5,Cui,wetland,Lead,0.86,0.14
+Weever,Lateolabrax japonicus ,2.74,3.5,Cui,wetland,Zinc,29.24,3.38
+Weever,Lateolabrax japonicus ,2.74,3.5,Cui,wetland,Mercury,0.53,0.01
+Javelin goby,Synechogobius hasta,3.65,3,Cui,wetland,Arsenic,8.97,2.25
+Javelin goby,Synechogobius hasta,3.65,3,Cui,wetland,Cadmium,-,-
+Javelin goby,Synechogobius hasta,3.65,3,Cui,wetland,Copper,11.2,10.89
+Javelin goby,Synechogobius hasta,3.65,3,Cui,wetland,Manganese,4.07,1.52
+Javelin goby,Synechogobius hasta,3.65,3,Cui,wetland,Lead,0.55,0.37
+Javelin goby,Synechogobius hasta,3.65,3,Cui,wetland,Zinc,79.36,22.16
+Javelin goby,Synechogobius hasta,3.65,3,Cui,wetland,Mercury,0.12,0.09
+Catfish,Chaeturichthys stigmatias,2.85,3.5,Cui,wetland,Arsenic,1.83,0.58
+Catfish,Chaeturichthys stigmatias,2.85,3.5,Cui,wetland,Cadmium,-,-
+Catfish,Chaeturichthys stigmatias,2.85,3.5,Cui,wetland,Copper,2.62,0.39
+Catfish,Chaeturichthys stigmatias,2.85,3.5,Cui,wetland,Manganese,4.29,0.75
+Catfish,Chaeturichthys stigmatias,2.85,3.5,Cui,wetland,Lead,0.32,0.04
+Catfish,Chaeturichthys stigmatias,2.85,3.5,Cui,wetland,Zinc,60.35,15.02
+Catfish,Chaeturichthys stigmatias,2.85,3.5,Cui,wetland,Mercury,1.26,1.25
+Redeye mullet,Planiliza haematocheila,2.18,2.5,Cui,wetland,Arsenic,0.97,0.32
+Redeye mullet,Planiliza haematocheila,2.18,2.5,Cui,wetland,Cadmium,-,-
+Redeye mullet,Planiliza haematocheila,2.18,2.5,Cui,wetland,Copper,3.72,1.09
+Redeye mullet,Planiliza haematocheila,2.18,2.5,Cui,wetland,Manganese,2.58,0.81
+Redeye mullet,Planiliza haematocheila,2.18,2.5,Cui,wetland,Lead,-,-
+Redeye mullet,Planiliza haematocheila,2.18,2.5,Cui,wetland,Zinc,21.6,4.95
+Redeye mullet,Planiliza haematocheila,2.18,2.5,Cui,wetland,Mercury,0.1,1.22
+Saunders Gull,Larus saundersi,3.8,-,Cui,wetland,Arsenic,0.36,0.04
+Saunders Gull,Larus saundersi,3.8,-,Cui,wetland,Cadmium,-,-
+Saunders Gull,Larus saundersi,3.8,-,Cui,wetland,Copper,19.02,3.13
+Saunders Gull,Larus saundersi,3.8,-,Cui,wetland,Manganese,3.95,1.43
+Saunders Gull,Larus saundersi,3.8,-,Cui,wetland,Lead,0.45,0.08
+Saunders Gull,Larus saundersi,3.8,-,Cui,wetland,Zinc,81.46,9.73
+Saunders Gull,Larus saundersi,3.8,-,Cui,wetland,Mercury,3.7,0.73
+Purple Heron,Ardea purpurea,2.85,-,Cui,wetland,Arsenic,0.21,0.03
+Purple Heron,Ardea purpurea,2.85,-,Cui,wetland,Cadmium,-,-
+Purple Heron,Ardea purpurea,2.85,-,Cui,wetland,Copper,22.31,2.17
+Purple Heron,Ardea purpurea,2.85,-,Cui,wetland,Manganese,10.63,3.62
+Purple Heron,Ardea purpurea,2.85,-,Cui,wetland,Lead,0.2,0.05
+Purple Heron,Ardea purpurea,2.85,-,Cui,wetland,Zinc,218.56,21.38
+Purple Heron,Ardea purpurea,2.85,-,Cui,wetland,Mercury,3.42,0.54
+Little Egret,Egretta garzetta,3.11,-,Cui,wetland,Arsenic,0.19,0.02
+Little Egret,Egretta garzetta,3.11,-,Cui,wetland,Cadmium,-,-
+Little Egret,Egretta garzetta,3.11,-,Cui,wetland,Copper,10.83,1.89
+Little Egret,Egretta garzetta,3.11,-,Cui,wetland,Manganese,6.7,2.46
+Little Egret,Egretta garzetta,3.11,-,Cui,wetland,Lead,1.02,0.42
+Little Egret,Egretta garzetta,3.11,-,Cui,wetland,Zinc,272.35,19.27
+Little Egret,Egretta garzetta,3.11,-,Cui,wetland,Mercury,0.03,0.01
+sea grapes (seaweed),Caulerpa cylindracea,1,-,Gain_2016,wetland,Iron,0.093,
+sea grass,Posidonia oceanica,1,-,Gain_2016,wetland,Iron,285.629,120.16
+sea cucumber,Holothuria tubulosa,-,-,Gain_2016,wetland,Iron,50.143,13.654
+trunkfish,Holothuria fuscopunctata,-,-,Gain_2016,wetland,Iron,416.271,73.6
+Sea Urchin,Paracentrotus lividus ,-,-,Gain_2016,wetland,Iron,847.71,-
+bivalve,Mytilus galloprovincialis,-,-,Gain_2016,wetland,Iron,525.053,416.105
+Salema,Sarpa salpa,-,2,Gain_2016,wetland,Iron,571.843,-
+Two-banded Seabream,Diplodus vulgaris,3.5,3.5,Gain_2016,wetland,Iron,10.129,1.884
+Saddled Seabream,Oblada melanura,3.4,3.4,Gain_2016,wetland,Iron,420.302,208.995
+Annular Seabream,Diplodus annularis,3,3.6,Gain_2016,wetland,Iron,11.857,4.696
+Surmullet,Mullus surmuletus,3.5,3.5,Gain_2016,wetland,Iron,11.316,3.691
+Brown wrasse,Labrus merula,3.5,3.6,Gain_2016,wetland,Iron,6.521,0.616
+Eastern Atlantic Pocket Wrasee,Symphodus tinca,3.3,3.3,Gain_2016,wetland,Iron,14.039,3.001
+Brown Meagre,Sciaena umbra,3.8,3.8,Gain_2016,wetland,Iron,11.563,-
+Forkbeard,Phycis phycis,4.3,4.3,Gain_2016,wetland,Iron,11.162,3.07
+Painted Comber,Serranus scriba,3.8,3.8,Gain_2016,wetland,Iron,12.526,-
+Cardinal Fish,Apogon imberbis,3.8,3.8,Gain_2016,wetland,Iron,9.628,1.271
+Piper gurnard ,Trigla lyra,3.9,3.7,Gain_2016,wetland,Iron,8.187,1.637
+Red scorpionfish ,Scorpaena scrofa,4.5,4.3,Gain_2016,wetland,Iron,5.137,-
+Dusky grouper,Epinephelus marginatus,-,4.4,Gain_2016,wetland,Iron,4.32,-
+,water,-,-,Gain_2016,wetland,Manganese,0.114,-
+,sediment,-,-,Gain_2016,wetland,Manganese,16.681,7.07
+,Caulerpa cylindracea,1,-,Gain_2016,wetland,Manganese,7.008,2.876
+,Posidonia oceanica,1,-,Gain_2016,wetland,Manganese,42.463,8.51
+sea cucumber,Holothuria tubulosa*,-,-,Gain_2016,wetland,Manganese,18.25,-
+sea cucumber,Holothuria fuscopunctata,-,-,Gain_2016,wetland,Manganese,10.185,4.632
+Sea Urchin,Paracentrotus lividus ,-,-,Gain_2016,wetland,Manganese,11.484,-
+mussel,Mytilus galloprovincialis*,-,-,Gain_2016,wetland,Manganese,5.416,-
+Salema,Sarpa salpa,2,2,Gain_2016,wetland,Manganese,0.39,0.089
+Two-banded Seabream,Diplodus vulgaris,3.5,3.5,Gain_2016,wetland,Manganese,0.618,0.237
+Saddled Seabream,Oblada melanura,3.4,3.4,Gain_2016,wetland,Manganese,0.383,0.13
+Annular Seabream,Diplodus annularis,3,3.6,Gain_2016,wetland,Manganese,0.799,0.547
+striped red mullet,Mullus surmuletus,3.5,3.5,Gain_2016,wetland,Manganese,0.417,0.015
+Brown wrasse,Labrus merula,3.5,3.6,Gain_2016,wetland,Manganese,0.882,0.108
+Eastern Atlantic Pocket Wrasee,Symphodus tinca,3.3,3.3,Gain_2016,wetland,Manganese,0.683,-
+Brown Meagre,Sciaena umbra,3.8,3.8,Gain_2016,wetland,Manganese,0.327,-
+Forkbeard,Phycis phycis,4.3,4.3,Gain_2016,wetland,Manganese,0.425,0.081
+Painted Comber,Serranus scriba,3.8,3.8,Gain_2016,wetland,Manganese,0.261,0.048
+Cardinal Fish,Apogon imberbis,3.8,3.8,Gain_2016,wetland,Manganese,1.612,-
+Piper gurnard ,Trigla lyra,3.9,3.7,Gain_2016,wetland,Manganese,0.305,-
+Red scorpionfish ,Scorpaena scrofa,4.5,4.3,Gain_2016,wetland,Manganese,0.459,-
+Dusky grouper,Epinephelus marginatus,-,4.4,Gain_2016,wetland,Manganese,0.203,0.033
+water,water,-,-,Gain_2016,wetland,Copper,0.075,-
+sediment,sediment,-,-,Gain_2016,wetland,Copper,0.897,0.433
+sea grapes (seaweed),Caulerpa cylindracea,1,-,Gain_2016,wetland,Copper,2.667,1.563
+sea grass,Posidonia oceanica,1,-,Gain_2016,wetland,Copper,7.001,1.473
+sea cucumber,Holothuria tubulosa*,-,-,Gain_2016,wetland,Copper,7.464,-
+sea cucumber,Holothuria fuscopunctata,-,-,Gain_2016,wetland,Copper,4.725,2.864
+Sea Urchin,Paracentrotus lividus ,-,-,Gain_2016,wetland,Copper,7.914,-
+mussel,Mytilus galloprovincialis,-,-,Gain_2016,wetland,Copper,3.895,-
+Salema,Sarpa salpa,2,2,Gain_2016,wetland,Copper,1.092,0.249
+Two-banded Seabream,Diplodus vulgaris,3.5,3.5,Gain_2016,wetland,Copper,1.558,1.331
+Saddled Seabream,Oblada melanura,3.4,3.4,Gain_2016,wetland,Copper,0.717,0.236
+Annular Seabream,Diplodus annularis,3,3.6,Gain_2016,wetland,Copper,1.051,0.265
+striped red mullet,Mullus surmuletus,3.5,3.5,Gain_2016,wetland,Copper,0.856,0.048
+Brown wrasse,Labrus merula,3.5,3.6,Gain_2016,wetland,Copper,0.766,0.027
+Eastern Atlantic Pocket Wrasee,Symphodus tinca,3.3,3.3,Gain_2016,wetland,Copper,0.866,-
+Brown Meagre,Sciaena umbra,3.8,3.8,Gain_2016,wetland,Copper,0.963,-
+Forkbeard,Phycis phycis,4.3,4.3,Gain_2016,wetland,Copper,0.887,0.386
+Painted Comber,Serranus scriba,3.8,3.8,Gain_2016,wetland,Copper,0.441,0.042
+Cardinal Fish,Apogon imberbis,3.8,3.8,Gain_2016,wetland,Copper,1.079,-
+Piper gurnard ,Trigla lyra,3.9,3.7,Gain_2016,wetland,Copper,0.475,-
+Red scorpionfish ,Scorpaena scrofa,4.5,4.3,Gain_2016,wetland,Copper,0.677,-
+Dusky grouper,Epinephelus marginatus,-,4.4,Gain_2016,wetland,Copper,0.56,0.136
+water,water,-,-,Gain_2016,wetland,Zinc,0.601,-
+sediment,sediment,-,-,Gain_2016,wetland,Zinc,5.232,2.055
+sea grapes (seaweed),Caulerpa cylindracea,1,-,Gain_2016,wetland,Zinc,20.727,6.229
+sea grass,Posidonia oceanica,1,-,Gain_2016,wetland,Zinc,77.49,16.72
+sea cucumber,Holothuria tubulosa*,-,-,Gain_2016,wetland,Zinc,41.383,-
+sea cucumber,Holothuria fuscopunctata,-,-,Gain_2016,wetland,Zinc,50.995,10.214
+sea urchin,Paracentrotus lividus ,-,-,Gain_2016,wetland,Zinc,112.59,-
+mussel,Mytilus galloprovincialis,-,-,Gain_2016,wetland,Zinc,101.15,-
+Salema,Sarpa salpa,2,2,Gain_2016,wetland,Zinc,28.197,7.305
+Two-banded Seabream,Diplodus vulgaris,3.5,3.5,Gain_2016,wetland,Zinc,19.089,4.308
+Oblada melanura,Oblada melanura,3.4,3.4,Gain_2016,wetland,Zinc,27.362,10.539
+Annular Seabream,Diplodus annularis,3,3.6,Gain_2016,wetland,Zinc,23.151,0.464
+striped red mullet,Mullus surmuletus,3.5,3.5,Gain_2016,wetland,Zinc,14.213,0.91
+Brown wrasse,Labrus merula,3.5,3.6,Gain_2016,wetland,Zinc,13.821,1.902
+Eastern Atlantic Pocket Wrasee,Symphodus tinca,3.3,3.3,Gain_2016,wetland,Zinc,15.068,-
+Brown Meagre,Sciaena umbra,3.8,3.8,Gain_2016,wetland,Zinc,13.039,-
+Forkbeard,Phycis phycis,4.3,4.3,Gain_2016,wetland,Zinc,14.808,1.958
+Painted Comber,Serranus scriba,3.8,3.8,Gain_2016,wetland,Zinc,13.127,0.271
+Cardinal Fish,Apogon imberbis,3.8,3.8,Gain_2016,wetland,Zinc,18.258,-
+Piper gurnard ,Trigla lyra,3.9,3.7,Gain_2016,wetland,Zinc,11.646,-
+Red scorpionfish ,Scorpaena scrofa,4.5,4.3,Gain_2016,wetland,Zinc,13.426,-
+Dusky grouper,Epinephelus marginatus,-,4.4,Gain_2016,wetland,Zinc,13.859,2.353
+sediment,sediment,-,-,Gain_2016,wetland,Molybdenum,0.044,0.017
+sea grapes (seaweed),Caulerpa cylindracea,1,-,Gain_2016,wetland,Molybdenum,0.25,0.152
+sea grass,Posidonia oceanica,1,-,Gain_2016,wetland,Molybdenum,2.696,2.299
+sea cucumber,Holothuria tubulosa*,-,-,Gain_2016,wetland,Molybdenum,1.991,-
+sea cucumber,Holothuria fuscopunctata,-,-,Gain_2016,wetland,Molybdenum,1.704,1.247
+Sea Urchin,Paracentrotus lividus ,-,-,Gain_2016,wetland,Molybdenum,0.317,-
+mussel,Mytilus galloprovincialis,-,-,Gain_2016,wetland,Molybdenum,14.887,-
+Salema,Sarpa salpa,2,2,Gain_2016,wetland,Molybdenum,0.01,0.003
+Two-banded Seabream,Diplodus vulgaris,3.5,3.5,Gain_2016,wetland,Molybdenum,0.012,0.001
+Saddled Seabream,Oblada melanura,3.4,3.4,Gain_2016,wetland,Molybdenum,0.005,0.001
+Annular Seabream,Diplodus annularis,3,3.6,Gain_2016,wetland,Molybdenum,0.008,0.005
+striped red mullet,Mullus surmuletus,3.5,3.5,Gain_2016,wetland,Molybdenum,0.012,0.003
+Brown wrasse,Labrus merula,3.5,3.6,Gain_2016,wetland,Molybdenum,0.009,0.001
+Eastern Atlantic Pocket Wrasee,Symphodus tinca,3.3,3.3,Gain_2016,wetland,Molybdenum,0.01,-
+Brown Meagre,Sciaena umbra,3.8,3.8,Gain_2016,wetland,Molybdenum,0.009,-
+Forkbeard,Phycis phycis,4.3,4.3,Gain_2016,wetland,Molybdenum,0.012,0.002
+Painted Comber,Serranus scriba,3.8,3.8,Gain_2016,wetland,Molybdenum,0.009,0.002
+Cardinal Fish,Apogon imberbis,3.8,3.8,Gain_2016,wetland,Molybdenum,0.014,-
+Piper gurnard ,Trigla lyra,3.9,3.7,Gain_2016,wetland,Molybdenum,0.009,-
+Red scorpionfish ,Scorpaena scrofa,4.5,4.3,Gain_2016,wetland,Molybdenum,0.012,-
+Dusky grouper,Epinephelus marginatus,-,4.4,Gain_2016,wetland,Molybdenum,0.015,0.017
+sediment,sediment,-,-,Gain_2016,wetland,Cadmium,0.029,0.018
+sea grapes (seaweed),Caulerpa cylindracea,1,-,Gain_2016,wetland,Cadmium,0.14,0.057
+sea grass,Posidonia oceanica,1,-,Gain_2016,wetland,Cadmium,2.375,0.541
+sea cucumber,Holothuria tubulosa*,-,-,Gain_2016,wetland,Cadmium,0.463,-
+sea cucumber,Holothuria fuscopunctata,-,-,Gain_2016,wetland,Cadmium,0.698,0.554
+sea urchin,Paracentrotus lividus ,-,-,Gain_2016,wetland,Cadmium,0.206,-
+mussel,Mytilus galloprovincialis,-,-,Gain_2016,wetland,Cadmium,0.62,-
+Salema,Sarpa salpa,2,2,Gain_2016,wetland,Cadmium,0.008,0.004
+Two-banded Seabream,Diplodus vulgaris,3.5,3.5,Gain_2016,wetland,Cadmium,0.009,0
+Saddled Seabream,Oblada melanura,3.4,3.4,Gain_2016,wetland,Cadmium,0.021,0.043
+Annular Seabream,Diplodus annularis,3,3.6,Gain_2016,wetland,Cadmium,0.016,0.004
+striped red mullet,Mullus surmuletus,3.5,3.5,Gain_2016,wetland,Cadmium,0.006,0.001
+Brown wrasse,Labrus merula,3.5,3.6,Gain_2016,wetland,Cadmium,0.01,0.001
+Eastern Atlantic Pocket Wrasee,Symphodus tinca,3.3,3.3,Gain_2016,wetland,Cadmium,0.01,-
+Brown Meagre,Sciaena umbra,3.8,3.8,Gain_2016,wetland,Cadmium,0.012,-
+Forkbeard,Phycis phycis,4.3,4.3,Gain_2016,wetland,Cadmium,0.006,0.002
+Painted Comber,Serranus scriba,3.8,3.8,Gain_2016,wetland,Cadmium,0.005,0.002
+Cardinal Fish,Apogon imberbis,3.8,3.8,Gain_2016,wetland,Cadmium,0.012,-
+Piper gurnard ,Trigla lyra,3.9,3.7,Gain_2016,wetland,Cadmium,0.003,-
+Red scorpionfish ,Scorpaena scrofa,4.5,4.3,Gain_2016,wetland,Cadmium,0.017,-
+Dusky grouper,Epinephelus marginatus,-,4.4,Gain_2016,wetland,Cadmium,0.007,0.005
+sediment,sediment,-,-,Gain_2016,wetland,Lead,7.144,2.843
+sea grapes (seaweed),Caulerpa cylindracea,1,-,Gain_2016,wetland,Lead,1.616,0.53
+sea grass,Posidonia oceanica,1,-,Gain_2016,wetland,Lead,1.13,1.404
+sea cucumber,Holothuria tubulosa*,-,-,Gain_2016,wetland,Lead,17.838,-
+sea cucumber,Holothuria fuscopunctata,-,-,Gain_2016,wetland,Lead,7.149,4.565
+Sea Urchin,Paracentrotus lividus ,-,-,Gain_2016,wetland,Lead,0.153,-
+mussel,Mytilus galloprovincialis,-,-,Gain_2016,wetland,Lead,0.8,-
+Salema,Sarpa salpa,2,2,Gain_2016,wetland,Lead,0.043,0.037
+Two-banded Seabream,Diplodus vulgaris,3.5,3.5,Gain_2016,wetland,Lead,0.045,0.022
+Saddled Seabream,Oblada melanura,3.4,3.4,Gain_2016,wetland,Lead,0.031,0.025
+Annular Seabream,Diplodus annularis,3,3.6,Gain_2016,wetland,Lead,0.037,-
+striped red mullet,Mullus surmuletus,3.5,3.5,Gain_2016,wetland,Lead,0.017,0.005
+Brown wrasse,Labrus merula,3.5,3.6,Gain_2016,wetland,Lead,0.03,0.002
+Eastern Atlantic Pocket Wrasee,Symphodus tinca,3.3,3.3,Gain_2016,wetland,Lead,0.029,-
+Brown Meagre,Sciaena umbra,3.8,3.8,Gain_2016,wetland,Lead,0.03,-
+Forkbeard,Phycis phycis,4.3,4.3,Gain_2016,wetland,Lead,0.022,0.013
+Painted Comber,Serranus scriba,3.8,3.8,Gain_2016,wetland,Lead,0.02,0.001
+Cardinal Fish,Apogon imberbis,3.8,3.8,Gain_2016,wetland,Lead,0.026,-
+Piper gurnard ,Trigla lyra,3.9,3.7,Gain_2016,wetland,Lead,0.003,-
+Red scorpionfish ,Scorpaena scrofa,4.5,4.3,Gain_2016,wetland,Lead,0.046,-
+Dusky grouper,Epinephelus marginatus,-,4.4,Gain_2016,wetland,Lead,0.026,0.028
+sediment,sediment,-,-,Gain_2016,wetland,Arsenic,1.891,0.325
+sea grapes (seaweed),Caulerpa cylindracea,1,-,Gain_2016,wetland,Arsenic,7.558,1.595
+sea grass,Posidonia oceanica,1,-,Gain_2016,wetland,Arsenic,1.428,0.544
+sea cucumber,Holothuria tubulosa*,-,-,Gain_2016,wetland,Arsenic,32.308,-
+sea cucumber,Holothuria fuscopunctata,-,-,Gain_2016,wetland,Arsenic,60.699,46.978
+Sea Urchin,Paracentrotus lividus ,-,-,Gain_2016,wetland,Arsenic,22.74,-
+mussel,Mytilus galloprovincialis,-,-,Gain_2016,wetland,Arsenic,19.373,-
+Salema,Sarpa salpa,2,2,Gain_2016,wetland,Arsenic,12.3,4.457
+Two-banded Seabream,Diplodus vulgaris,3.5,3.5,Gain_2016,wetland,Arsenic,26.995,4.471
+Saddled Seabream,Oblada melanura,3.4,3.4,Gain_2016,wetland,Arsenic,26.105,11.283
+Annular Seabream,Diplodus annularis,3,3.6,Gain_2016,wetland,Arsenic,15.933,7.363
+striped red mullet,Mullus surmuletus,3.5,3.5,Gain_2016,wetland,Arsenic,47.451,4.434
+Brown wrasse,Labrus merula,3.5,3.6,Gain_2016,wetland,Arsenic,20.074,11.694
+Eastern Atlantic Pocket Wrasee,Symphodus tinca,3.3,3.3,Gain_2016,wetland,Arsenic,132.046,-
+Brown Meagre,Sciaena umbra,3.8,3.8,Gain_2016,wetland,Arsenic,21.907,-
+Forkbeard,Phycis phycis,4.3,4.3,Gain_2016,wetland,Arsenic,46.691,2.64
+Painted Comber,Serranus scriba,3.8,3.8,Gain_2016,wetland,Arsenic,36.35,7.265
+Cardinal Fish,Apogon imberbis,3.8,3.8,Gain_2016,wetland,Arsenic,29.863,-
+Piper gurnard ,Trigla lyra,3.9,3.7,Gain_2016,wetland,Arsenic,19.05,-
+Red scorpionfish ,Scorpaena scrofa,4.5,4.3,Gain_2016,wetland,Arsenic,11.477,-
+Dusky grouper,Epinephelus marginatus,-,4.4,Gain_2016,wetland,Arsenic,11.101,0.922
+sediment,sediment,-,-,Gain_2016,wetland,Methylmercury,-,-
+sea grapes (seaweed),Caulerpa cylindracea,1,-,Gain_2016,wetland,Methylmercury,-,-
+sea grass,Posidonia oceanica,1,-,Gain_2016,wetland,Methylmercury,-,-
+sea cucumber,Holothuria tubulosa*,-,-,Gain_2016,wetland,Methylmercury,-,-
+sea cucumber,Holothuria fuscopunctata,-,-,Gain_2016,wetland,Methylmercury,0.102,0.034
+Sea Urchin,Paracentrotus lividus ,-,-,Gain_2016,wetland,Methylmercury,-,-
+mussel,Mytilus galloprovincialis,-,-,Gain_2016,wetland,Methylmercury,-,-
+Salema,Sarpa salpa,2,2,Gain_2016,wetland,Methylmercury,0.02,0.002
+Two-banded Seabream,Diplodus vulgaris,3.5,3.5,Gain_2016,wetland,Methylmercury,0.457,0.016
+Saddled Seabream,Oblada melanura,3.4,3.4,Gain_2016,wetland,Methylmercury,0.558,0.234
+Annular Seabream,Diplodus annularis,3,3.6,Gain_2016,wetland,Methylmercury,0.506,0.004
+striped red mullet,Mullus surmuletus,3.5,3.5,Gain_2016,wetland,Methylmercury,0.396,0.07
+Brown wrasse,Labrus merula,3.5,3.6,Gain_2016,wetland,Methylmercury,0.498,0.113
+Eastern Atlantic Pocket Wrasee,Symphodus tinca,3.3,3.3,Gain_2016,wetland,Methylmercury,0.198,-
+Brown Meagre,Sciaena umbra,3.8,3.8,Gain_2016,wetland,Methylmercury,0.22,-
+Forkbeard,Phycis phycis,4.3,4.3,Gain_2016,wetland,Methylmercury,0.431,0.318
+Painted Comber,Serranus scriba,3.8,3.8,Gain_2016,wetland,Methylmercury,2.043,0.08
+Cardinal Fish,Apogon imberbis,3.8,3.8,Gain_2016,wetland,Methylmercury,0.675,-
+Piper gurnard ,Trigla lyra,3.9,3.7,Gain_2016,wetland,Methylmercury,0.353,-
+Red scorpionfish ,Scorpaena scrofa,4.5,4.3,Gain_2016,wetland,Methylmercury,0.449,-
+Dusky grouper,Epinephelus marginatus,-,4.4,Gain_2016,wetland,Methylmercury,3.498,0.185
+Zooplankton,Zooplankton,-,-,Zuo_2017,lake,Copper,3.91,1.08
+Zooplankton,Zooplankton,-,-,Zuo_2017,lake,Zinc,27.9,2.95
+Zooplankton,Zooplankton,-,-,Zuo_2017,lake,Cadmium,0.02,0.02
+white shrimp,Exopalaemon modestus,3.4,-,Zuo_2017,lake,Copper,36.6,3.86
+white shrimp,Exopalaemon modestus,3.4,-,Zuo_2017,lake,Zinc,74.17,3.82
+white shrimp,Exopalaemon modestus,3.4,-,Zuo_2017,lake,Cadmium,1.47,0.12
+freshwater shrimp,Macrobrachium nipponense,3,-,Zuo_2017,lake,Copper,47.22,4.21
+freshwater shrimp,Macrobrachium nipponense,3,-,Zuo_2017,lake,Zinc,65.7,1.88
+freshwater shrimp,Macrobrachium nipponense,3,-,Zuo_2017,lake,Cadmium,1.02,0.36
+anchovy,Coilia ectenes taihuensisa,2.6,3,Zuo_2017,lake,Copper,1.71,0.51
+anchovy,Coilia ectenes taihuensisa,2.6,3,Zuo_2017,lake,Zinc,55.39,8.85
+anchovy,Coilia ectenes taihuensisa,2.6,3,Zuo_2017,lake,Cadmium,0.06,0.01
+Whitebait,Hemisalanx prognathus (a),3.1,2.7,Zuo_2017,lake,Copper,1.29,0.55
+Whitebait,Hemisalanx prognathus (a),3.1,2.7,Zuo_2017,lake,Zinc,60.55,4.52
+Whitebait,Hemisalanx prognathus (a),3.1,2.7,Zuo_2017,lake,Cadmium,0.23,0.02
+Black carp,Hemicculter leuciclus (a),3.4,2.8,Zuo_2017,lake,Copper,1.49,0.36
+Black carp,Hemicculter leuciclus (a),3.4,2.8,Zuo_2017,lake,Zinc,42.26,5.73
+Black carp,Hemicculter leuciclus (a),3.4,2.8,Zuo_2017,lake,Cadmium,0.06,0.01
+silver carp,Hypophthalmichthys molitrix (a),3.7,2,Zuo_2017,lake,Copper,1.74,0.21
+silver carp,Hypophthalmichthys molitrix (a),3.7,2,Zuo_2017,lake,Zinc,47.9,7.15
+silver carp,Hypophthalmichthys molitrix (a),3.7,2,Zuo_2017,lake,Cadmium,0.06,0.02
+silver carp,Hypophthalmichthys molitrixb,3.7,2,Zuo_2017,lake,Copper,4.02,0.65
+silver carp,Hypophthalmichthys molitrixb,3.7,2,Zuo_2017,lake,Zinc,96.47,2.19
+silver carp,Hypophthalmichthys molitrixb,3.7,2,Zuo_2017,lake,Cadmium,0.05,0.01
+Terch,Aristichthys nobilis (a),3.7,2.8,Zuo_2017,lake,Copper,2.62,0.34
+Terch,Aristichthys nobilis (a),3.7,2.8,Zuo_2017,lake,Zinc,34.17,3.85
+Terch,Aristichthys nobilis (a),3.7,2.8,Zuo_2017,lake,Cadmium,0.06,0.03
+Terch,Aristichthys nobilis (b),3.7,2.8,Zuo_2017,lake,Copper,4.8,0.41
+Terch,Aristichthys nobilis (b),3.7,2.8,Zuo_2017,lake,Zinc,101.94,6.36
+Terch,Aristichthys nobilis (b),3.7,2.8,Zuo_2017,lake,Cadmium,0.17,0.02
+common carp,Cyprinus carpio (a),3.8,3.1,Zuo_2017,lake,Copper,4.93,0.73
+common carp,Cyprinus carpio (a),3.8,3.1,Zuo_2017,lake,Zinc,132.25,7.57
+common carp,Cyprinus carpio (a),3.8,3.1,Zuo_2017,lake,Cadmium,0.12,0.05
+common carp,Cyprinus carpio (b),3.8,3.1,Zuo_2017,lake,Copper,9.74,1.86
+common carp,Cyprinus carpio (b),3.8,3.1,Zuo_2017,lake,Zinc,166.43,1.31
+common carp,Cyprinus carpio (b),3.8,3.1,Zuo_2017,lake,Cadmium,0.18,0.04
+Ice algae,~,1.3,-,Cambell_2005,pelagic bay,Molybdenum,0.02,0.02
+Copepod,Calanus,2,-,Cambell_2005,pelagic bay,Molybdenum,0.03,0.005
+"Mixed
+zooplanktona",Zooplankton,2.2,-,Cambell_2005,pelagic bay,Molybdenum,0.03,0.01
+Amphipod,Themisto libellula,2.5,-,Cambell_2005,pelagic bay,Molybdenum,0.07,0.01
+Mysid,Mysis oculata,2.7,-,Cambell_2005,pelagic bay,Molybdenum,0.08,0.03
+Arctic cod,Boreogadus saida,3.7,3.1,Cambell_2005,pelagic bay,Molybdenum,0.24,-
+Artic Cod,Boreogadus saida,3.7,3.1,Cambell_2005,pelagic bay,Molybdenum,0.08,0.1
+Dovekie,Alle alle,3.2,,Cambell_2005,pelagic bay,Molybdenum,0.04,0.01
+Dovekie,Alle alle,3.2,,Cambell_2005,pelagic bay,Molybdenum,0.7,0.08
+Black-legged kittawake,Rissa tridactyla,3.8,,Cambell_2005,pelagic bay,Molybdenum,0.04,0
+Black-legged kittawake,Rissa tridactyla,3.8,,Cambell_2005,pelagic bay,Molybdenum,0.62,0.07
+Black  guillemot,Ceppus grylle,3.9,,Cambell_2005,pelagic bay,Molybdenum,0.03,0.01
+Black Guillemot,Ceppus grylle,3.9,,Cambell_2005,pelagic bay,Molybdenum,0.71,0.14
+thick-billed murre,Uria lomvia,3.9,,Cambell_2005,pelagic bay,Molybdenum,0.12,0.08
+thick-billed murre,Uria lomvia,3.9,,Cambell_2005,pelagic bay,Molybdenum,0.82,0.14
+Ivory gull,Pagophilia eburnea,4,,Cambell_2005,pelagic bay,Molybdenum,0.03,0.01
+Ivory gull,Pagophilia eburnea,4,,Cambell_2005,pelagic bay,Molybdenum,0.55,0.58
+Northern fulmar,Fulmarus glacialis,4.1,,Cambell_2005,pelagic bay,Molybdenum,0.04,0.01
+Northern fulmar,Fulmarus glacialis,4.1,,Cambell_2005,pelagic bay,Molybdenum,0.54,0.07
+Glaucous gull,Larus hyperboreus,4.7,,Cambell_2005,pelagic bay,Molybdenum,0.04,0
+Glaucous gull,Larus hyperboreus,4.7,,Cambell_2005,pelagic bay,Molybdenum,0.82,0.15
+Thayer’s gull,Larus thayeri,4.9,,Cambell_2005,pelagic bay,Molybdenum,0.04,-
+Thayer's gull,Larus thayeri,4.9,,Cambell_2005,pelagic bay,Molybdenum,0.86,-
+Ringed Seal,Phoca hispida,4.6,-,Cambell_2005,pelagic bay,Molybdenum,0.01,0.01
+Ringed Seal,Phoca hispida,4.6,-,Cambell_2005,pelagic bay,Molybdenum,0.67,0.13
+Ice Algae,~,1.3,-,Cambell_2005,pelagic bay,Lead,0.06,0.06
+Copepod,Calanus,2,-,Cambell_2005,pelagic bay,Lead,0.25,0.23
+Zooplankton,~,2.2,-,Cambell_2005,pelagic bay,Lead,1.05,1.19
+amphipod,Themisto libellula,2.5,-,Cambell_2005,pelagic bay,Lead,0.25,0.02
+Mysid,Mysis oculata,2.7,-,Cambell_2005,pelagic bay,Lead,1.53,2.35
+Artic Cod,Boreogadus saida,3.7,3.1,Cambell_2005,pelagic bay,Lead,0.13,
+Artic Cod,Boreogadus saida,3.7,3.1,Cambell_2005,pelagic bay,Lead,0.05,
+Dovekie,Alle alle,3.2,-,Cambell_2005,pelagic bay,Lead,0.09,0.22
+Dovekie,Alle alle,3.2,-,Cambell_2005,pelagic bay,Lead,0.27,0.61
+Black-legged kittawake,Rissa tridactyla,3.8,-,Cambell_2005,pelagic bay,Lead,0.02,0.01
+Black-legged kittawake,Rissa tridactyla,3.8,-,Cambell_2005,pelagic bay,Lead,0.02,0.01
+Black Guillemot,Ceppus grylle,3.9,-,Cambell_2005,pelagic bay,Lead,0.04,0.02
+Black Guillemot,Ceppus grylle,3.9,-,Cambell_2005,pelagic bay,Lead,0.03,0.02
+Thick-billed murre,Uria lomvia,3.9,-,Cambell_2005,pelagic bay,Lead,0.06,0.05
+Thick-billed murre,Uria lomvia,3.9,-,Cambell_2005,pelagic bay,Lead,0.05,0.02
+Ivory Gull,Pagophilia eburnea,4,-,Cambell_2005,pelagic bay,Lead,0.12,0.2
+Ivory Gull,Pagophilia eburnea,4,-,Cambell_2005,pelagic bay,Lead,0.01,
+Northern fulmar,Fulmarus glacialis,4.1,-,Cambell_2005,pelagic bay,Lead,0.01,0.01
+Northern fulmar,Fulmarus glacialis,4.1,-,Cambell_2005,pelagic bay,Lead,0.02,0.02
+Glaucous gull,Larus hyperboreus,4.7,-,Cambell_2005,pelagic bay,Lead,0.04,0.05
+Glaucous gull,Larus hyperboreus,4.7,-,Cambell_2005,pelagic bay,Lead,0.02,0.03
+Thayers gull,Larus thayeri,4.9,-,Cambell_2005,pelagic bay,Lead,-,-
+Thayers gull,Larus thayeri,4.9,-,Cambell_2005,pelagic bay,Lead,0.07,-
+Ringed Seal,Phoca hispida,4.6,-,Cambell_2005,pelagic bay,Lead,0.01,0.01
+Ringed Seal,Phoca hispida,4.6,-,Cambell_2005,pelagic bay,Lead,0.01,0.01
+Ice Algae,~,1.3,-,Cambell_2005,pelagic bay,Zinc,2.93,0.03
+Copepod,Calnus hyperboreus,2,-,Cambell_2005,pelagic bay,Zinc,17.73,0.65
+Zooplankton,~,2.2,-,Cambell_2005,pelagic bay,Zinc,14.3,4.41
+amphipod,Themisto libellula,2.5,-,Cambell_2005,pelagic bay,Zinc,14.83,3.14
+Mysid,Mysis oculata,2.7,-,Cambell_2005,pelagic bay,Zinc,14.47,1.76
+Artic Cod,Boreogadus saida,3.7,3.1,Cambell_2005,pelagic bay,Zinc,57.8,-
+Artic Cod,Boreogadus saida,3.7,3.1,Cambell_2005,pelagic bay,Zinc,16.6,18.2
+Dovekie,Alle alle,3.2,-,Cambell_2005,pelagic bay,Zinc,11.17,1.08
+Dovekie,Alle alle,3.2,-,Cambell_2005,pelagic bay,Zinc,32.27,4.82
+Black-legged kittawake,Rissa tridactyla,3.8,-,Cambell_2005,pelagic bay,Zinc,16.03,1.46
+Black-legged kittawake,Rissa tridactyla,3.8,-,Cambell_2005,pelagic bay,Zinc,35.55,8.33
+Black Guillemot,Ceppus grylle,3.9,-,Cambell_2005,pelagic bay,Zinc,13.35,1.69
+Black Guillemot,Ceppus grylle,3.9,-,Cambell_2005,pelagic bay,Zinc,35.8,4.17
+Thick-billed murre,Uria lomvia,3.9,-,Cambell_2005,pelagic bay,Zinc,15.19,1.71
+Thick-billed murre,Uria lomvia,3.9,-,Cambell_2005,pelagic bay,Zinc,46.94,3.99
+Ivory Gull,Pagophilia eburnea,4,-,Cambell_2005,pelagic bay,Zinc,16.08,1.92
+Ivory Gull,Pagophilia eburnea,4,-,Cambell_2005,pelagic bay,Zinc,23.5,
+Northern fulmar,Fulmarus glacialis,4.1,-,Cambell_2005,pelagic bay,Zinc,20.56,2.79
+Northern fulmar,Fulmarus glacialis,4.1,-,Cambell_2005,pelagic bay,Zinc,63.21,15.03
+Glaucous gull,Larus hyperboreus,4.7,-,Cambell_2005,pelagic bay,Zinc,23.39,2.51
+Glaucous gull,Larus hyperboreus,4.7,-,Cambell_2005,pelagic bay,Zinc,40.36,7.58
+Thayers gull,Larus thayeri,4.9,-,Cambell_2005,pelagic bay,Zinc,36.7,-
+Thayers gull,Larus thayeri,4.9,-,Cambell_2005,pelagic bay,Zinc,44.3,-
+Ringed Seal,Phoca hispida,4.6,-,Cambell_2005,pelagic bay,Zinc,20.6,5.01
+Ringed Seal,Phoca hispida,4.6,-,Cambell_2005,pelagic bay,Zinc,43.73,6.06
+Ice Algae,~,1.3,-,Cambell_2005,pelagic bay,Methylmercury,0.003,-
+Copepod,Calnus hyperboreus,2,-,Cambell_2005,pelagic bay,Methylmercury,0.025,0.017
+Zooplankton,~,2.2,-,Cambell_2005,pelagic bay,Methylmercury,0.006,0.002
+amphipod,Themisto libellula,2.5,-,Cambell_2005,pelagic bay,Methylmercury,0.02,0.009
+Mysid,Mysis oculata,2.7,-,Cambell_2005,pelagic bay,Methylmercury,0.011,0.003
+Artic Cod,Boreogadus saida,3.7,3.1,Cambell_2005,pelagic bay,Methylmercury,0.04,-
+Artic Cod,Boreogadus saida,3.7,3.1,Cambell_2005,pelagic bay,Methylmercury,0.015,0.002
+Dovekie,Alle alle,3.2,-,Cambell_2005,pelagic bay,Methylmercury,0.08,0.02
+Dovekie,Alle alle,3.2,-,Cambell_2005,pelagic bay,Methylmercury,0.27,0.08
+Black-legged kittawake,Rissa tridactyla,3.8,-,Cambell_2005,pelagic bay,Methylmercury,0.3,0.09
+Black-legged kittawake,Rissa tridactyla,3.8,-,Cambell_2005,pelagic bay,Methylmercury,1.05,0.43
+Black Guillemot,Ceppus grylle,3.9,-,Cambell_2005,pelagic bay,Methylmercury,0.34,0.1
+Black Guillemot,Ceppus grylle,3.9,-,Cambell_2005,pelagic bay,Methylmercury,1.17,0.45
+Thick-billed murre,Uria lomvia,3.9,-,Cambell_2005,pelagic bay,Methylmercury,0.33,0.09
+Thick-billed murre,Uria lomvia,3.9,-,Cambell_2005,pelagic bay,Methylmercury,1.17,0.23
+Ivory Gull,Pagophilia eburnea,4,-,Cambell_2005,pelagic bay,Methylmercury,0.21,0.06
+Ivory Gull,Pagophilia eburnea,4,-,Cambell_2005,pelagic bay,Methylmercury,0.8,0.18
+Northern fulmar,Fulmarus glacialis,4.1,-,Cambell_2005,pelagic bay,Methylmercury,0.39,0.14
+Northern fulmar,Fulmarus glacialis,4.1,-,Cambell_2005,pelagic bay,Methylmercury,3.41,1.62
+Glaucous gull,Larus hyperboreus,4.7,-,Cambell_2005,pelagic bay,Methylmercury,0.8,0.27
+Glaucous gull,Larus hyperboreus,4.7,-,Cambell_2005,pelagic bay,Methylmercury,2.92,1.06
+Thayers gull,Larus thayeri,4.9,-,Cambell_2005,pelagic bay,Methylmercury,0.48,-
+Thayers gull,Larus thayeri,4.9,-,Cambell_2005,pelagic bay,Methylmercury,1.94,-
+Ringed Seal,Phoca hispida,4.6,-,Cambell_2005,pelagic bay,Methylmercury,0.68,0.29
+Ringed Seal,Phoca hispida,4.6,-,Cambell_2005,pelagic bay,Methylmercury,22.51,16.87
+Ice Algae,~,1.3,-,Cambell_2005,pelagic bay,Arsenic,0.2,0.01
+Copepod,Calnus hyperboreus,2,-,Cambell_2005,pelagic bay,Arsenic,1.42,0.42
+Zooplankton,~,2.2,-,Cambell_2005,pelagic bay,Arsenic,1.13,0
+amphipod,Themisto libellula,2.5,-,Cambell_2005,pelagic bay,Arsenic,6.53,1.69
+Mysid,Mysis oculata,2.7,-,Cambell_2005,pelagic bay,Arsenic,2.65,0.16
+Artic Cod,Boreogadus saida,3.7,3.1,Cambell_2005,pelagic bay,Arsenic,9.47,-
+Ice Algae,~,1.3,3.1,Cambell_2005,pelagic bay,Cadmium,0.21,0.02
+Copepod,Calnus hyperboreus,2,-,Cambell_2005,pelagic bay,Cadmium,1.62,0.79
+Zooplankton,~,2.2,-,Cambell_2005,pelagic bay,Cadmium,0.89,0.46
+amphipod,Themisto libellula,2.5,-,Cambell_2005,pelagic bay,Cadmium,7.15,2.27
+Mysid,Mysis oculata,2.7,-,Cambell_2005,pelagic bay,Cadmium,1.17,0.24
+Artic Cod,Boreogadus saida,3.7,3.1,Cambell_2005,pelagic bay,Cadmium,0.06,-
+Ice Algae,~,1.3,3.1,Cambell_2005,pelagic bay,Copper,0.84,0.82
+Copepod,Calnus hyperboreus,2,-,Cambell_2005,pelagic bay,Copper,1.55,0.57
+Zooplankton,~,2.2,-,Cambell_2005,pelagic bay,Copper,1.6,0.46
+amphipod,Themisto libellula,2.5,-,Cambell_2005,pelagic bay,Copper,3.79,1.48
+Mysid,Mysis oculata,2.7,-,Cambell_2005,pelagic bay,Copper,3.83,0.55
+Artic Cod,Boreogadus saida,3.7,3.1,Cambell_2005,pelagic bay,Copper,1.96,-
+Ice Algae,~,1.3,-,Cambell_2005,pelagic bay,Manganese,0.52,0.003
+Copepod,Calnus hyperboreus,2,-,Cambell_2005,pelagic bay,Manganese,0.29,0.07
+Zooplankton,~,2.2,-,Cambell_2005,pelagic bay,Manganese,0.43,0.37
+amphipod,Themisto libellula,2.5,-,Cambell_2005,pelagic bay,Manganese,0.46,0.14
+Mysid,Mysis oculata,2.7,-,Cambell_2005,pelagic bay,Manganese,1.14,0.32
+Artic Cod,Boreogadus saida,3.7,3.1,Cambell_2005,pelagic bay,Manganese,1.21,-
+Dovekie,Alle alle,3.2,-,Cambell_2005,pelagic bay,Cadmium,0.41,0.19
+Dovekie,Alle alle,3.2,-,Cambell_2005,pelagic bay,Cadmium,5.78,1.19
+Black-legged kittawake,Rissa tridactyla,3.8,-,Cambell_2005,pelagic bay,Cadmium,0.46,0.24
+Black-legged kittawake,Rissa tridactyla,3.8,-,Cambell_2005,pelagic bay,Cadmium,8.62,5.66
+Black Guillemot,Ceppus grylle,3.9,-,Cambell_2005,pelagic bay,Cadmium,0.42,0.15
+Black Guillemot,Ceppus grylle,3.9,-,Cambell_2005,pelagic bay,Cadmium,6.82,1.66
+Thick-billed murre,Uria lomvia,3.9,-,Cambell_2005,pelagic bay,Cadmium,0.54,0.26
+Thick-billed murre,Uria lomvia,3.9,-,Cambell_2005,pelagic bay,Cadmium,12.84,3.19
+Ivory Gull,Pagophilia eburnea,4,-,Cambell_2005,pelagic bay,Cadmium,0.19,0.12
+Ivory Gull,Pagophilia eburnea,4,-,Cambell_2005,pelagic bay,Cadmium,4.945,-
+Northern fulmar,Fulmarus glacialis,4.1,-,Cambell_2005,pelagic bay,Cadmium,1.17,1.16
+Northern fulmar,Fulmarus glacialis,4.1,-,Cambell_2005,pelagic bay,Cadmium,21.84,13.22
+Glaucous gull,Larus hyperboreus,4.7,-,Cambell_2005,pelagic bay,Cadmium,0.21,0.16
+Glaucous gull,Larus hyperboreus,4.7,-,Cambell_2005,pelagic bay,Cadmium,4.8,3.72
+Thayers gull,Larus thayeri,4.9,-,Cambell_2005,pelagic bay,Cadmium,0.08,-
+Thayers gull,Larus thayeri,4.9,-,Cambell_2005,pelagic bay,Cadmium,1.77,-
+Ringed Seal,Phoca hispida,4.6,-,Cambell_2005,pelagic bay,Cadmium,0.07,0.06
+Ringed Seal,Phoca hispida,4.6,-,Cambell_2005,pelagic bay,Cadmium,6.16,4.98
+Dovekie,Alle alle,3.2,-,Cambell_2005,pelagic bay,Copper,6.97,0.56
+Dovekie,Alle alle,3.2,-,Cambell_2005,pelagic bay,Copper,8.18,1.7
+Black-legged kittawake,Rissa tridactyla,3.8,-,Cambell_2005,pelagic bay,Copper,5.75,0.53
+Black-legged kittawake,Rissa tridactyla,3.8,-,Cambell_2005,pelagic bay,Copper,6.05,0.91
+Black Guillemot,Ceppus grylle,3.9,-,Cambell_2005,pelagic bay,Copper,6.9,0.55
+Black Guillemot,Ceppus grylle,3.9,-,Cambell_2005,pelagic bay,Copper,8.07,1.46
+Thick-billed murre,Uria lomvia,3.9,-,Cambell_2005,pelagic bay,Copper,8.09,3.35
+Thick-billed murre,Uria lomvia,3.9,-,Cambell_2005,pelagic bay,Copper,8.55,1.74
+Ivory Gull,Pagophilia eburnea,4,-,Cambell_2005,pelagic bay,Copper,7.43,1.18
+Ivory Gull,Pagophilia eburnea,4,-,Cambell_2005,pelagic bay,Copper,4.355,-
+Northern fulmar,Fulmarus glacialis,4.1,-,Cambell_2005,pelagic bay,Copper,5.33,0.4
+Northern fulmar,Fulmarus glacialis,4.1,-,Cambell_2005,pelagic bay,Copper,6.24,0.97
+Glaucous gull,Larus hyperboreus,4.7,-,Cambell_2005,pelagic bay,Copper,5.17,0.38
+Glaucous gull,Larus hyperboreus,4.7,-,Cambell_2005,pelagic bay,Copper,5.67,0.96
+Thayers gull,Larus thayeri,4.9,-,Cambell_2005,pelagic bay,Copper,5.33,-
+Thayers gull,Larus thayeri,4.9,-,Cambell_2005,pelagic bay,Copper,7.31,-
+Ringed Seal,Phoca hispida,4.6,-,Cambell_2005,pelagic bay,Copper,1.29,0.31
+Ringed Seal,Phoca hispida,4.6,-,Cambell_2005,pelagic bay,Copper,6.15,2.35
+Dovekie,Alle alle,3.2,-,Cambell_2005,pelagic bay,Manganese,0.65,0.07
+Dovekie,Alle alle,3.2,-,Cambell_2005,pelagic bay,Manganese,3.32,0.31
+Black-legged kittawake,Rissa tridactyla,3.8,-,Cambell_2005,pelagic bay,Manganese,0.52,0.08
+Black-legged kittawake,Rissa tridactyla,3.8,-,Cambell_2005,pelagic bay,Manganese,3.52,0.67
+Black Guillemot,Ceppus grylle,3.9,-,Cambell_2005,pelagic bay,Manganese,0.61,0.09
+Black Guillemot,Ceppus grylle,3.9,-,Cambell_2005,pelagic bay,Manganese,2.67,0.42
+Thick-billed murre,Uria lomvia,3.9,-,Cambell_2005,pelagic bay,Manganese,0.49,0.05
+Thick-billed murre,Uria lomvia,3.9,-,Cambell_2005,pelagic bay,Manganese,3.28,0.3
+Ivory Gull,Pagophilia eburnea,4,-,Cambell_2005,pelagic bay,Manganese,0.5,0.12
+Ivory Gull,Pagophilia eburnea,4,-,Cambell_2005,pelagic bay,Manganese,2.205,-
+Northern fulmar,Fulmarus glacialis,4.1,-,Cambell_2005,pelagic bay,Manganese,0.68,1.32
+Northern fulmar,Fulmarus glacialis,4.1,-,Cambell_2005,pelagic bay,Manganese,4.29,0.55
+Glaucous gull,Larus hyperboreus,4.7,-,Cambell_2005,pelagic bay,Manganese,0.54,0.05
+Glaucous gull,Larus hyperboreus,4.7,-,Cambell_2005,pelagic bay,Manganese,3.72,0.87
+Thayers gull,Larus thayeri,4.9,-,Cambell_2005,pelagic bay,Manganese,0.49,-
+Thayers gull,Larus thayeri,4.9,-,Cambell_2005,pelagic bay,Manganese,4.31,-
+Ringed Seal,Phoca hispida,4.6,-,Cambell_2005,pelagic bay,Manganese,0.19,0.09
+Ringed Seal,Phoca hispida,4.6,-,Cambell_2005,pelagic bay,Manganese,2.79,0.52
