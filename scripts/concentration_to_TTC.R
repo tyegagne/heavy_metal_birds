@@ -9,7 +9,7 @@ df <- data.frame(x = x,y = y)
 plot(df$x,df$y)
 abline(h = 1, lty = "dashed")
 weights <- c(100, 1, 1, 1, 1, 1, 1, 1, 1, 1)
-spline_mod <- smooth.spline(x = df$x, y = df$y,w = weights, df = 5)
+spline_mod <- smooth.spline(x = df$x, y = df$y,w = weights, df = 3)
 prediction <- predict(object = spline_mod, x = seq(0,5,length.out = 100))
 lines(prediction$x,prediction$y)
 
@@ -99,6 +99,7 @@ par(mfrow = c(4,2))
 n = 15
 # generate a plot dummy concentration data
 x_base=runif(n , min = 0, max = 5)
+real_intercept <- 500
 
 ya = exp(1.5*x_base)+rnorm(n , sd = 200)+real_intercept # exponential increasing
 yb = -exp(1.2*x_base)+rnorm(n , sd = 100)+real_intercept # exponential degreasing
@@ -111,7 +112,6 @@ for(e in 1:length(equations)){
   
 
 # this is the real intercept i.e. "environmental level"
-real_intercept <- 500
 
 y_base = equations[e] %>% as.vector() 
 
