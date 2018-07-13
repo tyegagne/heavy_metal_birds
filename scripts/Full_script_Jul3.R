@@ -81,14 +81,7 @@ metal_by_spp <- ggplot(joined_metal,aes(x = year, y = (interp_levels), color = s
 metal_by_spp + facet_wrap(~metal, scales = "free_y", ncol = 1)
 metal_by_spp + facet_grid(metal~spp, scales = "free_y"); rm(metal_by_spp)
 
-# grouped by raw metal ensemble mean plot
-joined_metal %>% group_by(metal,year) %>% 
-  mutate(metal_ensemble = mean(interp_levels)) %>% 
-  ggplot(aes(x = year, y = metal_ensemble, color = metal, group = metal))+
-  geom_point(size = .5, color = "grey")+
-  geom_line(size = .5, color = "grey")+ geom_smooth()+
-  facet_wrap(~metal, scales = "free_y", ncol = 1)+
-  scale_x_continuous(expand = c(0,0)) + themeo
+
 
 # interpolating values between years
 # build dummy data.frame
@@ -136,6 +129,27 @@ joined_metal %>%
   scale_color_manual(values = colorRampPalette(rev(brewer.pal(8, "Paired")))(9))+
   facet_wrap(~spp, scales = "free_y")+
   themeo
+
+# grouped by raw metal ensemble mean plot
+ensem <- joined_metal %>% group_by(metal,year) %>% 
+  mutate(metal_ensemble = mean(ip.value, na.rm =T)) %>% 
+  ggplot(aes(x = year, y = metal_ensemble, color = metal, group = metal))+
+  geom_point(size = .5, color = "grey")+
+  geom_line(size = .5, color = "grey")+ geom_smooth(show.legend = F)+
+  facet_wrap(~metal, scales = "free_y", ncol = 1)+
+  scale_x_continuous(expand = c(0,0)) + 
+  themeo
+# plots of metals by species facetted 
+metal_by_spp <- ggplot(joined_metal,aes(x = year, y = (ip.value), color = spp, group = spp))+
+  geom_point(size = .2)+
+  geom_line(size = .2)+
+  scale_x_continuous(expand = c(0,0)) + 
+  scale_color_manual(values = colorRampPalette(rev(brewer.pal(8, "Paired")))(9))+
+  themeo
+spp <- metal_by_spp + facet_wrap(~metal, scales = "free_y", ncol = 1)+labs(title = 'Uncorrected')
+
+gridExtra::grid.arrange(spp, ensem, ncol = 2)
+
 
 # bring in the trophic position estimates from Gagne et al. 2018
 trophic_p <- read.csv('tp_through_time.csv')
@@ -188,7 +202,6 @@ trophic_p <- tp_null
 ####
 
 
-# attempting correction with ensemble TP decline. 
 BFAL <- filter(trophic_p, spp == "LAAL") %>% mutate(spp = "BFAL")
 RFBO <- filter(trophic_p, spp == "BRBO") %>% mutate(spp = "RFBO")
 trophic_p <- rbind(trophic_p, BFAL, RFBO)
@@ -335,6 +348,11 @@ lookup_table$tp_med   <- as.character(lookup_table$tp_med) %>% as.factor()
 
 levels(joined_all$metal) # What want 
 levels(lookup_table$metal)
+
+
+# READ IN THE CAMBELL TTCs, eliminantes all suedel script above.
+lookup_table <- read.csv("cambell_TTC.csv")
+lookup_table$tp_med <- as.factor(lookup_table$tp_med)
 
 joined_all <- left_join(joined_all,lookup_table, by = c("metal","tp_med"))
 #corrected <- joined_all %>% mutate(corrected_metal_level = interp_levels * ttc)  # think the bug is that interp levels should be ref as ip.value?

@@ -1,41 +1,43 @@
 
-conc_comp <- read.csv('concentration_compilation.csv', na.strings = '-') %>% 
-                                      filter(reference == "Cambell_2005") %>% 
-                                      drop_na(concentration)
+library(ggplot2)
+library(tidyverse)
 
-
+# set working directory and read in csv
+setwd('/Users/tgagne/heavy_metal_birds/data') # running from Tylers computer
+conc_comp <- read.csv('concentration_compilation.csv', na.strings = '-') %>%  # read in the reference from which environmental concentrations where scraped
+                                      filter(reference == "Cambell_2005") %>% # Cambell 2005 in this case is Baffin Bay pelagic study
+                                      drop_na(concentration)                  # drop any NAs in the concentration data
+# look at it quick
 str(conc_comp)
-
 ggplot(conc_comp,aes(x = published.TL,y = concentration))+
   geom_point()+
   facet_wrap(~Metal, scales = "free_y")
 
- conc_comp
- par(mfrow = c(4,4))
- metals <- levels(droplevels(conc_comp$Metal))
- 
- cambell_lookup <- NULL
+ par(mfrow = c(4,4))                                # Establish the plotting frame                    
+ metals <- droplevels(conc_comp$Metal) %>% levels() # What metals are in that reference,  build a vector
+ cambell_lookup <- NULL                             # empty dataframe to put in complete TTC lookup data
 
-for(e in 1:length(metals)){
+for(e in 1:length(metals)){   # i.e. : for each metal, do this:
   
-  # this is the real intercept i.e. "environmental level"
+  # subset on the TL and concentration data for a single metal as an x and a y vector and combine in to a data.frame
   x_base = subset(conc_comp, Metal == metals[e])[,"published.TL"]
   y_base = subset(conc_comp, Metal == metals[e])[,"concentration"]
-  
   df <- data.frame(x = x_base,y = y_base)
   
+  # plot this data
   plot(df$x, df$y, xlab = "trophic position", ylab = "concentration (ppm)",pch = 20, xlim = c(0,5), main = metals[e])
   
   # fit 3 degree spline to raw concentration data
   spline_mod <- smooth.spline(df$x, df$y, df = 3)
   prediction <- predict(object = spline_mod, x = seq(0,5,by = 0.01))
+
   lines(prediction)
   
   # obtain 0 intercept of the model
   mod_intercept <- as.data.frame(prediction)[1,2]
   mod_intercept
   
-  mod_intercept <- ifelse(mod_intercept <= 0,median(df$y), mod_intercept)
+  mod_intercept <- ifelse(mod_intercept <= 0,min(df$y)+.5*sd(df$y), mod_intercept)
   
   # correct the concentration data given the intercepts, modeled vs real
   mod_corrected_TTC <- df$y / mod_intercept
@@ -53,18 +55,33 @@ for(e in 1:length(metals)){
   plot(x, y, pch = 20, ylab = "transfer coefficient", xlab = "trophic position", xlim = c(0,5))
   lines(est_prediction)
   
-  metal_lookup <- data.frame(TL = est_prediction$x,ttc = est_prediction$y,metal = metals[e])
+  metal_lookup <- data.frame(tp_med = est_prediction$x,ttc = est_prediction$y,metal = metals[e])
   
   cambell_lookup <- rbind(metal_lookup,cambell_lookup)
 
 }
-
+ 
+cambell_lookup$tp_med <- as.factor(cambell_lookup$tp_med)
+# match these lookup metals to our data
+ #levels(joined_all$metal) # What want 
+ #[1] "Arsenic"    "Cadmium"    "Copper"     "Iron"       "Lead"       "Manganese"  "Mercury"    "Molybdenum" "Zinc"  
+ 
+ levels(cambell_lookup$metal)
+ #[1] "Zinc"          "Molybdenum"    "Methylmercury" "Manganese"     "Lead"          "Copper"        "Cadmium"       "Arsenic" 
+ cambell_lookup$metal <- plyr::revalue(cambell_lookup$metal, c("Methylmercury"="Mercury"))
+ 
+ # Iron will self represent as Zinc
+ Fe <- subset(cambell_lookup, metal == "Zinc"); Fe$metal <- "Iron" %>% as.factor(); str(Fe)
+ cambell_lookup <- rbind(cambell_lookup,Fe)
+ cambell_lookup$metal <- as.character( cambell_lookup$metal ) %>% as.factor() # reorder alphabetically
+ 
+ #write.csv(cambell_lookup,"cambell_TTC.csv", row.names = F)
  
 str(cambell_lookup)
 
-b <- ggplot(cambell_lookup, aes(TL, ttc*10))+ # correction shows what 10ppm at base would look like at various TPs
+b <- ggplot(cambell_lookup, aes(as.numeric(as.character(tp_med)), ttc*1))+ # correction shows what 10ppm at base would look like at various TPs
   geom_line()+
-  geom_hline(yintercept = 10, lty = "dashed")+
+  geom_hline(yintercept = 1, lty = "dashed")+
   facet_wrap(~metal, scales = "free_y", ncol = 1)+
   themeo
 
@@ -72,13 +89,13 @@ b <- ggplot(cambell_lookup, aes(TL, ttc*10))+ # correction shows what 10ppm at b
 # paper figure
 b + 
   annotate("rect",
-           xmin = min(joined_all$tp_med, na.rm = T), 
-           xmax = max(joined_all$tp_med, na.rm = T), 
+           xmin = min(as.numeric(as.character(joined_all$tp_med)), na.rm = T), 
+           xmax = max(as.numeric(as.character(joined_all$tp_med)), na.rm = T), 
            ymin = -Inf, 
            ymax = Inf, 
            alpha = .5)+
-  facet_wrap(~metal, scales = "free_y", ncol = 2)+
-  labs(title = "Trophic transfer of an environment level of 10 ppm", 
+  facet_wrap(~metal, ncol = 2)+
+  labs(title = "Trophic transfer of an environment level of 1 ppm", 
        y = "parts per million", 
        x = "trophic position")
 
