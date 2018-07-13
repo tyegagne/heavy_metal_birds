@@ -37,7 +37,7 @@ for(e in 1:length(metals)){   # i.e. : for each metal, do this:
   mod_intercept <- as.data.frame(prediction)[1,2]
   mod_intercept
   
-  mod_intercept <- ifelse(mod_intercept <= 0,min(df$y)+.5*sd(df$y), mod_intercept)
+  mod_intercept <- ifelse(mod_intercept <= 0,min(df$y)+sd(df$y), mod_intercept)
   
   # correct the concentration data given the intercepts, modeled vs real
   mod_corrected_TTC <- df$y / mod_intercept
@@ -94,7 +94,7 @@ b +
            ymin = -Inf, 
            ymax = Inf, 
            alpha = .5)+
-  facet_wrap(~metal, ncol = 2)+
+  facet_wrap(~metal, ncol = 2, scales = "free_y")+
   labs(title = "Trophic transfer of an environment level of 1 ppm", 
        y = "parts per million", 
        x = "trophic position")

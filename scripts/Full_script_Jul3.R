@@ -114,13 +114,13 @@ rm(sc,yearvec,met,rep,dummy_df,m,s, metals, spp)
 # linear interpolation of NAs
 joined_metal <- 
   joined_metal %>% 
-  group_by(spp,metal) %>% 
+  dplyr::group_by(spp,metal) %>% 
   # this when uncommented extends extrapolation to min max years
   # the other interpolation line has to be hashed out
   # mutate(ip.value = na.approx(interp_levels, rule = 2)) 
-  mutate(time = seq(1,n())) %>%
-  mutate(ip.value = approx(time,interp_levels,time)$y) %>% 
-  select(-time)
+  dplyr::mutate(time = seq(1,n())) %>%
+  dplyr::mutate(ip.value = approx(time,interp_levels,time)$y) %>% 
+  dplyr::select(-time)
 
 # this plot checks the interpolation between years
 joined_metal %>% 
@@ -131,8 +131,8 @@ joined_metal %>%
   themeo
 
 # grouped by raw metal ensemble mean plot
-ensem <- joined_metal %>% group_by(metal,year) %>% 
-  mutate(metal_ensemble = mean(ip.value, na.rm =T)) %>% 
+ensem <- joined_metal %>% dplyr::group_by(metal,year) %>% 
+  dplyr::mutate(metal_ensemble = mean(ip.value, na.rm =T)) %>% 
   ggplot(aes(x = year, y = metal_ensemble, color = metal, group = metal))+
   geom_point(size = .5, color = "grey")+
   geom_line(size = .5, color = "grey")+ geom_smooth(show.legend = F)+
@@ -395,9 +395,9 @@ many
 # ppm global generation
 
 # by metal summaries
-ensemble <- corrected %>% group_by(metal,year) %>% 
+ensemble <- corrected %>% dplyr::group_by(metal,year) %>% 
   
-  mutate(metal_ensemble = mean(corrected_metal_level, na.rm = T )) %>% 
+  dplyr::mutate(metal_ensemble = mean(corrected_metal_level, na.rm = T )) %>% 
   
   ggplot(aes(x = year, y = metal_ensemble, color = metal, group = metal))+
   geom_point(size = .5, color = "grey")+
