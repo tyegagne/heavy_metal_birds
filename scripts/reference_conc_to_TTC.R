@@ -2,6 +2,20 @@
 library(ggplot2)
 library(tidyverse)
 
+
+##############################
+###  Popular ggPlot theme  ###
+##############################
+themeo <-theme_classic()+
+  theme(strip.background = element_blank(),
+        axis.line = element_blank(),
+        axis.text.x = element_text(margin = margin( 0.2, unit = "cm")),
+        axis.text.y = element_text(margin = margin(c(1, 0.2), unit = "cm")),
+        axis.ticks.length=unit(-0.1, "cm"),
+        panel.border = element_rect(colour = "black", fill=NA, size=.5),
+        legend.title=element_blank(),
+        strip.text=element_text(hjust=0) )
+
 # set working directory and read in csv
 setwd('/Users/tgagne/heavy_metal_birds/data') # running from Tylers computer
 conc_comp <- read.csv('concentration_compilation.csv', na.strings = '-') %>%  # read in the reference from which environmental concentrations where scraped
@@ -37,7 +51,10 @@ for(e in 1:length(metals)){   # i.e. : for each metal, do this:
   mod_intercept <- as.data.frame(prediction)[1,2]
   mod_intercept
   
-  mod_intercept <- ifelse(mod_intercept <= 0,min(df$y)+sd(df$y), mod_intercept)
+  # Because baseline concentration cannot be below 0 if recorded in tissues at any concentration, then correct here
+  # We need to settle on an approach in order to address intercept, i.e. envrionmental concentration approximation
+  # I've currently settled on:
+  mod_intercept <- ifelse(mod_intercept <= 0,min(df$y)+mad(df$y), mod_intercept)
   
   # correct the concentration data given the intercepts, modeled vs real
   mod_corrected_TTC <- df$y / mod_intercept

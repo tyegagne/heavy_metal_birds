@@ -130,23 +130,26 @@ joined_metal %>%
   facet_wrap(~spp, scales = "free_y")+
   themeo
 
+joined_metal$metal <- fct_relevel(f = joined_metal$metal, c("As", "Cd", "Cu", "Fe", "Pb", "Mn", "Hg", "Mo","Zn")) 
+
 # grouped by raw metal ensemble mean plot
-ensem <- joined_metal %>% dplyr::group_by(metal,year) %>% 
+ensem <- joined_metal %>% 
+  dplyr::group_by(metal,year) %>% 
   dplyr::mutate(metal_ensemble = mean(ip.value, na.rm =T)) %>% 
-  ggplot(aes(x = year, y = metal_ensemble, color = metal, group = metal))+
+  ggplot(aes(x = year, y = metal_ensemble, group = metal))+
   geom_point(size = .5, color = "grey")+
-  geom_line(size = .5, color = "grey")+ geom_smooth(show.legend = F)+
+  geom_line(size = .5, color = "grey")+ geom_smooth(show.legend = F, color = "black", size = .25)+
   facet_wrap(~metal, scales = "free_y", ncol = 1)+
   scale_x_continuous(expand = c(0,0)) + 
   themeo
 # plots of metals by species facetted 
 metal_by_spp <- ggplot(joined_metal,aes(x = year, y = (ip.value), color = spp, group = spp))+
-  geom_point(size = .2)+
-  geom_line(size = .2)+
+  #geom_point(size = .2, show.legend = F)+
+  geom_line(size = .2, show.legend = F)+
   scale_x_continuous(expand = c(0,0)) + 
   scale_color_manual(values = colorRampPalette(rev(brewer.pal(8, "Paired")))(9))+
   themeo
-spp <- metal_by_spp + facet_wrap(~metal, scales = "free_y", ncol = 1)+labs(title = 'Uncorrected')
+spp <- metal_by_spp + facet_wrap(~metal, scales = "free_y", ncol = 1)
 
 gridExtra::grid.arrange(spp, ensem, ncol = 2)
 
@@ -235,45 +238,59 @@ ggplot(TTC,aes(x = TL, y = ttc))+
 
 
 metals <- levels(TTC$metal)
-metals <- metals[c(1,2,4,5,6,7)]
+#metals <- metals[c(1,2,4,5,6,7)] Prior Logistic NLS run
 lookup_table <- NULL
 
 for(i in 1:length(metals)){
   
+  # Logistic sigmoidal fit
+  # ----------------------
   # subset a single metal from the TTC table
-  TTC_sub <- subset(TTC, metal == metals[i])
-  
+  # TTC_sub <- subset(TTC, metal == metals[i])
   # find starting values of the logistic equation that will fit the TTC x TL data
-  starters <- coef(lm(logit(ttc/100) ~ TL, data = TTC_sub))
-  
+  # starters <- coef(lm(logit(ttc/100) ~ TL, data = TTC_sub))
   # define the logistic equation to be fit
-  TTC_form <- ttc~phi1/(1+exp(-(phi2+phi3*TL)))
-  
+  # TTC_form <- ttc~phi1/(1+exp(-(phi2+phi3*TL)))
   # list of starting values
-  start <- list(phi1=30,
-                #phi2 = 1,
-                phi2=starters[1] + .001 ,
-                phi3=starters[2] + .001)
-  
+  # start <- list(phi1=30,phi2=starters[1] + .001 ,phi3=starters[2] + .001)
   # non linear least squares fit
-  fitTypical <- nlsLM(TTC_form, data=TTC_sub, start=start, trace = T)
-  
+  # fitTypical <- nlsLM(TTC_form, data=TTC_sub, start=start, trace = T)
   # dataframe of predictions of TTC accross range of TP i.e. 0 - 5
-  newdata <- data.frame(TL = seq(0,5, by = .01),ttc = predict(fitTypical, newdata = data.frame(TL = seq(0,5, by = .01))), metal = metals[i])
-  
+  # newdata <- data.frame(TL = seq(0,5, by = .01),ttc = predict(fitTypical, newdata = data.frame(TL = seq(0,5, by = .01))), metal = metals[i])
   # build dataframe of all metal's TTCs
+  # lookup_table <- rbind(lookup_table,newdata)
+  
+  # Constrained spline fit
+  # ----------------------
+  TTC_sub <- subset(TTC, metal == metals[i])
+  x <- TTC_sub$TL
+  y <- TTC_sub$ttc
+  x <- c(0,x)
+  y <- c(1,y)
+  weights <- seq(1,1, length.out = length(x))
+  weights[1] <- 100
+  spline_mod <- smooth.spline(x, y ,w = weights, df = 3)
+  prediction <- predict(object = spline_mod, x = seq(0,5,by = 0.01))
+  plot(x, y, xlim = c(0,5), main = metals[i])
+  abline(h = 1, lty = "dashed")
+  prediction$y <- ifelse(prediction$y < 0, .01, prediction$y )
+  newdata <- data.frame(TL = seq(0,5, by = .01),ttc = prediction$y, metal = metals[i])
+  lines(newdata$TL,newdata$ttc)
   lookup_table <- rbind(lookup_table,newdata)
+
 }
 
 # does it look like it should?
 str(lookup_table)
 
 # Copper is cadmium, and Iron and Mg will self represent as Zinc
-Cu <- subset(lookup_table, metal == "Cadmium"); Cu$metal <- "Copper" %>% as.factor(); str(Cu)
+# Cu <- subset(lookup_table, metal == "Cadmium"); Cu$metal <- "Copper" %>% as.factor(); str(Cu) # Run if log/sig mods
 Mn <- subset(lookup_table, metal == "Zinc"); Mn$metal <- "Manganese" %>% as.factor(); str(Mn)
 Fe <- subset(lookup_table, metal == "Zinc"); Fe$metal <- "Iron" %>% as.factor(); str(Fe)
 
-lookup_table <- rbind(lookup_table,Cu,Mn,Fe)
+# lookup_table <- rbind(lookup_table,Cu,Mn,Fe) # Run if log/sig mods
+lookup_table <- rbind(lookup_table,Mn,Fe)
+
 
 a <- ggplot(lookup_table, aes(TL, ttc))+
   geom_line()+
@@ -372,54 +389,28 @@ ggplot(corrected,aes(x = year, y = corrected_metal_level, group = spp) )+
   geom_line()+
   facet_wrap(~metal, scales = "free_y", ncol = 1)
 
-many <- ggplot(corrected,aes(x = year, y = corrected_metal_level, group = spp) )+
- # geom_line(size = .4)+
-  geom_line(size = .5)+
-  facet_grid(metal~spp, scales = "free_y")+
-  #scale_color_manual(values = colorRampPalette(rev(brewer.pal(8, "Paired")))(9))+
-  scale_y_continuous(expand = c(0.25,0))+
-  themeo
-many
-
-many <- ggplot(corrected,aes(x = year, y = corrected_metal_level, group = spp) )+
-  # geom_line(size = .4)+
-  geom_line(size = .5)+
+# grouped by raw metal ensemble mean plot
+ensem <- corrected %>% dplyr::group_by(metal,year) %>% 
+  dplyr::mutate(metal_ensemble = mean(corrected_metal_level, na.rm =T)) %>% 
+  ggplot(aes(x = year, y = metal_ensemble, group = metal))+
+  geom_point(size = .5, color = "grey")+
+  geom_line(size = .5, color = "grey")+ geom_smooth(show.legend = F, color = "black", size = .25)+
   facet_wrap(~metal, scales = "free_y", ncol = 1)+
-  #scale_color_manual(values = colorRampPalette(rev(brewer.pal(8, "Paired")))(9))+
-  scale_y_continuous(expand = c(0.25,0))+
-  scale_x_continuous(expand = c(0,0))+
+  scale_x_continuous(expand = c(0,0)) + 
   themeo
-many
+# plots of metals by species facetted 
+metal_by_spp <- ggplot(corrected,aes(x = year, y = corrected_metal_level, color = spp, group = spp))+
+  #geom_point(size = .2, show.legend = F)+
+  geom_line(size = .2, show.legend = F)+
+  scale_x_continuous(expand = c(0,0)) + 
+  scale_color_manual(values = colorRampPalette(rev(brewer.pal(8, "Paired")))(9))+
+  themeo
+spp <- metal_by_spp + facet_wrap(~metal, scales = "free_y", ncol = 1)
 
+gridExtra::grid.arrange(spp, ensem, ncol = 2)
 # To Do: 
 # ppm global generation
 
-# by metal summaries
-ensemble <- corrected %>% dplyr::group_by(metal,year) %>% 
-  
-  dplyr::mutate(metal_ensemble = mean(corrected_metal_level, na.rm = T )) %>% 
-  
-  ggplot(aes(x = year, y = metal_ensemble, color = metal, group = metal))+
-  geom_point(size = .5, color = "grey")+
-  #geom_line(show.legend = F)+
-  geom_smooth(se = F, show.legend = F, span = 1, method = 'loess')+
-  facet_wrap(~metal, scales = "free_y", ncol = 1)+
-  scale_color_manual(values = colorRampPalette(rev(brewer.pal(8, "Paired")))(9))+
-  
-  scale_x_continuous(expand = c(0,0))+
-  #scale_y_continuous(limits = c(0,32))+
-  ylab(NULL)+
-  themeo
-
-ensemble
-
-# layout matrix of all observations with ensembles
-matrixo <-   matrix(nrow = 5, ncol = 5)
-matrixo[,1:4] <- 1
-matrixo[,5] <- 2
-
-gridExtra::grid.arrange(many, ensemble, layout_matrix = matrixo)
-gridExtra::grid.arrange(many, ensemble, ncol = 2)
 
 # SCRATCH
 
