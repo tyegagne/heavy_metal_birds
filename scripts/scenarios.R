@@ -138,3 +138,48 @@ grid.arrange(adj,tp , ncol = 2)
 
 
 
+
+str(scenarios)
+
+# Modeling examples of trophic transfer coefficient estimations
+
+test <- scenarios %>% 
+  filter(adjustment == "additive") %>% 
+  group_by(relationship) %>% 
+  mutate(environ_hm = seq(from = .5, to = .7, length.out = n())) %>% 
+  ungroup
+
+TTC <- ggplot(test, aes(x = tp, y = metal / environ_hm))+
+  geom_line()+
+  facet_wrap(~relationship, scales = "free", ncol = 1)+
+  scale_x_continuous(expand = c(0,0))+
+  scale_y_continuous(labels = NULL)+
+  labs(y = NULL)+
+  themeo
+
+
+environ<-ggplot(test,aes(x = time))+
+  geom_ribbon(aes(ymax = tp, ymin = -Inf), alpha = .6, show.legend = F)+
+  geom_line(aes(y = metal), lty = "dashed", color = "#cb181d", size = 1)+
+  geom_line(aes(y = environ_hm, group = relationship))+
+  facet_wrap( ~ relationship, ncol = 1)+
+  scale_x_continuous(expand = c(0,0))+
+  scale_y_continuous(labels = NULL)+
+  labs(y = NULL)+
+  themeo
+
+grid.arrange(environ,TTC , ncol = 2)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
