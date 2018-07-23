@@ -368,7 +368,10 @@ levels(lookup_table$metal)
 
 
 # READ IN THE CAMBELL TTCs, eliminantes all suedel script above.
-lookup_table <- read.csv("cambell_TTC.csv")
+lookup_table <- read.csv("cambell_TTC.csv") # Cambell spline model fits
+#lookup_table <- read.csv("cambell_TTC_logmods.csv") # Cambell log model model fits
+
+
 lookup_table$tp_med <- as.factor(lookup_table$tp_med)
 
 joined_all <- left_join(joined_all,lookup_table, by = c("metal","tp_med"))

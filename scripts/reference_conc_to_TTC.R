@@ -88,7 +88,7 @@ for(e in 1:length(metals)){   # i.e. : for each metal, do this:
 
 }
  
-cambell_lookup$tp_med <- as.factor(cambell_lookup$tp_med)
+#cambell_lookup$tp_med <- as.factor(cambell_lookup$tp_med)
 # match these lookup metals to our data
  #levels(joined_all$metal) # What want 
  #[1] "Arsenic"    "Cadmium"    "Copper"     "Iron"       "Lead"       "Manganese"  "Mercury"    "Molybdenum" "Zinc"  
@@ -102,8 +102,6 @@ Fe <- subset(cambell_lookup, metal == "Zinc"); Fe$metal <- "Iron" %>% as.factor(
 cambell_lookup <- rbind(cambell_lookup,Fe)
 cambell_lookup$metal <- as.character( cambell_lookup$metal ) %>% as.factor() # reorder alphabetically
  
-#write.csv(cambell_lookup,"cambell_TTC.csv", row.names = F)
- 
 # below zero adjustment methods
 # two approaches:
 # 
@@ -114,14 +112,16 @@ cambell_lookup$metal <- as.character( cambell_lookup$metal ) %>% as.factor() # r
 range01 <- function(x){(x-min(x))/(max(x)-min(x))}
 cambell_lookup$ttc[cambell_lookup$ttc <= 1] <- range01(cambell_lookup$ttc[cambell_lookup$ttc <= 1])
  
+# write.csv(cambell_lookup,"cambell_TTC.csv", row.names = F)
+
+
 # correction shows what 1 ppm at base would look like at various TPs
-b <- ggplot(cambell_lookup, aes(as.numeric(as.character(tp_med)), ttc*1))+ 
+b <- ggplot(cambell_lookup, aes(as.numeric(as.character(tp_med)), ttc*1  ))+ 
   geom_line()+
   geom_hline(yintercept = 1, lty = "dashed")+
   facet_wrap(~metal, scales = "free_y", ncol = 1)+
   themeo
 
-# paper figure
 b + annotate("rect",
            xmin = min(as.numeric(as.character(joined_all$tp_med)), na.rm = T), 
            xmax = max(as.numeric(as.character(joined_all$tp_med)), na.rm = T), 
@@ -134,6 +134,7 @@ b + annotate("rect",
        x = "trophic position")
 
 # Overlay Figure
+# paper figure 2
 # correction shows what 1ppm at base would look like at various TPs
 ggplot(cambell_lookup, aes(as.numeric(as.character(tp_med)), ttc*1, color = metal))+ 
   geom_line(size = 5, alpha = .6)+
@@ -141,8 +142,10 @@ ggplot(cambell_lookup, aes(as.numeric(as.character(tp_med)), ttc*1, color = meta
   labs(title = "Trophic transfer of an environment level of 1 ppm",
        x = "trophic position", y = "ppm")+
   annotate("rect",
-           xmin = min(as.numeric(as.character(joined_all$tp_med)), na.rm = T), 
-           xmax = max(as.numeric(as.character(joined_all$tp_med)), na.rm = T), 
+           #xmin = min(as.numeric(as.character(joined_all$tp_med)), na.rm = T), 
+           #xmax = max(as.numeric(as.character(joined_all$tp_med)), na.rm = T), 
+           xmin = 3.5,
+           xmax = 4.5,
            ymin = -Inf, 
            ymax = Inf, 
            alpha = .5) +
@@ -151,7 +154,8 @@ ggplot(cambell_lookup, aes(as.numeric(as.character(tp_med)), ttc*1, color = meta
   annotate("text", x = 4.9, y = .8, label = "italic('Biodilution')", size = 3, hjust = 1, alpha = .5, parse = T)+
   annotate("text", x = 4.9, y = 1.2, label = "italic('Biomagnification')", size = 3, hjust = 1, alpha = .5, parse = T)+
   annotate("text", x = 0, y = 8, label = "italic('Cambell et al. 2005')", size = 3, hjust = 0, alpha = .5, parse = T)+
-  annotate("text", x =  mean(as.numeric(as.character(joined_all$tp_med)), na.rm = T), 
+  annotate("text", 
+           x =  mean(as.numeric(as.character(joined_all$tp_med)), na.rm = T), 
            y = 5, vjust = 0,
            label = "seabird trophic range", 
            size = 4, hjust = 0, alpha = 1, angle = 90, color = "white")+
@@ -160,7 +164,9 @@ ggplot(cambell_lookup, aes(as.numeric(as.character(tp_med)), ttc*1, color = meta
   scale_color_brewer(palette = "Paired")+
   scale_y_continuous(breaks = c(0,.2,.4,.6,.8,1,2,3,4,5,6,7,8) )+
   themeo +
-  theme(legend.position = c(0.25, 0.65))+
+  theme(legend.position = c(0.25, 0.65)
+       # , text=element_text(size=16, family="Calibri")
+        )+
   guides(color=guide_legend(ncol=2))
   
 
