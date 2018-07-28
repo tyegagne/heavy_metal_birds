@@ -149,9 +149,9 @@ metal_by_spp <- ggplot(joined_metal,aes(x = year, y = (ip.value), color = spp, g
   scale_x_continuous(expand = c(0,0)) + 
   scale_color_manual(values = colorRampPalette(rev(brewer.pal(8, "Paired")))(9))+
   themeo
-spp <- metal_by_spp + facet_wrap(~metal, scales = "free_y", ncol = 1)
+spp_raw <- metal_by_spp + facet_wrap(~metal, scales = "free_y", ncol = 1)
 
-gridExtra::grid.arrange(spp, ensem, ncol = 2)
+gridExtra::grid.arrange(spp_raw, ensem, ncol = 2)
 
 
 # bring in the trophic position estimates from Gagne et al. 2018
@@ -408,12 +408,14 @@ metal_by_spp <- ggplot(corrected,aes(x = year, y = corrected_metal_level, color 
   scale_x_continuous(expand = c(0,0)) + 
   scale_color_manual(values = colorRampPalette(rev(brewer.pal(8, "Paired")))(9))+
   themeo
-spp <- metal_by_spp + facet_wrap(~metal, scales = "free_y", ncol = 1)
+spp_corrected <- metal_by_spp + facet_wrap(~metal, scales = "free_y", ncol = 1)
 
-gridExtra::grid.arrange(spp, ensem, ncol = 2)
+gridExtra::grid.arrange(spp_corrected, ensem, ncol = 2)
 # To Do: 
 # ppm global generation
 
+
+gridExtra::grid.arrange(spp_raw,spp_corrected,ncol = 2)
 
 # SCRATCH
 

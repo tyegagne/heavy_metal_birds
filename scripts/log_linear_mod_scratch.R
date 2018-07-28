@@ -22,6 +22,9 @@ par(mfrow = c(4,4))
 
 metals <- levels(droplevels(conc_comp$Metal))
 
+metals = "Arsenic" 
+i = 1
+
 for(i in 1:length(metals)){
 
 Cambell_Hg <- subset(conc_comp, Metal == metals[i])
@@ -43,6 +46,8 @@ lines(TL_range$published.TL, exp(conc$.) )
 
 
 plot(TL_range$published.TL, exp(conc$.) / exp(Hg_mod$coefficients[1])*1, col = "blue" , type = "l", main = metals[i],xlim = c(0,5)) 
+points(Cambell_Hg$published.TL, Cambell_Hg$concentration / exp(Hg_mod$coefficients[1]), col = "blue") 
+lines(TL_range$published.TL, exp(conc$.) / exp(Hg_mod$coefficients[1])+1000)
 
 Hg_mod$coefficients[2]
 Hg_mod$coefficients
