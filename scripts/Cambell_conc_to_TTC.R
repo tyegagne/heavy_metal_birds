@@ -170,14 +170,3 @@ ggplot(cambell_lookup, aes(as.numeric(as.character(tp_med)), ttc*1, color = meta
   guides(color=guide_legend(ncol=2))
   
 
-# plot of magnification
-
-par(mfrow = c(5,1),mar=c(1,1,1,1))
-
-runif(50)
-
-plot(runif(500*5),runif(500*5))
-plot(runif(500*4),runif(500*4))
-plot(runif(500*3),runif(500*3))
-plot(runif(500*2),runif(500*2))
-plot(runif(500*1),runif(500*1))

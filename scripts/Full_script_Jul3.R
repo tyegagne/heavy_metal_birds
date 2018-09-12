@@ -81,6 +81,12 @@ metal_by_spp <- ggplot(joined_metal,aes(x = year, y = (interp_levels), color = s
 metal_by_spp + facet_wrap(~metal, scales = "free_y", ncol = 1)
 metal_by_spp + facet_grid(metal~spp, scales = "free_y"); rm(metal_by_spp)
 
+#export for liz conf
+ggplot(joined_metal,aes(x = year, y = (interp_levels), color = spp, group = spp))+
+  geom_point(size = 1)+
+  geom_line(size = .75)+
+  scale_color_manual(values = colorRampPalette(rev(brewer.pal(8, "Paired")))(9))+
+  themeo + facet_wrap(~metal, scales = "free_y")
 
 
 # interpolating values between years
@@ -111,6 +117,8 @@ joined_metal <- sc
 # cleanup
 rm(sc,yearvec,met,rep,dummy_df,m,s, metals, spp)
 
+####
+####
 # linear interpolation of NAs
 joined_metal <- 
   joined_metal %>% 
@@ -121,6 +129,8 @@ joined_metal <-
   dplyr::mutate(time = seq(1,n())) %>%
   dplyr::mutate(ip.value = approx(time,interp_levels,time)$y) %>% 
   dplyr::select(-time)
+####
+####
 
 # this plot checks the interpolation between years
 joined_metal %>% 
@@ -130,15 +140,16 @@ joined_metal %>%
   facet_wrap(~spp, scales = "free_y")+
   themeo
 
-joined_metal$metal <- fct_relevel(f = joined_metal$metal, c("As", "Cd", "Cu", "Fe", "Pb", "Mn", "Hg", "Mo","Zn")) 
+joined_metal$metal <- fct_relevel(f = joined_metal$metal, c("As", "Cd", "Cu", "Fe","Hg", "Mn","Mo","Pb", "Zn")) 
 
 # grouped by raw metal ensemble mean plot
 ensem <- joined_metal %>% 
   dplyr::group_by(metal,year) %>% 
   dplyr::mutate(metal_ensemble = mean(ip.value, na.rm =T)) %>% 
   ggplot(aes(x = year, y = metal_ensemble, group = metal))+
-  geom_point(size = .5, color = "grey")+
-  geom_line(size = .5, color = "grey")+ geom_smooth(show.legend = F, color = "black", size = .25)+
+  #geom_point(size = .5, color = "grey")+
+  geom_line(size = 1, color = "grey")+ 
+  #geom_smooth(show.legend = F, color = "black", size = .25)+
   facet_wrap(~metal, scales = "free_y", ncol = 1)+
   scale_x_continuous(expand = c(0,0)) + 
   themeo
@@ -336,6 +347,39 @@ b +
   labs(title = "Trophic transfer of an environment level of 10 ppm", 
        y = "parts per million", 
        x = "trophic position")
+
+ggplot(lookup_table, aes(as.numeric(as.character(TL)), ttc*1, color = metal))+ 
+  geom_line(size = 5, alpha = .6)+
+  geom_hline(yintercept = 1, lty = "dashed")+
+  labs(title = "Trophic transfer of an environment level of 1 ppm",
+       x = "trophic position", y = "ppm")+
+  annotate("rect",
+           #xmin = min(as.numeric(as.character(joined_all$tp_med)), na.rm = T), 
+           #xmax = max(as.numeric(as.character(joined_all$tp_med)), na.rm = T), 
+           xmin = 3.5,
+           xmax = 4.5,
+           ymin = -Inf, 
+           ymax = Inf, 
+           alpha = .5) +
+  #annotate("text", x = .2, y = 0, label = "Biodilution", size = 15, hjust = 0, alpha = .25)+
+  #annotate("text", x = .2, y = 2, label = "Biomagnification", size = 15, hjust = 0, alpha = .25)+
+  annotate("text", x = 4.9, y = .8, label = "italic('Biodilution')", size = 3, hjust = 1, alpha = .5, parse = T)+
+  annotate("text", x = 4.9, y = 1.2, label = "italic('Biomagnification')", size = 3, hjust = 1, alpha = .5, parse = T)+
+  annotate("text", x = 0, y = 8, label = "italic('Sueddel et al. 1983')", size = 3, hjust = 0, alpha = .5, parse = T)+
+  annotate("text", 
+           x =  mean(as.numeric(as.character(joined_all$tp_med)), na.rm = T), 
+           y = 5, vjust = 0,
+           label = "seabird trophic range", 
+           size = 4, hjust = 0, alpha = 1, angle = 90, color = "white")+
+  scale_x_continuous(expand = c(0,0), limits = c(-0.2,5))+
+  # scale_y_continuous( limits = c(-.1,8.1), expand = c(0,0) )+
+  scale_color_brewer(palette = "Paired")+
+  scale_y_continuous(breaks = c(0,.2,.4,.6,.8,1,2,3,4,5,6,7,8,9,10), limits = c(0,10) )+
+  themeo +
+  theme(legend.position = c(0.25, 0.65)
+        # , text=element_text(size=16, family="Calibri")
+  )+
+  guides(color=guide_legend(ncol=2))
 
 
 levels(joined_all$metal) # What want to change
