@@ -23,11 +23,13 @@ themeo <-theme_classic()+
         legend.title=element_blank(),
         strip.text=element_text(hjust=0) )
 
-# set working directory and read in csv
-setwd('/Users/tgagne/heavy_metal_birds/data') # running from Tylers computer
+# set working space with here and read in csv
+library(here)
 
 # dataframe read in
-metals <- read.csv('heavy_metal_June6.csv' , header = T,na.strings = "--" )
+here()
+
+metals <- read.csv( 'data/heavy_metal_June6.csv', header = T,na.strings = "--" )
 
 unique_id <- paste0("B",seq(1,dim(metals)[1])) # create a unique ID for each specimen
 metals <- cbind(unique_id, metals)             # add that to the dataframe
@@ -81,7 +83,7 @@ metal_by_spp <- ggplot(joined_metal,aes(x = year, y = (interp_levels), color = s
 metal_by_spp + facet_wrap(~metal, scales = "free_y", ncol = 1)
 metal_by_spp + facet_grid(metal~spp, scales = "free_y"); rm(metal_by_spp)
 
-#export for liz conf
+# uncorrected concentrations by metal
 ggplot(joined_metal,aes(x = year, y = (interp_levels), color = spp, group = spp))+
   geom_point(size = 1)+
   geom_line(size = .75)+
@@ -140,6 +142,7 @@ joined_metal %>%
   facet_wrap(~spp, scales = "free_y")+
   themeo
 
+# reorder factor levels to match current order
 joined_metal$metal <- fct_relevel(f = joined_metal$metal, c("As", "Cd", "Cu", "Fe","Hg", "Mn","Mo","Pb", "Zn")) 
 
 # grouped by raw metal ensemble mean plot
@@ -166,7 +169,7 @@ gridExtra::grid.arrange(spp_raw, ensem, ncol = 2)
 
 
 # bring in the trophic position estimates from Gagne et al. 2018
-trophic_p <- read.csv('tp_through_time.csv')
+trophic_p <- read.csv('data/tp_through_time.csv')
 # round to hundredths
 trophic_p[,3:6] <- round(trophic_p[,3:6], digits = 2)
 
@@ -236,7 +239,7 @@ joined_all_t <- left_join(joined_metal, trophic_p, by = c("year","spp")) %>%  se
 ### ### ### ### ### ### ### ### ### #
 ### Trophic Transfer Coefficients ###
 ### ### ### ### ### ### ### ### ### #
-TTC <- read.csv('SuedelTTC.csv')
+TTC <- read.csv('data/SuedelTTC.csv')
 
 str(TTC)
 
@@ -254,7 +257,7 @@ lookup_table <- NULL
 
 for(i in 1:length(metals)){
   
-  # Logistic sigmoidal fit
+  # Logistic sigmoidal fit - deprecated now
   # ----------------------
   # subset a single metal from the TTC table
   # TTC_sub <- subset(TTC, metal == metals[i])
@@ -412,7 +415,7 @@ levels(lookup_table$metal)
 
 
 # READ IN THE CAMBELL TTCs, eliminantes all suedel script above.
-lookup_table <- read.csv("cambell_TTC.csv") # Cambell spline model fits
+lookup_table <- read.csv("data/cambell_TTC.csv") # Cambell spline model fits
 #lookup_table <- read.csv("cambell_TTC_logmods.csv") # Cambell log model model fits
 
 
@@ -476,10 +479,6 @@ corrected %>%
   facet_grid(metal~spp, scales = "free_y")
 
 
-corrected %>% 
-  ggplot(aes(x = as.numeric(tp_med), y = corrected_metal_level))+
-  geom_path()+
-  facet_grid(metal~spp, scales = "free_y")
 
 
 
