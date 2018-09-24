@@ -416,6 +416,7 @@ levels(lookup_table$metal)
 
 # READ IN THE CAMBELL TTCs, eliminantes all suedel script above.
 lookup_table <- read.csv("data/cambell_TTC.csv") # Cambell spline model fits
+lookup_table <- read.csv("data/Gain_TTC.csv") # Cambell spline model fits
 #lookup_table <- read.csv("cambell_TTC_logmods.csv") # Cambell log model model fits
 
 
