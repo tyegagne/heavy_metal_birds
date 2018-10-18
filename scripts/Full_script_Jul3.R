@@ -9,7 +9,6 @@ library(gtools)
 library(minpack.lm) 
 library(RColorBrewer)
 
-
 ##############################
 ###  Popular ggPlot theme  ###
 ##############################
@@ -136,22 +135,29 @@ joined_metal <-
 
 # this plot checks the interpolation between years
 joined_metal %>% 
-  ggplot(aes(year,ip.value,color = metal))+
+  ggplot(aes(year,ip.value,color = spp))+
   geom_point()+
   scale_color_manual(values = colorRampPalette(rev(brewer.pal(8, "Paired")))(9))+
-  facet_wrap(~spp, scales = "free_y")+
+  facet_wrap(~metal, scales = "free_y")+
   themeo
 
 # reorder factor levels to match current order
-joined_metal$metal <- fct_relevel(f = joined_metal$metal, c("As", "Cd", "Cu", "Fe","Hg", "Mn","Mo","Pb", "Zn")) 
+joined_metal$metal <- factor(joined_metal$metal, levels = c("As", "Cd", "Cu", "Fe","Hg", "Mn","Mo","Pb", "Zn")) 
 
 # grouped by raw metal ensemble mean plot
-ensem <- joined_metal %>% 
+ensem_uncorrec <- joined_metal %>% 
   dplyr::group_by(metal,year) %>% 
-  dplyr::mutate(metal_ensemble = mean(ip.value, na.rm =T)) %>% 
-  ggplot(aes(x = year, y = metal_ensemble, group = metal))+
+  dplyr::mutate(metal_ensemble = mean(ip.value, na.rm =T),
+                metal_ensemble_sd = sd(ip.value, na.rm =T)) 
+  
+  
+ensem<- ggplot(ensem_uncorrec, aes(x = year, y = metal_ensemble, group = metal))+
   #geom_point(size = .5, color = "grey")+
-  geom_line(size = 1, color = "grey")+ 
+  geom_ribbon(aes(x = year, 
+                  ymax = metal_ensemble + 1.96*metal_ensemble_sd,
+                  ymin = metal_ensemble - 1.96*metal_ensemble_sd,
+                  group = metal), fill = "grey")+
+  geom_line(size = 1, color = "dark grey")+ 
   #geom_smooth(show.legend = F, color = "black", size = .25)+
   facet_wrap(~metal, scales = "free_y", ncol = 1)+
   scale_x_continuous(expand = c(0,0)) + 
@@ -159,7 +165,7 @@ ensem <- joined_metal %>%
 # plots of metals by species facetted 
 metal_by_spp <- ggplot(joined_metal,aes(x = year, y = (ip.value), color = spp, group = spp))+
   #geom_point(size = .2, show.legend = F)+
-  geom_line(size = .2, show.legend = F)+
+  geom_line(size = 1, show.legend = F)+
   scale_x_continuous(expand = c(0,0)) + 
   scale_color_manual(values = colorRampPalette(rev(brewer.pal(8, "Paired")))(9))+
   themeo
@@ -416,6 +422,9 @@ levels(lookup_table$metal)
 
 # READ IN THE CAMBELL TTCs, eliminantes all suedel script above.
 lookup_table <- read.csv("data/cambell_TTC.csv") # Cambell spline model fits
+#lookup_table$metal <- factor(lookup_table$metal, levels = c("As", "Cd", "Cu", "Fe","Hg", "Mn","Mo","Pb", "Zn"))
+lookup_table$metal <- factor(lookup_table$metal, levels = c("Arsenic", "Cadmium", "Copper", "Iron","Mercury", "Manganese","Molybdenum","Lead", "Zinc"))
+
 #lookup_table <- read.csv("data/Gain_TTC.csv") # Cambell spline model fits
 #lookup_table <- read.csv("cambell_TTC_logmods.csv") # Cambell log model model fits
 
@@ -423,6 +432,9 @@ lookup_table <- read.csv("data/cambell_TTC.csv") # Cambell spline model fits
 lookup_table$tp_med <- as.factor(lookup_table$tp_med)
 
 joined_all <- left_join(joined_all,lookup_table, by = c("metal","tp_med"))
+
+colnames(lookup_table)[1] <- 'TL'
+
 #corrected <- joined_all %>% mutate(corrected_metal_level = interp_levels * ttc)  # think the bug is that interp levels should be ref as ip.value?
 corrected <- joined_all %>% mutate(corrected_metal_level = ip.value / ttc) # TTC suggest that you divide by in order to represent the environmental availability given what you know it is at a particular TP
 
@@ -441,48 +453,82 @@ ggplot(corrected,aes(x = year, y = corrected_metal_level, group = spp) )+
   facet_wrap(~metal, scales = "free_y", ncol = 1)
 
 # grouped by raw metal ensemble mean plot
-ensem <- corrected %>% dplyr::group_by(metal,year) %>% 
-  dplyr::mutate(metal_ensemble = mean(corrected_metal_level, na.rm =T)) %>% 
-  ggplot(aes(x = year, y = metal_ensemble, group = metal))+
-  geom_point(size = .5, color = "grey")+
-  geom_line(size = .5, color = "grey")+ geom_smooth(show.legend = F, color = "black", size = .25)+
+ensem_correc <- corrected %>% dplyr::group_by(metal,year) %>% 
+  dplyr::mutate(metal_ensemble = mean(corrected_metal_level, na.rm =T),
+                metal_ensemble_sd = sd(corrected_metal_level, na.rm =T)) 
+
+
+ensem <- ggplot(ensem_correc,aes(x = year, y = metal_ensemble, group = metal))+
+  #geom_point(size = .5, color = "grey")+
+  geom_ribbon(aes(x = year, 
+                  ymax = metal_ensemble + 1.96*metal_ensemble_sd,
+                  ymin = metal_ensemble - 1.96*metal_ensemble_sd,
+                  group = metal
+                  ), fill = "grey")+
+  geom_line(size = .5, color = "dark grey")+# geom_smooth(show.legend = F, color = "black", size = .25)+
   facet_wrap(~metal, scales = "free_y", ncol = 1)+
   scale_x_continuous(expand = c(0,0)) + 
   themeo
 # plots of metals by species facetted 
 metal_by_spp <- ggplot(corrected,aes(x = year, y = corrected_metal_level, color = spp, group = spp))+
   #geom_point(size = .2, show.legend = F)+
-  geom_line(size = .2, show.legend = F)+
+  geom_line(size = 1, show.legend = F)+
   scale_x_continuous(expand = c(0,0)) + 
   scale_color_manual(values = colorRampPalette(rev(brewer.pal(8, "Paired")))(9))+
   themeo
 spp_corrected <- metal_by_spp + facet_wrap(~metal, scales = "free_y", ncol = 1)
 
 gridExtra::grid.arrange(spp_corrected, ensem, ncol = 2)
-# To Do: 
-# ppm global generation
-
 
 gridExtra::grid.arrange(spp_raw,spp_corrected,ncol = 2)
 
-# SCRATCH
 
-# Metals vs. TP through time
+#####################
+# Fig 3 development #
+#####################
 
-str(corrected)
+ensem_correc$metal <- as.factor(ensem_correc$metal)
+# name matching factor levels
+ensem_uncorrec$metal <- fct_recode(ensem_uncorrec$metal, 
+                                   Arsenic = "As",
+                                   Cadmium   = "Cd",
+                                   Lead       = "Pb",
+                                   Mercury    = "Hg",
+                                   Molybdenum = "Mo",
+                                   Zinc       = "Zn",
+                                   Copper    = "Cu",
+                                   Manganese  = "Mn",
+                                   Iron      = "Fe")
 
+# select relavant columns
+raw          <- ensem_uncorrec %>% select("spp","metal","year","metal_ensemble","metal_ensemble_sd")
+tp_corrected <- ensem_correc %>% select("spp","metal","year","metal_ensemble","metal_ensemble_sd")
 
+# add identifier of corrected or not
+raw$correction          <- "uncorrected"
+tp_corrected$correction <- "corrected"
 
+#bind together
+full_df_correc <- rbind(tp_corrected,raw)
 
-corrected %>% 
-  ggplot(aes(x = as.numeric(tp_med), y = ip.value))+
-  geom_path()+
-  facet_grid(metal~spp, scales = "free_y")
+# order factors by magnitude and directon of change
+full_df_correc$metal <- fct_reorder(full_df_correc$metal, full_df_correc$metal_ensemble, fun = abs(min - max) )
+full_df_correc$metal <- fct_rev(full_df_correc$metal)
 
-
-
-
-
+# plot 
+ggplot(full_df_correc,aes(x = year, group = correction, fill = correction))+
+  geom_ribbon(aes(ymin = ifelse(metal_ensemble - 1.96*metal_ensemble_sd < 0,0,metal_ensemble - 1.96*metal_ensemble_sd < 0) ,
+                  ymax = metal_ensemble + 1.96*metal_ensemble_sd),
+              alpha = .6, 
+              color = "black",
+              size = .25)+
+  geom_line(aes(y = metal_ensemble, color = correction), size = 1)+
+  scale_color_manual(values = c("#35978f",'#bf812d') %>%  rev())+
+  scale_fill_manual(values = c("#35978f",'#bf812d') %>%  rev())+
+  facet_wrap(~metal, scales = "free_y")+
+  scale_x_continuous(expand = c(0,0))+
+  labs(y = "parts per million")+
+  themeo
 
 
 

@@ -15,9 +15,9 @@ gain_corrected <- data.frame(year = corrected$year,
                              corrected_conc = corrected$corrected_metal_level,source = "gain")
 #write.csv(gain_corrected,"gain_merge.csv")
 
-gain_corrected <- read.csv("gain_merge.csv")
-sueddel_corrected <- read.csv("sueddel_merge.csv")
-cambell_corrected <- read.csv("cambell_merge.csv")
+gain_corrected <- read.csv("./data/archive/gain_merge.csv")
+sueddel_corrected <- read.csv("./data/archive/sueddel_merge.csv")
+cambell_corrected <- read.csv("./data/archive/cambell_merge.csv")
 
 all_corrected <- rbind(gain_corrected,sueddel_corrected,cambell_corrected)
 
@@ -45,14 +45,14 @@ all_corrected %>%
          max_ppm = max(corrected_conc)) %>% 
   ungroup() %>% 
   ggplot()+
-  geom_ribbon(aes(x = year, ymin = min_ppm, ymax = max_ppm, group = spp, fill = spp), alpha = .5) +
-  #facet_grid(metal~spp,scales = "free_y")
+  geom_ribbon(aes(x = year, ymin = min_ppm, ymax = max_ppm, group = spp, fill = spp), alpha = .5, color = "black") +
+  facet_grid(metal~spp,scales = "free_y")+
   facet_wrap(~metal,scales = "free_y", ncol = 3)+
-  scale_fill_manual(values = colorRampPalette(rev(brewer.pal(8, "Accent")))(9))+
+  scale_fill_manual(values = colorRampPalette(rev(brewer.pal(8, "Paired")))(9))+
   #scale_fill_manual(values = colorRampPalette(rev(brewer.pal(8, "Paired")))(9))+
   scale_x_continuous(expand = c(0,0))+
   scale_y_continuous(expand = c(.2,.5))+
-  theme_linedraw()
+  themeo
 
 
 
