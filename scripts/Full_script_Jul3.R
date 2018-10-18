@@ -512,7 +512,7 @@ tp_corrected$correction <- "corrected"
 full_df_correc <- rbind(tp_corrected,raw)
 
 # order factors by magnitude and directon of change
-full_df_correc$metal <- fct_reorder(full_df_correc$metal, full_df_correc$metal_ensemble, fun = abs(min - max) )
+full_df_correc$metal <- fct_reorder(full_df_correc$metal, full_df_correc$metal_ensemble, fun = filter(correction == "corrected") %>% abs(min - max) )
 full_df_correc$metal <- fct_rev(full_df_correc$metal)
 
 # plot 
@@ -523,10 +523,16 @@ ggplot(full_df_correc,aes(x = year, group = correction, fill = correction))+
               color = "black",
               size = .25)+
   geom_line(aes(y = metal_ensemble, color = correction), size = 1)+
+  
+  # dummy points allow y axis expansion
+  geom_point(aes( y = (metal_ensemble + 1.96*metal_ensemble_sd)*1.1), color = NA)+
+  
+  # aesthetics
   scale_color_manual(values = c("#35978f",'#bf812d') %>%  rev())+
   scale_fill_manual(values = c("#35978f",'#bf812d') %>%  rev())+
   facet_wrap(~metal, scales = "free_y")+
   scale_x_continuous(expand = c(0,0))+
+  scale_y_continuous(expand = c(0,0))+
   labs(y = "parts per million")+
   themeo
 
