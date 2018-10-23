@@ -181,7 +181,8 @@ trophic_p[,3:6] <- round(trophic_p[,3:6], digits = 2)
 
 # plot it quick to look at it 
 tp_plot <- ggplot(trophic_p,aes(x = year, y = tp_med, color = spp))+
-  geom_line()+
+  geom_line(size = 1)+
+  scale_color_brewer(palette = "Dark2")+
   themeo
 
 # facet it by species, 'TP' is the ensemble of all of these spp
@@ -514,13 +515,14 @@ full_df_correc <- rbind(tp_corrected,raw)
 # order factors by magnitude and directon of change
 full_df_correc$metal <- fct_reorder(full_df_correc$metal, full_df_correc$metal_ensemble, fun = filter(correction == "corrected") %>% abs(min - max) )
 full_df_correc$metal <- fct_rev(full_df_correc$metal)
+full_df_correc$correction <- fct_rev(full_df_correc$correction)
 
 # plot 
 ggplot(full_df_correc,aes(x = year, group = correction, fill = correction))+
   geom_ribbon(aes(ymin = ifelse(metal_ensemble - 1.96*metal_ensemble_sd < 0,0,metal_ensemble - 1.96*metal_ensemble_sd < 0) ,
                   ymax = metal_ensemble + 1.96*metal_ensemble_sd),
               alpha = .6, 
-              color = "black",
+              #color = "black",
               size = .25)+
   geom_line(aes(y = metal_ensemble, color = correction), size = 1)+
   
@@ -528,13 +530,15 @@ ggplot(full_df_correc,aes(x = year, group = correction, fill = correction))+
   geom_point(aes( y = (metal_ensemble + 1.96*metal_ensemble_sd)*1.1), color = NA)+
   
   # aesthetics
-  scale_color_manual(values = c("#35978f",'#bf812d') %>%  rev())+
-  scale_fill_manual(values = c("#35978f",'#bf812d') %>%  rev())+
-  facet_wrap(~metal, scales = "free_y")+
+  scale_color_manual(values = c("#35978f",'#bf812d') )+
+  scale_fill_manual(values = c("#35978f",'#bf812d') )+
+  facet_wrap(~metal, scales = "free_y", ncol = 2)+
   scale_x_continuous(expand = c(0,0))+
   scale_y_continuous(expand = c(0,0))+
   labs(y = "parts per million")+
-  themeo
+  themeo+
+  theme(legend.position = c(0.15,.9))
+  
 
 
 
