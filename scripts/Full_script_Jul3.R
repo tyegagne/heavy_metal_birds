@@ -182,7 +182,7 @@ trophic_p[,3:6] <- round(trophic_p[,3:6], digits = 2)
 # plot it quick to look at it 
 tp_plot <- ggplot(trophic_p,aes(x = year, y = tp_med, color = spp))+
   geom_line(size = 1)+
-  scale_color_brewer(palette = "Dark2")+
+  #scale_color_brewer(palette = "Dark2")+
   themeo
 
 # facet it by species, 'TP' is the ensemble of all of these spp

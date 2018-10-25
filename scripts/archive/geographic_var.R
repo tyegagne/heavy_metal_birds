@@ -88,50 +88,59 @@ geo_tp <- left_join(geo_tp,lookup_table, by = "tp_med")
 geo_tp
 str(geo_tp)
 
-te <- left_join(joined_metal,geo_tp, by = c("spp","region","metal"))
-te
+tp_w_ttc <- left_join(joined_metal,geo_tp, by = c("spp","region","metal"))
 
-str(te)
-str(joined_metal)
-str(geo_tp)
+str(tp_w_ttc)
 
+tp_w_ttc$val <- tp_w_ttc$interp_levels
+tp_w_ttc$correc <- "uncorrected"
 
+tp_w_correc <- tp_w_ttc
+tp_w_correc$val <- tp_w_correc$interp_levels / tp_w_correc$ttc
+tp_w_correc$correc <- "corrected"
 
-levels(geo_tp$metal)
-levels(joined_metal$metal)
-
-
-
+tp_w_ttc <- rbind(tp_w_ttc,tp_w_correc)
 
 
+ggplot(tp_w_ttc,aes(x = region, y = val, color = correc))+
+  geom_boxplot(outlier.color = NA)+
+  facet_grid(metal~spp, scales = "free_y")+
+  themeo
+
+ggplot(tp_w_ttc,aes(x = region, y = val, color = spp))+
+  geom_boxplot(outlier.color = NA)+
+  facet_grid(metal~correc, scales = "free_y")+
+  themeo
 
 
-
-##################
-
+tp_w_ttc$metal <- fct_relevel(tp_w_ttc$metal,c("Mercury","Arsenic","Zinc", "Iron","Lead","Copper","Manganese","Cadmium","Molybdenum")  )
 
 
+  
+bar <- position_dodge(width = 0.5)
+tp_w_ttc$correc <- fct_rev(tp_w_ttc$correc)
+
+for(a in 1:length(levels(tp_w_ttc$metal))){
+  
+  levels(tp_w_ttc$metal)[a] <- paste0(LETTERS[a],". ",levels(tp_w_ttc$metal)[a] )
+  
+}
+
+ggplot(tp_w_ttc,aes(x = region, y = val, color = correc))+
+  #geom_point(color = "black", size = .1)+
+  geom_boxplot(#outlier.color = NA,
+                outlier.size = .1,
+               position = bar,width = .7)+
+  scale_color_manual(values = c("#f3a461","#8eb7ce") %>% rev())+
+  facet_wrap(~metal, scales = "free_y", ncol = 2)+
+  labs(y = "parts per million",title = "Geographic comparison of metals for two species of ubiquitous terns")+
+  themeo+
+  theme(axis.title.x = element_blank(),
+        #legend.position = c(0.1,.85),
+        legend.position = c(0.7,.1))
 
 
-#medians w/95% quantile interval
-bar <- position_dodge(width = 0.2)
-ggplot(a)+
-  geom_point(aes(x=location,y=middle,color=spp),position = bar)+
-  geom_errorbar(aes(x=location, ymin = lower, ymax = upper,color=spp),position = bar,width = .2)+
-  geom_line(aes(x=location,y=middle,group=spp,color=spp), position = bar)+
-  scale_color_brewer(palette = "Dark2")+
-  ylab("trophic position")+
-  xlab(" ")+
-  theme_classic()+
-  theme(strip.background = element_blank(),
-        #axis.text.x = element_text(margin = margin( 0.2, unit = "cm")),
-        #axis.text.y = element_text(margin = margin(c(1, 0.2), unit = "cm")),
-        axis.ticks.length=unit(-0.1, "cm"),
-        panel.border = element_rect(colour = "black", fill=NA, size=.5),
-        legend.title=element_blank(),
-        legend.position = c(0.8, .85),
-        strip.text=element_text(hjust=0))
-
+#############
 
 
 
