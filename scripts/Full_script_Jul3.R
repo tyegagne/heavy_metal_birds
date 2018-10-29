@@ -213,15 +213,15 @@ tp_plot + facet_wrap(~spp)
 # If you run the next 10 lines it will move forward with locating correction TTC values based 
 # on ensemble of TP rather than species specific TPs. 
 # Skip these 10 lines if you prefer to run corrections with spp specific trophic positions rather than ensemble.
-tp_null <- NULL; spp <- levels(trophic_p$spp); ensem_tp <- subset(trophic_p, spp == "TP")
-for(s in 1:length(spp)){
-  tp_duh <-  data.frame(X = "x", spp = spp[s], 
-                        year = seq(1891,2015,by = 1), 
-                        tp_med = ensem_tp$tp_med, 
-                        tp_upper = ensem_tp$tp_upper,
-                        tp_lower = ensem_tp$tp_lower)
-  tp_null <- rbind(tp_null,tp_duh)}
-trophic_p <- tp_null
+#tp_null <- NULL; spp <- levels(trophic_p$spp); ensem_tp <- subset(trophic_p, spp == "TP")
+#for(s in 1:length(spp)){
+#  tp_duh <-  data.frame(X = "x", spp = spp[s], 
+#                        year = seq(1891,2015,by = 1), 
+#                        tp_med = ensem_tp$tp_med, 
+#                        tp_upper = ensem_tp$tp_upper,
+#                        tp_lower = ensem_tp$tp_lower)
+#  tp_null <- rbind(tp_null,tp_duh)}
+#trophic_p <- tp_null
 ###
 ####
 
@@ -428,6 +428,16 @@ lookup_table$metal <- factor(lookup_table$metal, levels = c("Arsenic", "Cadmium"
 
 #lookup_table <- read.csv("data/Gain_TTC.csv") # Cambell spline model fits
 #lookup_table <- read.csv("cambell_TTC_logmods.csv") # Cambell log model model fits
+global <-  max(as.numeric(as.character(joined_all$tp_med)), na.rm = T) %>% round(1)
+global
+
+lookup_table <-
+  lookup_table %>% 
+  group_by(metal) %>% 
+  mutate(ttc =  ttc, # 1 is the TTC when TL = 0
+         ttc_constant_tp = ttc[tp_med == global] / ttc ## ttc when TL = 3.5 etc
+         ) %>% 
+  ungroup()
 
 
 lookup_table$tp_med <- as.factor(lookup_table$tp_med)
@@ -437,7 +447,10 @@ joined_all <- left_join(joined_all,lookup_table, by = c("metal","tp_med"))
 colnames(lookup_table)[1] <- 'TL'
 
 #corrected <- joined_all %>% mutate(corrected_metal_level = interp_levels * ttc)  # think the bug is that interp levels should be ref as ip.value?
-corrected <- joined_all %>% mutate(corrected_metal_level = ip.value / ttc) # TTC suggest that you divide by in order to represent the environmental availability given what you know it is at a particular TP
+#corrected <- joined_all %>% mutate(corrected_metal_level = ip.value * 1 / ttc) # TTC suggest that you divide by in order to represent the environmental availability given what you know it is at a particular TP
+corrected <- joined_all %>% mutate(corrected_metal_level = ip.value * 1/ttc) 
+corrected <- corrected %>% mutate(corrected_metal_constant = ip.value * ttc_constant_tp) 
+
 
 ggplot(corrected )+
   geom_line(aes(x = year, y = (corrected_metal_level), color = spp))+
@@ -518,16 +531,23 @@ full_df_correc$metal <- fct_rev(full_df_correc$metal)
 full_df_correc$correction <- fct_rev(full_df_correc$correction)
 
 # plot 
-ggplot(full_df_correc,aes(x = year, group = correction, fill = correction))+
-  geom_ribbon(aes(ymin = ifelse(metal_ensemble - 1.96*metal_ensemble_sd < 0,0,metal_ensemble - 1.96*metal_ensemble_sd < 0) ,
+ggplot()+
+  geom_ribbon(data = full_df_correc, aes(x = year, group = correction, fill = correction,ymin = ifelse(metal_ensemble - 1.96*metal_ensemble_sd < 0,0,metal_ensemble - 1.96*metal_ensemble_sd < 0) ,
                   ymax = metal_ensemble + 1.96*metal_ensemble_sd),
               alpha = .6, 
               #color = "black",
               size = .25)+
-  geom_line(aes(y = metal_ensemble, color = correction), size = 1)+
+  geom_line(data = full_df_correc,aes(x = year, group = correction, y = metal_ensemble, color = correction), size = 1)+
+  
+  # constant TP of mean 
+  geom_line(data = ensem_correc %>% 
+              group_by(year,metal) %>% 
+              mutate(corrected_metal_constant = mean(corrected_metal_constant, na.rm = T)),
+            aes(x = year,y = corrected_metal_constant),
+            lty = "dashed", size = .25)+
   
   # dummy points allow y axis expansion
-  geom_point(aes( y = (metal_ensemble + 1.96*metal_ensemble_sd)*1.1), color = NA)+
+  geom_point(data = full_df_correc,aes(x = year, y = (metal_ensemble + 1.96*metal_ensemble_sd)*1.1), color = NA)+
   
   # aesthetics
   scale_color_manual(values = c("#35978f",'#bf812d') )+
@@ -539,8 +559,6 @@ ggplot(full_df_correc,aes(x = year, group = correction, fill = correction))+
   themeo+
   theme(legend.position = c(0.15,.9))
   
-
-
 
 
 
