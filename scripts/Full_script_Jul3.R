@@ -434,10 +434,19 @@ global
 lookup_table <-
   lookup_table %>% 
   group_by(metal) %>% 
-  mutate(ttc =  ttc, # 1 is the TTC when TL = 0
-         ttc_constant_tp = ttc[tp_med == global] / ttc ## ttc when TL = 3.5 etc
+  mutate(
+    
+    ttc_old = ttc,
+    # note: in mutate order matters, it will refer bach to prior ttc
+    ttc_constant_tp = ttc[tp_med == global] / ttc, ## ttc when TL = 3.5 etc
+    ttc =  1/ttc # 1 is the TTC when TL = 0
+         
          ) %>% 
   ungroup()
+
+ggplot(lookup_table,aes(tp_med,ttc,color = metal))+geom_line()+scale_y_continuous(limits = c(0,5))
+ggplot(lookup_table,aes(tp_med,ttc_constant_tp,color = metal))+geom_line()+scale_y_continuous(limits = c(0,5))
+ggplot(lookup_table,aes(tp_med,ttc_old,color = metal))+geom_line()+scale_y_continuous(limits = c(0,5))
 
 
 lookup_table$tp_med <- as.factor(lookup_table$tp_med)
@@ -448,8 +457,8 @@ colnames(lookup_table)[1] <- 'TL'
 
 #corrected <- joined_all %>% mutate(corrected_metal_level = interp_levels * ttc)  # think the bug is that interp levels should be ref as ip.value?
 #corrected <- joined_all %>% mutate(corrected_metal_level = ip.value * 1 / ttc) # TTC suggest that you divide by in order to represent the environmental availability given what you know it is at a particular TP
-corrected <- joined_all %>% mutate(corrected_metal_level = ip.value * 1/ttc) 
-corrected <- corrected %>% mutate(corrected_metal_constant = ip.value * ttc_constant_tp) 
+corrected <- joined_all %>% mutate(corrected_metal_level = ip.value * ttc) 
+corrected <- corrected %>% mutate( corrected_metal_constant = ip.value * ttc_constant_tp) 
 
 
 ggplot(corrected )+
@@ -557,7 +566,7 @@ ggplot()+
   scale_y_continuous(expand = c(0,0))+
   labs(y = "parts per million")+
   themeo+
-  theme(legend.position = c(0.15,.9))
+  theme(legend.position = c(0.7,0.08))
   
 
 
