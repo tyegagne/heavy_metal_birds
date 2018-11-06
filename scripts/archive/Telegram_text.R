@@ -13,10 +13,7 @@ for(i in 1:100000){
   
 }
 
-
-
-
-send_telegram_message(text = "Hey, your script is done!",
+send_telegram_message(text = paste("Hey, your script is done!",timestamp()),
                       chat_id = 555649681,
                       bot_token = '478033552:AAHeBRJDkEDv-pswf-0PmWrNb9VnBXv0GKo'
                       )

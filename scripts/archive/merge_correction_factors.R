@@ -23,7 +23,9 @@ all_corrected <- rbind(gain_corrected,sueddel_corrected,cambell_corrected)
 
 ggplot(all_corrected,aes(x=year,y=corrected_conc,group = spp,color = spp))+
   geom_line()+
-  facet_grid(metal~source,scales = "free_y")
+  facet_grid(metal~source,scales = "free_y")+
+  scale_color_brewer(palette = "Spectral", direction = -1)+
+  themeo
 
 all_corrected %>% 
   filter(spp == "BUPE" & metal == "Lead") %>% 
