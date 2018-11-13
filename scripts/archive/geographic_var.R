@@ -1,3 +1,6 @@
+library(tidyverse)
+
+
 ##############################
 ###  Popular ggPlot theme  ###
 ##############################
@@ -11,8 +14,8 @@ themeo <-theme_classic()+
         legend.title=element_blank(),
         strip.text=element_text(hjust=0) )
 
-geo_fea <- read.delim('/Users/tgagne/heavy_metal_birds/data/geog_CAHFS_metals_feathers.csv', skip = 2, na.strings = "--") 
-   #%>% filter(year > 2013)
+geo_fea <- read.delim('/Users/tgagne/heavy_metal_birds/data/geog_CAHFS_metals_feathers.csv', skip = 2, na.strings = "--") %>% 
+   filter(year > 1990)
 
 unique_id <- paste0("B",seq(1,dim(geo_fea)[1])) # create a unique ID for each specimen
 metals <- cbind(unique_id, geo_fea)             # add that to the dataframe
@@ -93,11 +96,11 @@ tp_w_ttc <- left_join(joined_metal,geo_tp, by = c("spp","region","metal"))
 str(tp_w_ttc)
 
 tp_w_ttc$val <- tp_w_ttc$interp_levels
-tp_w_ttc$correc <- "uncorrected"
+tp_w_ttc$correc <- "tissue levels"
 
 tp_w_correc <- tp_w_ttc
 tp_w_correc$val <- tp_w_correc$interp_levels / tp_w_correc$ttc
-tp_w_correc$correc <- "corrected"
+tp_w_correc$correc <- "baseline corrected"
 
 tp_w_ttc <- rbind(tp_w_ttc,tp_w_correc)
 
@@ -126,12 +129,13 @@ for(a in 1:length(levels(tp_w_ttc$metal))){
   
 }
 
-ggplot(tp_w_ttc,aes(x = region, y = val, color = correc))+
-  #geom_point(color = "black", size = .1)+
-  geom_boxplot(#outlier.color = NA,
-                outlier.size = .1,
-               position = bar,width = .7)+
-  scale_color_manual(values = c("#f3a461","#8eb7ce") %>% rev())+
+
+ggplot(tp_w_ttc,aes(x = region, y = val))+
+  geom_boxplot(aes(color = correc),outlier.size = .1,position = bar, width = .7)+
+  #geom_quasirandom(aes(fill = correc),dodge.width = .5, size = 2, shape = 21)+
+  scale_color_manual(values = c("#37978f","#bf822b"))+
+  scale_fill_manual(values = c("#37978f","#bf822b"))+
+  
   facet_wrap(~metal, scales = "free_y", ncol = 2)+
   labs(y = "parts per million",title = "Geographic comparison of metals for two species of ubiquitous terns")+
   themeo+
