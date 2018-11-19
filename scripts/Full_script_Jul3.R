@@ -570,6 +570,20 @@ ggplot()+
   
 
 
+normalize <- function(x){
+  return((x-min(x)) / (max(x)-min(x)))
+}
+
+ensem_correc %>% 
+  mutate(tp_med = tp_med %>% as.character() %>% as.numeric()) %>% 
+  group_by(metal) %>% 
+  mutate(ip.value =scale(ip.value)) %>%
+  ungroup() %>% 
+  ggplot(aes(x=tp_med,y=ip.value))+
+  geom_point(size = .2)+
+  facet_grid(spp~metal, scales = "free_x")+
+  themeo
+
 
 
 
