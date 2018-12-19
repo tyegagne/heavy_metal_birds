@@ -65,7 +65,7 @@ ggplot(joined_metal, aes(x=region,y = interp_levels))+
 # bind appropriate TP to SOTE and BRNO TP data from Gagne et al. 2018b
 geo_tp <- data.frame(region = c("American Samoa","American Samoa", "Hawaiian Islands", "Hawaiian Islands","Florida","Florida"),
            spp    = c("SOTE","BRNO","SOTE","BRNO","SOTE","BRNO"),
-           tp_med     = c(4.05,3.99,3.79,3.64,3.61,3.60))
+           tp_med     = c(4.05,3.99,3.79,3.64,3.61,3.60))    # drawn from Gagne et al. 2018b
 geo_tp
 
 # then lookup appropriate TTC from Cambell
