@@ -567,9 +567,34 @@ ggplot()+
   labs(y = "parts per million")+
   themeo+
   theme(legend.position = c(0.7,0.08))
-  
+ 
 
+str(full_df_correc)
 
+full_df_correc %>% 
+  group_by(metal) %>% 
+  summarise(mean_ppm = mean(metal_ensemble, na.rm = T),
+            SE_ppm = sd(metal_ensemble, na.rm = T) / sqrt(n())
+            #N = n()
+            ) %>% 
+  arrange(mean_ppm)
+
+ #thresholds based on Burger Gochfield 2004
+
+# Pb = 4 ppm 
+# Hg = 5 ppm
+# Cd = 2 ppm
+
+# At what year did Pb, Hg, Cd become higher or lower than the threshold.
+
+subset(full_df_correc, metal == "Cadmium") %>% 
+  subset(metal_ensemble < 4) %>% View()
+
+# significantly different from x
+full_df_correc %>% 
+  group_by(metal) %>% 
+
+#
 normalize <- function(x){
   return((x-min(x)) / (max(x)-min(x)))
 }
