@@ -146,7 +146,19 @@ ggplot(tp_w_ttc,aes(x = region, y = val))+
 
 #############
 
+str(tp_w_ttc)
 
+tp_w_ttc %>% 
+  group_by(metal) %>% 
+  filter(spp == "SOTE") %>% 
+  filter(correc == "tissue levels") %>% 
+  filter(region == "Florida") %>% 
+  summarise(mean_ppm = mean(val, na.rm = T),
+            SD_ppm = sd(val, na.rm = T)
+            #N = n()
+  ) %>% 
+  arrange(mean_ppm)
+ 
 
 ggplot(joined_metal,aes(x = year, group = region, fill = region))+
   geom_histogram()

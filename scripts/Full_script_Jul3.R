@@ -185,6 +185,13 @@ tp_plot <- ggplot(trophic_p,aes(x = year, y = tp_med, color = spp))+
   #scale_color_brewer(palette = "Dark2")+
   themeo
 
+# min and max of average TP
+trophic_p %>% filter(spp == "TP") %>% summarise(min(tp_med),
+                                               max(tp_med))
+# accross spp
+trophic_p %>%  summarise(min(tp_med),
+                                                max(tp_med))
+
 # facet it by species, 'TP' is the ensemble of all of these spp
 tp_plot + facet_wrap(~spp)
 
@@ -573,8 +580,11 @@ str(full_df_correc)
 
 full_df_correc %>% 
   group_by(metal) %>% 
+  filter(spp == "SOTE") %>% 
+  filter(correction == "uncorrected") %>% 
+  filter(year >= 1978 & year <= 1980) %>% 
   summarise(mean_ppm = mean(metal_ensemble, na.rm = T),
-            SE_ppm = sd(metal_ensemble, na.rm = T) / sqrt(n())
+            SD_ppm = sd(metal_ensemble, na.rm = T)
             #N = n()
             ) %>% 
   arrange(mean_ppm)
