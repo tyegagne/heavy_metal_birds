@@ -23,10 +23,12 @@ themeo <-theme_classic()+
         strip.text=element_text(hjust=0) )
 
 # set working space with here and read in csv
-library(here)
+#library(here)
 
 # dataframe read in
-here()
+#here()
+
+setwd('/Users/tgagne/heavy_metal_birds/') # running from Tylers computer
 
 metals <- read.csv( 'data/heavy_metal_June6.csv', header = T,na.strings = "--" )
 
@@ -580,6 +582,7 @@ str(full_df_correc)
 
 full_df_correc %>% 
   group_by(metal) %>% 
+  filter()
   filter(spp == "SOTE") %>% 
   filter(correction == "uncorrected") %>% 
   filter(year >= 1978 & year <= 1980) %>% 

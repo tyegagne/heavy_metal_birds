@@ -39,10 +39,11 @@ ggplot(conc_comp,aes(x = published.TL,y = concentration))+
   geom_point()+
   facet_wrap(~Metal, scales = "free_y")
 
- par(mfrow = c(4,4))                                # Establish the plotting frame                    
- metals <- droplevels(conc_comp$Metal) %>% levels() # What metals are in that reference,  build a vector
- cambell_lookup <- NULL                             # empty dataframe to put in complete TTC lookup data
-
+par(mfrow = c(4,4))                                # Establish the plotting frame                    
+metals <- droplevels(conc_comp$Metal) %>% levels() # What metals are in that reference,  build a vector
+cambell_lookup <- NULL                             # empty dataframe to put in complete TTC lookup data
+raw_met_data <- NULL
+ 
 for(e in 1:length(metals)){   # i.e. : for each metal, do this:
   
   # subset on the TL and concentration data for a single metal as an x and a y vector and combine in to a data.frame
@@ -94,8 +95,10 @@ for(e in 1:length(metals)){   # i.e. : for each metal, do this:
   lines(est_prediction)
   # make a dataframe of predicted TTCs
   metal_lookup <- data.frame(tp_med = est_prediction$x,ttc = est_prediction$y,metal = metals[e])
+  raw_met <- data.frame(tp_med = x, ttc_raw = y, metal = metals[e])
   # bind this to the data frame of other metals
   cambell_lookup <- rbind(metal_lookup,cambell_lookup)
+  raw_met_data   <- rbind(raw_met_data,raw_met)
 
 }
  
@@ -107,7 +110,9 @@ for(e in 1:length(metals)){   # i.e. : for each metal, do this:
 levels(cambell_lookup$metal)
 #[1] "Zinc"          "Molybdenum"    "Methylmercury" "Manganese"     "Lead"          "Copper"        "Cadmium"       "Arsenic" 
 cambell_lookup$metal <- plyr::revalue(cambell_lookup$metal, c("Methylmercury"="Mercury"))
- 
+raw_met_data$metal <- plyr::revalue(raw_met_data$metal, c("Methylmercury"="Mercury"))
+
+
 # Iron will self represent as Zinc
 Fe <- subset(cambell_lookup, metal == "Zinc"); Fe$metal <- "Iron" %>% as.factor(); str(Fe)
 cambell_lookup <- rbind(cambell_lookup,Fe)
@@ -180,4 +185,47 @@ ggplot(cambell_lookup, aes(as.numeric(as.character(tp_med)), ttc*1, color = meta
         )+
   guides(color=guide_legend(ncol=2))
   
+
+# reorder metal factors by degree of magnification
+cambell_lookup %>% group_by(metal) %>% summarise(max(ttc)) %>% arrange( `max(ttc)`)
+
+cambell_lookup$metal <- fct_relevel(cambell_lookup$metal, c('Mercury','Arsenic','Molybdenum','Iron','Zinc','Manganese','Cadmium','Copper','Lead') )
+raw_met_data$metal <- fct_relevel(raw_met_data$metal, c('Mercury','Arsenic','Molybdenum','Iron','Zinc','Manganese','Cadmium','Copper','Lead') )
+
+# facetted
+ggplot(cambell_lookup, aes(as.numeric(as.character(tp_med)), ttc*1, color = metal))+ 
+  geom_point(data = raw_met_data,aes(x = tp_med, y = ttc_raw, color = metal)) +
+  geom_line(size = 2, alpha = .9)+
+  geom_hline(yintercept = 1, lty = "dashed")+
+  labs(title = "Trophic transfer of an environment level of 1 ppm",
+       x = "trophic position", y = "ppm", subtitle = "Cambell et al. 2005")+
+  annotate("rect",
+           #xmin = min(as.numeric(as.character(joined_all$tp_med)), na.rm = T), 
+           #xmax = max(as.numeric(as.character(joined_all$tp_med)), na.rm = T), 
+           xmin = 3.5,
+           xmax = 4.5,
+           ymin = -Inf, 
+           ymax = Inf, 
+           alpha = .5) +
+  #annotate("text", x = .2, y = 0, label = "Biodilution", size = 15, hjust = 0, alpha = .25)+
+  #annotate("text", x = .2, y = 2, label = "Biomagnification", size = 15, hjust = 0, alpha = .25)+
+  #annotate("text", x = 4.9, y = .8, label = "italic('Biodilution')", size = 3, hjust = 1, alpha = .5, parse = T)+
+  #annotate("text", x = 4.9, y = 1.2, label = "italic('Biomagnification')", size = 3, hjust = 1, alpha = .5, parse = T)+
+  #annotate("text", x = 0, y = 8, label = "italic('Cambell et al. 2005')", size = 3, hjust = 0, alpha = .5, parse = T)+
+  #annotate("text", 
+  #         x =  mean(as.numeric(as.character(joined_all$tp_med)), na.rm = T), 
+  #         y = 5, vjust = 0,
+  #         label = "seabird trophic range", 
+  #         size = 4, hjust = 0, alpha = 1, angle = 90, color = "white")+
+  scale_x_continuous(expand = c(0,0), limits = c(-0.2,5))+
+  scale_y_continuous( limits = c(-.1,8.1), expand = c(0,0) )+
+  scale_color_brewer(palette = "Paired")+
+  #scale_y_continuous(breaks = c(0,.2,.4,.6,.8,1,2,3,4,5,6,7,8) )+
+  themeo +
+  theme(legend.position = c(0.75, 0.1)
+        # , text=element_text(size=16, family="Calibri")
+  )+
+  guides(color=guide_legend(ncol=2))+
+  facet_wrap(~metal, ncol = 2)
+
 
