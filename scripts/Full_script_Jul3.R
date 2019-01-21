@@ -453,9 +453,18 @@ lookup_table <-
          ) %>% 
   ungroup()
 
-ggplot(lookup_table,aes(tp_med,ttc,color = metal))+geom_line()+scale_y_continuous(limits = c(0,5))
-ggplot(lookup_table,aes(tp_med,ttc_constant_tp,color = metal))+geom_line()+scale_y_continuous(limits = c(0,5))
-ggplot(lookup_table,aes(tp_med,ttc_old,color = metal))+geom_line()+scale_y_continuous(limits = c(0,5))
+#ggplot(lookup_table,aes(tp_med,ttc,color = metal))+geom_line()+scale_y_continuous(limits = c(0,5))+themeo
+ggplot(lookup_table,aes(tp_med,ttc_constant_tp,color = metal))+
+  geom_line()+
+  scale_y_continuous(limits = c(0,5))+
+  scale_color_brewer(palette = "Paired")+
+  themeo
+
+ggplot(lookup_table,aes(tp_med,ttc_old,color = metal))+
+  geom_line()+
+  scale_y_continuous(limits = c(0,5))+
+  scale_color_brewer(palette = "Paired")+
+  themeo
 
 
 lookup_table$tp_med <- as.factor(lookup_table$tp_med)

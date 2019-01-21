@@ -192,6 +192,8 @@ cambell_lookup %>% group_by(metal) %>% summarise(max(ttc)) %>% arrange( `max(ttc
 cambell_lookup$metal <- fct_relevel(cambell_lookup$metal, c('Mercury','Arsenic','Molybdenum','Iron','Zinc','Manganese','Cadmium','Copper','Lead') )
 raw_met_data$metal <- fct_relevel(raw_met_data$metal, c('Mercury','Arsenic','Molybdenum','Iron','Zinc','Manganese','Cadmium','Copper','Lead') )
 
+raw_met_data %>% filter(metal == "Mercury" & tp_med > 3 & ttc_raw > 6) 
+
 # facetted
 ggplot(cambell_lookup, aes(as.numeric(as.character(tp_med)), ttc*1, color = metal))+ 
   geom_point(data = raw_met_data,aes(x = tp_med, y = ttc_raw, color = metal)) +
