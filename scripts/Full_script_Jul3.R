@@ -585,7 +585,133 @@ ggplot()+
   labs(y = "parts per million")+
   themeo+
   theme(legend.position = c(0.7,0.08))
- 
+
+######################################################################
+# New Figure 2 Development: split up the plot by raw-TLO-TLConstant #
+######################################################################
+full_df_correc
+
+levels(ensem_correc$metal)
+levels(full_df_correc$metal)
+
+order <- c("Arsenic","Mercury","Lead","Copper","Manganese", "Molybdenum","Cadmium","Zinc","Iron" )
+
+full_df_correc$metal <- fct_relevel(full_df_correc$metal, order)
+ensem_correc$metal<- fct_relevel(ensem_correc$metal, order)
+
+raw_base <- ggplot()+
+  geom_ribbon(data = full_df_correc, aes(x = year, group = correction, fill = correction,ymin = ifelse(metal_ensemble - 1.96*metal_ensemble_sd < 0,0,metal_ensemble - 1.96*metal_ensemble_sd < 0) ,
+                                         ymax = metal_ensemble + 1.96*metal_ensemble_sd),
+              alpha = .6, 
+              show.legend = F,
+              #color = "black",
+              size = .25)+
+  geom_line(data = full_df_correc,aes(x = year, group = correction, y = metal_ensemble, color = correction), size = 1,show.legend = F)+
+  
+  # constant TP of mean 
+  #geom_line(data = ensem_correc %>% 
+  #            group_by(year,metal) %>% 
+  #            mutate(corrected_metal_constant = mean(corrected_metal_constant, na.rm = T)),
+  #          aes(x = year,y = corrected_metal_constant),
+  #          lty = "dashed", size = .25)+
+  
+  # dummy points allow y axis expansion
+  geom_point(data = full_df_correc %>% group_by(metal) %>% mutate(metal_ensemble = max(metal_ensemble, na.rm = T),
+                                                                  metal_ensemble_sd = max(metal_ensemble_sd, na.rm = T)) ,
+            aes(x = year, y = (metal_ensemble + 1.96*metal_ensemble_sd)*1.1), color = NA)+
+  
+  # # to ref level tooo
+  
+  # 
+  # 
+  # aesthetics
+  scale_color_manual(values = c("#35978f",'#bf812d') )+
+  scale_fill_manual(values = c("#35978f",'#bf812d') )+
+  facet_wrap(~metal+correction, scales = "free_y", ncol = 2)+
+  scale_x_continuous(expand = c(0,0))+
+  scale_y_continuous(expand = c(0,0))+
+  labs(y = "parts per million")+
+  themeo+
+  theme(legend.position = c(0.7,0.08),
+        strip.background = element_blank(),
+        strip.text.x = element_blank()
+        )
+
+
+
+
+# corrected to constant reference
+const_TL <- ggplot(data = ensem_correc %>% 
+         group_by(year,metal) %>% 
+         mutate(corrected_metal_constant_n = mean(corrected_metal_constant, na.rm = T)) %>% 
+         mutate(corrected_metal_constant_sd = sd(corrected_metal_constant, na.rm = T)) %>% 
+         select(year,metal,corrected_metal_constant_n,corrected_metal_constant_sd))+
+  
+  geom_ribbon(
+            
+              aes(x = year, group = metal, #fill = metal,
+                  ymin = ifelse(corrected_metal_constant_n - 1.96*corrected_metal_constant_sd < 0,0,corrected_metal_constant_n - 1.96*corrected_metal_constant_sd < 0) ,
+                   #ymin = corrected_metal_constant_n - 1.96*corrected_metal_constant_sd,
+                                        ymax = corrected_metal_constant_n + 1.96*corrected_metal_constant_sd),
+              alpha = .2, 
+ #            show.legend = F,
+              #color = "black",
+              size = .25)+
+  # constant TP of mean 
+  
+  # dummy points allow y axis expansion
+  # geom_point(data = ensem_correc %>% 
+  #              group_by(year,metal) %>% 
+  #              mutate(corrected_metal_constant_n = mean(corrected_metal_constant, na.rm = T)) %>% 
+  #              mutate(corrected_metal_constant_sd = sd(corrected_metal_constant, na.rm = T)) %>% 
+  #              select(year,metal,corrected_metal_constant_n,corrected_metal_constant_sd) %>% 
+  #              group_by(metal) %>% mutate(metal_ensemble = max(corrected_metal_constant_n, na.rm = T),
+  #                                                                 metal_ensemble_sd = max(corrected_metal_constant_sd, na.rm = T)) ,
+  #            aes(x = year, y = (metal_ensemble + 1.96*metal_ensemble_sd)*1.1), color = "black")+
+  # 
+  geom_point(data = full_df_correc %>% group_by(metal) %>% mutate(metal_ensemble = max(metal_ensemble, na.rm = T),
+                                                                  metal_ensemble_sd = max(metal_ensemble_sd, na.rm = T)) ,
+             aes(x = year, y = (metal_ensemble + 1.96*metal_ensemble_sd)*1.1), color = NA)+
+  
+  
+  geom_line(
+            aes(x = year,y = corrected_metal_constant_n),
+            lty = "dashed", size = .5)+
+  
+  # dummy points allow y axis expansion
+  geom_point(data = full_df_correc,aes(x = year, y = (metal_ensemble + 1.96*metal_ensemble_sd)*1.1), color = NA)+
+  
+  # aesthetics
+  #scale_color_manual(values = c("#35978f",'#bf812d') )+
+  #scale_fill_manual(values = c("#35978f",'#bf812d') )+
+  facet_wrap(~metal, scales = "free_y", ncol = 1)+
+  scale_x_continuous(expand = c(0,0))+
+  scale_y_continuous(expand = c(0,0))+
+  labs(y = "parts per million")+
+  themeo+
+  theme(legend.position = c(0.7,0.08),
+        strip.background = element_blank(),
+        strip.text.x = element_blank()
+        )
+
+
+library(gridExtra)
+grid.arrange(raw_base,const_TL, layout_matrix = matrix(c(1,1,2)) %>% t() )
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 str(full_df_correc)
 
