@@ -1,5 +1,3 @@
-
-library(ggplot2)
 library(tidyverse)
 
 
@@ -28,8 +26,7 @@ theme_themeo <- function () {
           strip.text=element_text(hjust=0) )}
 
 # set working directory and read in csv
-setwd('/Users/tgagne/heavy_metal_birds/data') # running from Tylers computer
-conc_comp <- read.csv('concentration_compilation.csv', na.strings = '-') %>%  # read in the reference from which environmental 
+conc_comp <- read.csv('~/heavy_metal_birds/data/concentration_compilation.csv', na.strings = '-') %>%  # read in the reference from which environmental 
                                                                               # concentrations where scraped
                                       filter(reference == "Cambell_2005") %>% # Cambell 2005 in this case is Baffin Bay pelagic study
                                       drop_na(concentration)                  # drop any NAs in the concentration data

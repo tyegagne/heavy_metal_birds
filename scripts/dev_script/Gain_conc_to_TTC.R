@@ -18,7 +18,7 @@ themeo <-theme_classic()+
 
 # set working directory and read in csv
 setwd('/Users/tgagne/heavy_metal_birds/data') # running from Tylers computer
-conc_comp <- read.csv('concentration_compilation.csv', na.strings = '-') %>%  # read in the reference from which environmental 
+conc_comp <- read.csv('~/heavy_metal_birds/data/concentration_compilation.csv', na.strings = '-') %>%  # read in the reference from which environmental 
   # concentrations where scraped
   filter(reference == "Gain_2016" ) %>% # Cambell 2005 in this case is Baffin Bay pelagic study
   mutate(published.TL = if_else(Latin.name == "water",0, published.TL)) %>% 

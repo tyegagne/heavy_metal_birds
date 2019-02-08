@@ -22,15 +22,10 @@ themeo <-theme_classic()+
         legend.title=element_blank(),
         strip.text=element_text(hjust=0) )
 
-# set working space with here and read in csv
-#library(here)
-
 # dataframe read in
-#here()
 
-setwd('/Users/tgagne/heavy_metal_birds/') # running from Tylers computer
 
-metals <- read.csv( 'data/heavy_metal_June6.csv', header = T,na.strings = "--" )
+metals <- read.csv( '~/heavy_metal_birds/data/heavy_metal_June6.csv', header = T,na.strings = "--" )
 
 unique_id <- paste0("B",seq(1,dim(metals)[1])) # create a unique ID for each specimen
 metals <- cbind(unique_id, metals)             # add that to the dataframe
@@ -177,7 +172,7 @@ gridExtra::grid.arrange(spp_raw, ensem, ncol = 2)
 
 
 # bring in the trophic position estimates from Gagne et al. 2018
-trophic_p <- read.csv('data/tp_through_time.csv')
+trophic_p <- read.csv('~/heavy_metal_birds/data/tp_through_time.csv')
 # round to hundredths
 trophic_p[,3:6] <- round(trophic_p[,3:6], digits = 2)
 
@@ -255,7 +250,7 @@ joined_all_t <- left_join(joined_metal, trophic_p, by = c("year","spp")) %>%  se
 ### ### ### ### ### ### ### ### ### #
 ### Trophic Transfer Coefficients ###
 ### ### ### ### ### ### ### ### ### #
-TTC <- read.csv('data/SuedelTTC.csv')
+TTC <- read.csv('~/heavy_metal_birds/data/SuedelTTC.csv')
 
 str(TTC)
 
@@ -431,7 +426,7 @@ levels(lookup_table$metal)
 
 
 # READ IN THE CAMBELL TTCs, eliminantes all suedel script above.
-lookup_table <- read.csv("data/cambell_TTC.csv") # Cambell spline model fits
+lookup_table <- read.csv("~/heavy_metal_birds/data/cambell_TTC.csv") # Cambell spline model fits
 #lookup_table$metal <- factor(lookup_table$metal, levels = c("As", "Cd", "Cu", "Fe","Hg", "Mn","Mo","Pb", "Zn"))
 lookup_table$metal <- factor(lookup_table$metal, levels = c("Arsenic", "Cadmium", "Copper", "Iron","Mercury", "Manganese","Molybdenum","Lead", "Zinc"))
 
