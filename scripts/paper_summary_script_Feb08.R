@@ -1,6 +1,6 @@
 # load libraries
-library(ggplot2)
-library(dplyr)
+#library(ggplot2)
+#library(dplyr)
 library(tidyr)
 library(tidyverse)
 library(zoo)
@@ -23,8 +23,6 @@ themeo <-theme_classic()+
         strip.text=element_text(hjust=0) )
 
 # dataframe read in
-
-
 metals <- read.csv( '~/heavy_metal_birds/data/heavy_metal_June6.csv', header = T,na.strings = "--" )
 
 unique_id <- paste0("B",seq(1,dim(metals)[1])) # create a unique ID for each specimen
@@ -159,6 +157,7 @@ ensem<- ggplot(ensem_uncorrec, aes(x = year, y = metal_ensemble, group = metal))
   facet_wrap(~metal, scales = "free_y", ncol = 1)+
   scale_x_continuous(expand = c(0,0)) + 
   themeo
+
 # plots of metals by species facetted 
 metal_by_spp <- ggplot(joined_metal,aes(x = year, y = (ip.value), color = spp, group = spp))+
   #geom_point(size = .2, show.legend = F)+
@@ -166,6 +165,7 @@ metal_by_spp <- ggplot(joined_metal,aes(x = year, y = (ip.value), color = spp, g
   scale_x_continuous(expand = c(0,0)) + 
   scale_color_manual(values = colorRampPalette(rev(brewer.pal(8, "Paired")))(9))+
   themeo
+
 spp_raw <- metal_by_spp + facet_wrap(~metal, scales = "free_y", ncol = 1)
 
 gridExtra::grid.arrange(spp_raw, ensem, ncol = 2)
@@ -250,6 +250,9 @@ joined_all_t <- left_join(joined_metal, trophic_p, by = c("year","spp")) %>%  se
 ### ### ### ### ### ### ### ### ### #
 ### Trophic Transfer Coefficients ###
 ### ### ### ### ### ### ### ### ### #
+# This is a set of freshwater heavy metal concentrations at a range of trophic levels
+# Ultimately we found a published pelagic food web study that covers 8 out 9 of our metals and
+# a large range of trophic levels. This script with the the freshwater data is left as an example.
 TTC <- read.csv('~/heavy_metal_birds/data/SuedelTTC.csv')
 
 str(TTC)
@@ -268,7 +271,8 @@ lookup_table <- NULL
 
 for(i in 1:length(metals)){
   
-  # Logistic sigmoidal fit - deprecated now
+  # Logistic sigmoidal fit - deprecated now, we utilize a constrained spline model below the commented code
+  
   # ----------------------
   # subset a single metal from the TTC table
   # TTC_sub <- subset(TTC, metal == metals[i])
@@ -424,8 +428,9 @@ lookup_table$tp_med   <- as.character(lookup_table$tp_med) %>% as.factor()
 levels(joined_all$metal) # What want 
 levels(lookup_table$metal)
 
-
-# READ IN THE CAMBELL TTCs, eliminantes all suedel script above.
+##################################################################
+# READ IN THE CAMBELL TTCs, eliminantes all suedel script above. #
+##################################################################
 lookup_table <- read.csv("~/heavy_metal_birds/data/cambell_TTC.csv") # Cambell spline model fits
 #lookup_table$metal <- factor(lookup_table$metal, levels = c("As", "Cd", "Cu", "Fe","Hg", "Mn","Mo","Pb", "Zn"))
 lookup_table$metal <- factor(lookup_table$metal, levels = c("Arsenic", "Cadmium", "Copper", "Iron","Mercury", "Manganese","Molybdenum","Lead", "Zinc"))
@@ -733,11 +738,7 @@ full_df_correc %>%
 subset(full_df_correc, metal == "Cadmium") %>% 
   subset(metal_ensemble < 4) %>% View()
 
-# significantly different from x
-full_df_correc %>% 
-  group_by(metal) %>% 
 
-#
 normalize <- function(x){
   return((x-min(x)) / (max(x)-min(x)))
 }
