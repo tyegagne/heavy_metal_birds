@@ -58,6 +58,7 @@ joined_metal$metal <- as.factor(joined_metal$metal)                             
 joined_metal <- filter(joined_metal, !spp %in% c("RFBO","BFAL") )                # single/~2-3 year observations in recent 
 joined_metal <- filter(joined_metal, !(metal %in% c("As",'Hg') & year < 1980) )  # filter Hg and As newer than 1980
 
+raw_plot_data <- joined_metal
 
 # quantile winsorising
 # Cutoff based on observations of grouped metals. Univariate outliers by metal level
@@ -496,8 +497,7 @@ ggplot(corrected,aes(x = year, y = corrected_metal_level, group = spp) )+
 # grouped by raw metal ensemble mean plot
 ensem_correc <- corrected %>% dplyr::group_by(metal,year) %>% 
   dplyr::mutate(metal_ensemble = mean(corrected_metal_level, na.rm =T),
-                metal_ensemble_sd = sd(corrected_metal_level, na.rm =T)) 
-
+                metal_ensemble_sd = sd(corrected_metal_level, na.rm =T))
 
 ensem <- ggplot(ensem_correc,aes(x = year, y = metal_ensemble, group = metal))+
   #geom_point(size = .5, color = "grey")+
@@ -599,6 +599,38 @@ order <- c("Arsenic","Mercury","Lead","Copper","Manganese", "Molybdenum","Cadmiu
 full_df_correc$metal <- fct_relevel(full_df_correc$metal, order)
 ensem_correc$metal<- fct_relevel(ensem_correc$metal, order)
 
+
+# pull out years for which we have raw data
+str(full_df_correc)
+
+####################
+# join raw values to full_df_correc ###
+####################
+raw_plot_data$metal <- fct_recode(raw_plot_data$metal, 
+                                   Arsenic = "As",
+                                   Cadmium   = "Cd",
+                                   Lead       = "Pb",
+                                   Mercury    = "Hg",
+                                   Molybdenum = "Mo",
+                                   Zinc       = "Zn",
+                                   Copper    = "Cu",
+                                   Manganese  = "Mn",
+                                   Iron      = "Fe")
+str(raw_plot_data)
+
+raw_points_uncorrected <- full_join(raw_plot_data,full_df_correc, by = c("year","metal","spp"))
+
+full_join(raw_plot_data,full_df_correc, by = c("year","metal","spp")) %>% 
+  ggplot()+
+  geom_point(aes(x = year, y = interp_levels, color = spp))+
+  geom_line(aes(x = year, y = metal_ensemble))+
+  facet_wrap(~metal+correction, scale = "free_y", ncol = 2)+
+  themeo
+
+####
+####
+
+
 raw_base <- ggplot()+
   geom_ribbon(data = full_df_correc, aes(x = year, group = correction, fill = correction,ymin = ifelse(metal_ensemble - 1.96*metal_ensemble_sd < 0,0,metal_ensemble - 1.96*metal_ensemble_sd < 0) ,
                                          ymax = metal_ensemble + 1.96*metal_ensemble_sd),
@@ -607,6 +639,10 @@ raw_base <- ggplot()+
               #color = "black",
               size = .25)+
   geom_line(data = full_df_correc,aes(x = year, group = correction, y = metal_ensemble, color = correction), size = 1,show.legend = F)+
+  
+  
+  # raw uncorrected points
+  geom_point(data = raw_points_uncorrected, aes(x = year, y = interp_levels, color = correction))+
   
   # constant TP of mean 
   #geom_line(data = ensem_correc %>% 
@@ -646,6 +682,8 @@ const_TL <- ggplot(data = ensem_correc %>%
          mutate(corrected_metal_constant_n = mean(corrected_metal_constant, na.rm = T)) %>% 
          mutate(corrected_metal_constant_sd = sd(corrected_metal_constant, na.rm = T)) %>% 
          select(year,metal,corrected_metal_constant_n,corrected_metal_constant_sd))+
+  
+  
   
   geom_ribbon(
             
