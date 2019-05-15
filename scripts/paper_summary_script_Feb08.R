@@ -58,7 +58,6 @@ joined_metal$metal <- as.factor(joined_metal$metal)                             
 joined_metal <- filter(joined_metal, !spp %in% c("RFBO","BFAL") )                # single/~2-3 year observations in recent 
 joined_metal <- filter(joined_metal, !(metal %in% c("As",'Hg') & year < 1980) )  # filter Hg and As newer than 1980
 
-raw_plot_data <- joined_metal
 
 # quantile winsorising
 # Cutoff based on observations of grouped metals. Univariate outliers by metal level
@@ -67,6 +66,8 @@ joined_metal <-
   joined_metal %>% 
   group_by(metal) %>% 
   mutate(interp_levels = Winsorize(interp_levels,probs = c(0,0.90)))
+
+raw_plot_data <- joined_metal
 
 # plots of metals by species facetted 
 metal_by_spp <- ggplot(joined_metal,aes(x = year, y = (interp_levels), color = spp, group = spp))+
@@ -472,6 +473,9 @@ lookup_table$tp_med <- as.factor(lookup_table$tp_med)
 
 joined_all <- left_join(joined_all,lookup_table, by = c("metal","tp_med"))
 
+
+
+
 colnames(lookup_table)[1] <- 'TL'
 
 #corrected <- joined_all %>% mutate(corrected_metal_level = interp_levels * ttc)  # think the bug is that interp levels should be ref as ip.value?
@@ -619,16 +623,13 @@ raw_plot_data$metal <- fct_recode(raw_plot_data$metal,
 str(raw_plot_data)
 
 raw_points_uncorrected <- full_join(raw_plot_data,full_df_correc, by = c("year","metal","spp"))
+raw_points_uncorrected$metal <- fct_relevel(raw_points_uncorrected$metal, levels(full_df_correc$metal))
 
-full_join(raw_plot_data,full_df_correc, by = c("year","metal","spp")) %>% 
-  ggplot()+
-  geom_point(aes(x = year, y = interp_levels, color = spp))+
-  geom_line(aes(x = year, y = metal_ensemble))+
-  facet_wrap(~metal+correction, scale = "free_y", ncol = 2)+
-  themeo
+
 
 ####
 ####
+
 
 
 raw_base <- ggplot()+
@@ -642,7 +643,7 @@ raw_base <- ggplot()+
   
   
   # raw uncorrected points
-  geom_point(data = raw_points_uncorrected, aes(x = year, y = interp_levels, color = correction))+
+  geom_point(data = raw_points_uncorrected %>% mutate(interp_levels = ifelse(correction == "corrected", NA, interp_levels)), aes(x = year, y = interp_levels, color = correction))+
   
   # constant TP of mean 
   #geom_line(data = ensem_correc %>% 
