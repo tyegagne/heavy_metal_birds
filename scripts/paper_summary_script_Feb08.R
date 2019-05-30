@@ -60,6 +60,8 @@ joined_metal <- filter(joined_metal, !(metal %in% c("As",'Hg') & year < 1980) ) 
 
 
 # quantile winsorising
+raw_plot_data <- joined_metal
+
 # Cutoff based on observations of grouped metals. Univariate outliers by metal level
 # upper quantile in response to inflatted positive values
 joined_metal <- 
