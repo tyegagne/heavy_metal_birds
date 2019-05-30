@@ -67,7 +67,10 @@ joined_metal <-
   group_by(metal) %>% 
   mutate(interp_levels = Winsorize(interp_levels,probs = c(0,0.90)))
 
-raw_plot_data <- joined_metal
+ raw_plot_data <- joined_metal
+# colnames(raw_plot_data)[4] <- "concen_post"
+# raw_plot_data$ref_limit <- NULL
+# write.csv(raw_plot_data, file = "post_processed_specimen_concentrations.csv")
 
 # plots of metals by species facetted 
 metal_by_spp <- ggplot(joined_metal,aes(x = year, y = (interp_levels), color = spp, group = spp))+
